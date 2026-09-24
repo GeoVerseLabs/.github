@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoVerse Live 产品手册</title>
+<meta name="description" content="GeoVerse Live：协作式地理数据编辑平台。OpenLayers / MapLibre 双引擎、专业要素编辑与版本历史、专题制图、实时协作、AI 助手与开放发布。">
+<meta property="og:title" content="GeoVerse Live — 协作式地理数据编辑平台">
+<meta property="og:description" content="一套数据，两种渲染引擎；从编辑、协作到对外发布的一体化地图平台。">
+<meta property="og:image" content="assets/editor-thematic-maplibre.webp">
+<meta name="color-scheme" content="dark">
+<style>
+  :root {
+    --bg: #0a0c11;
+    --bg-2: #10131a;
+    --panel: #141823;
+    --line: #232837;
+    --text: #e8eaf0;
+    --text-2: #a4abbd;
+    --text-3: #6f778b;
+    --accent: #8b6cf6;
+    --accent-2: #b39dff;
+    --ol: #4f8cff;
+    --libre: #2fbf8a;
+    --radius: 14px;
+    --max: 1180px;
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.7 var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent-2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  img { display: block; max-width: 100%; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 16px; }
+
+  /* nav */
+  .nav {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap { display: flex; align-items: center; gap: 24px; height: 56px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 650; color: var(--text); letter-spacing: .2px; }
+  .brand:hover { text-decoration: none; }
+  .brand-mark { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(from 200deg, var(--ol), var(--accent), var(--libre), var(--ol)); box-shadow: 0 0 0 3px #1b2030 inset; }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
+  .nav-links a { color: var(--text-2); }
+  .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+  /* hero */
+  .hero { position: relative; padding: 72px 0 40px; overflow: hidden; }
+  .hero::before {
+    content: ""; position: absolute; inset: -40% -10% auto; height: 620px;
+    background: radial-gradient(closest-side, rgba(139,108,246,.22), transparent 70%);
+    pointer-events: none;
+  }
+  .eyebrow { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--text-2); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: var(--bg-2); }
+  .eyebrow b { color: var(--accent-2); font-weight: 600; }
+  h1 { font-size: clamp(34px, 5.4vw, 60px); line-height: 1.12; margin: 20px 0 16px; letter-spacing: -.5px; font-weight: 750; }
+  h1 .grad { background: linear-gradient(90deg, var(--ol), var(--accent-2) 50%, var(--libre)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: clamp(16px, 2vw, 19px); color: var(--text-2); max-width: 760px; margin: 0 0 28px; }
+  .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 10px; font-weight: 600; font-size: 15px; border: 1px solid var(--line); color: var(--text); background: var(--panel); }
+  .btn:hover { text-decoration: none; border-color: #353c50; }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .btn.primary:hover { background: #7a59f0; }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 26px 0 0; padding: 0; list-style: none; }
+  .pill { font-size: 13px; padding: 3px 11px; border-radius: 999px; background: var(--bg-2); border: 1px solid var(--line); color: var(--text-2); }
+  .pill.ol::before, .pill.libre::before { content: "●"; margin-right: 6px; font-size: 10px; vertical-align: 1px; }
+  .pill.ol::before { color: var(--ol); }
+  .pill.libre::before { color: var(--libre); }
+
+  .shot {
+    border-radius: var(--radius); overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    box-shadow: 0 30px 80px -30px rgba(0,0,0,.75), 0 0 0 1px rgba(255,255,255,.02);
+    cursor: zoom-in;
+  }
+  .shot img { width: 100%; height: auto; }
+  .hero .shot { margin-top: 48px; }
+  figure { margin: 0; }
+  figcaption { font-size: 13px; color: var(--text-3); margin-top: 10px; }
+
+  /* stats */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 56px 0 0; }
+  .stat { background: var(--bg-2); padding: 20px 22px; }
+  .stat b { display: block; font-size: 26px; font-weight: 700; letter-spacing: -.3px; }
+  .stat span { font-size: 13px; color: var(--text-2); }
+
+  /* sections */
+  section.block { padding: 88px 0 0; }
+  .kicker { font-family: var(--mono); font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent-2); margin: 0 0 10px; }
+  h2 { font-size: clamp(26px, 3.4vw, 36px); line-height: 1.25; margin: 0 0 14px; letter-spacing: -.3px; font-weight: 720; }
+  .sub { color: var(--text-2); margin: 0 0 22px; max-width: 720px; }
+  .feature { display: grid; grid-template-columns: 5fr 7fr; gap: 48px; align-items: center; }
+  .feature.flip { grid-template-columns: 7fr 5fr; }
+  .feature.flip .copy { order: 2; }
+  .points { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .points li { position: relative; padding-left: 24px; color: var(--text-2); font-size: 15px; }
+  .points li::before { content: ""; position: absolute; left: 2px; top: .72em; width: 8px; height: 8px; border-radius: 2px; background: var(--accent); transform: rotate(45deg); }
+  .points b { color: var(--text); font-weight: 600; }
+
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 8px; }
+  .duo .tag { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .duo .tag i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  .tri { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; align-items: start; }
+  .tri .stack { display: grid; gap: 20px; }
+
+  /* more grid */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 8px; }
+  .card { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+  .card h3 { margin: 0 0 6px; font-size: 16px; font-weight: 650; }
+  .card p { margin: 0; color: var(--text-2); font-size: 14px; }
+
+  .strip { margin-top: 20px; }
+
+  /* stack table */
+  .stack-table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .stack-table th, .stack-table td { text-align: left; padding: 12px 18px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .stack-table tr:last-child th, .stack-table tr:last-child td { border-bottom: 0; }
+  .stack-table th { width: 150px; color: var(--text-3); font-weight: 500; }
+  .stack-table td { color: var(--text-2); }
+
+  /* contact */
+  .contact { margin: 96px 0 0; padding: 44px 40px; border-radius: 20px; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(79,140,255,.10), rgba(139,108,246,.14) 50%, rgba(47,191,138,.10)); display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: space-between; }
+  .contact h2 { margin: 0 0 6px; }
+  .contact p { margin: 0; color: var(--text-2); }
+
+  footer { padding: 40px 0 56px; color: var(--text-3); font-size: 13px; }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; border-top: 1px solid var(--line); padding-top: 24px; }
+
+  /* lightbox */
+  .lb { position: fixed; inset: 0; z-index: 50; background: rgba(5,6,10,.92); display: none; align-items: center; justify-content: center; padding: 24px; cursor: zoom-out; }
+  .lb.open { display: flex; }
+  .lb img { max-width: 100%; max-height: 100%; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
+
+  @media (max-width: 900px) {
+    .feature, .feature.flip, .tri, .duo { grid-template-columns: 1fr; gap: 28px; }
+    .feature.flip .copy { order: 0; }
+    .grid { grid-template-columns: 1fr 1fr; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+    .hero { padding-top: 48px; }
+    section.block { padding-top: 64px; }
+    .contact { padding: 28px 22px; }
+    .stack-table th { width: 96px; }
+    .stack-table th, .stack-table td { padding: 10px 12px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>GeoVerse Live</a>
+    <div class="nav-links">
+      <a href="#engines">双引擎</a>
+      <a href="#editing">编辑</a>
+      <a href="#thematic">专题制图</a>
+      <a href="#collab">协作与 AI</a>
+      <a href="#publish">开放发布</a>
+      <a href="#more">更多能力</a>
+      <a href="#contact">联系我们</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="eyebrow"><b>产品手册</b> · 私有部署 · 早期访问</span>
+    <h1>GeoVerse Live<br><span class="grad">协作式地理数据编辑平台</span></h1>
+    <p class="lead">一套数据，两种渲染引擎。GeoVerse Live 把要素编辑、版本管理、专题制图、多人协作、AI 助手和对外发布放进同一个浏览器工作台，底层由 GeoVerse SDK 驱动，原生支持国内坐标系。</p>
+    <div class="cta">
+      <a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7">预约演示</a>
+      <a class="btn" href="#engines">浏览功能</a>
+    </div>
+    <ul class="pills">
+      <li class="pill ol">OpenLayers</li>
+      <li class="pill libre">MapLibre GL</li>
+      <li class="pill">GCJ-02 / BD-09</li>
+      <li class="pill">实时协作</li>
+      <li class="pill">AI 自然语言编辑</li>
+      <li class="pill">多租户 · RBAC</li>
+    </ul>
+    <figure class="shot">
+      <img src="assets/editor-thematic-maplibre.webp" alt="GeoVerse Live 编辑器：世界各国按人均 GDP 分级着色，叠加世界主要城市点图层" width="1600" height="742">
+    </figure>
+    <div class="stats">
+      <div class="stat"><b>2</b><span>渲染引擎，一键切换</span></div>
+      <div class="stat"><b>20+</b><span>绘制、改形与拓扑编辑工具</span></div>
+      <div class="stat"><b>3</b><span>项目角色：所有者 / 可编辑 / 可评论</span></div>
+      <div class="stat"><b>中 / EN</b><span>界面双语，暗色与亮色主题</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 1. 双引擎 -->
+  <section class="block" id="engines">
+    <p class="kicker">01 · Dual Engine</p>
+    <h2>同一个项目，OpenLayers 与 MapLibre 随时切换</h2>
+    <p class="sub">渲染引擎是项目的一个属性。图层、样式、专题规则和协作数据在两条引擎上完全通用，切换后打开就是同一张图。OpenLayers 轨原生适配高德、天地图等 GCJ-02 底图，MapLibre 轨提供矢量瓦片与平滑缩放。</p>
+    <div class="duo">
+      <figure>
+        <span class="tag"><i style="background:var(--libre)"></i>MapLibre GL · OpenStreetMap 底图</span>
+        <div class="shot"><img src="assets/editor-thematic-maplibre.webp" alt="MapLibre 引擎下的专题图" loading="lazy" width="1600" height="742"></div>
+      </figure>
+      <figure>
+        <span class="tag"><i style="background:var(--ol)"></i>OpenLayers · 高德矢量底图（GCJ-02）</span>
+        <div class="shot"><img src="assets/editor-thematic-openlayers.webp" alt="OpenLayers 引擎下的同一张专题图" loading="lazy" width="1600" height="742"></div>
+      </figure>
+    </div>
+    <figcaption>同一项目、同一套分级规则，分别在两种引擎下渲染。</figcaption>
+  </section>
+
+  <!-- 2. 编辑 -->
+  <section class="block" id="editing">
+    <div class="feature">
+      <div class="copy">
+        <p class="kicker">02 · Editing &amp; History</p>
+        <h2>专业要素编辑，每一次提交都有版本</h2>
+        <p class="sub">面向测绘和规划数据的编辑器，编辑先落在浏览器本地会话，确认后一次提交到服务端。</p>
+        <ul class="points">
+          <li><b>绘制与改形</b>：点、线、面、矩形、圆；移动、顶点编辑、旋转缩放变换、镜像、复制粘贴</li>
+          <li><b>拓扑工具</b>：打断、切面、合并、开洞 / 填洞 / 消洞，吸附与对齐辅助线</li>
+          <li><b>撤销重做与乐观锁</b>：多人改同一要素时自动检测冲突，按字段三路合并</li>
+          <li><b>版本历史</b>：逐版本查看、对比差异、一键回滚</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="assets/edit-history.webp" alt="选中线要素显示顶点手柄，右侧为 v1 至 v13 的版本历史" loading="lazy" width="1600" height="742"></figure>
+    </div>
+  </section>
+
+  <!-- 3. 专题制图 -->
+  <section class="block" id="thematic">
+    <div class="feature flip">
+      <div class="copy">
+        <p class="kicker">03 · Thematic Mapping</p>
+        <h2>按属性出专题图，规则、直方图、图例联动</h2>
+        <p class="sub">在「高级样式」工作台里选字段、选方法，几秒生成分类或分级规则，画布实时预览。</p>
+        <ul class="points">
+          <li><b>分类 / 分级</b>：自然断点、分位数、等距或手工断点</li>
+          <li><b>归一化</b>：人口密度、人均指标等「字段 ÷ 字段」一步完成</li>
+          <li><b>色带</b>：定性配色、连续与发散色带，含色觉友好（CVD）方案</li>
+          <li><b>富样式</b>：图标库（Maki / Temaki / 自定义）、线型、文本标注、动画路径</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="assets/thematic-style.webp" alt="高级样式工作台：按人均 GDP 自然断点分 5 级，右侧直方图显示各档数量" loading="lazy" width="1600" height="742"></figure>
+    </div>
+  </section>
+
+  <!-- 4. 数据接入 -->
+  <section class="block" id="data">
+    <div class="feature">
+      <div class="copy">
+        <p class="kicker">04 · Data In &amp; Out</p>
+        <h2>数据进得来，也出得去</h2>
+        <p class="sub">拖入文件先做结构预检和几何校验，给出要素数、几何类型和字段，确认后才落库。</p>
+        <ul class="points">
+          <li><b>文件导入</b>：GeoJSON、Shapefile（.zip），可指定源坐标系</li>
+          <li><b>数据源连接</b>：PostGIS、REST、WMS、S3 / MinIO</li>
+          <li><b>导出</b>：按图层导出 GeoJSON</li>
+          <li><b>空间数据库</b>：PostgreSQL + PostGIS 存储，服务端做几何有效性校验</li>
+        </ul>
+      </div>
+      <figure class="shot"><img src="assets/import-preview.webp" alt="导入预览：176 个要素、几何类型与属性字段" loading="lazy" width="1080" height="960"></figure>
+    </div>
+  </section>
+
+  <!-- 5. 协作与 AI -->
+  <section class="block" id="collab">
+    <p class="kicker">05 · Collaboration &amp; AI</p>
+    <h2>多人一起改图，AI 帮你查和改</h2>
+    <p class="sub">项目成员实时在线：在线状态、光标、变更广播和评论即时同步；AI 助手用自然语言操作当前图层。</p>
+    <div class="duo">
+      <figure>
+        <div class="shot"><img src="assets/collab-comments.webp" alt="评论锚定到选中的城市要素，可定位、标记已解决和回复" loading="lazy" width="1600" height="742"></div>
+        <figcaption><b style="color:var(--text)">评论锚定到要素</b>：定位、回复、标记已解决，支持贴图；站内信与通知实时推送。</figcaption>
+      </figure>
+      <figure>
+        <div class="shot"><img src="assets/ai-assistant.webp" alt="AI 助手回答当前图层人口最多的 5 个城市，并展示调用的工具" loading="lazy" width="1600" height="742"></div>
+        <figcaption><b style="color:var(--text)">AI 助手</b>：调用了哪些工具、查了什么全部透明。AI 的修改只落在本地会话，可撤销，点「提交」才保存。</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 6. 开放发布 -->
+  <section class="block" id="publish">
+    <p class="kicker">06 · Open &amp; Share</p>
+    <h2>把图层组合成地图，分享给不需要登录的人</h2>
+    <p class="sub">「综合地图」可以跨项目叠加有权限的图层，生成免登录的分享链接或 iframe 嵌入代码。数据端点支持 AES-GCM 密文传输，可限定允许嵌入的来源。</p>
+    <div class="tri">
+      <div class="stack">
+        <figure class="shot"><img src="assets/open-map-composer.webp" alt="综合地图编排：左侧图层列表与不透明度，右侧加入图层与底图设置" loading="lazy" width="1600" height="742"></figure>
+        <figure class="shot"><img src="assets/embed-viewer.webp" alt="访问者打开分享链接看到的纯地图页（局部）" loading="lazy" width="1340" height="798"></figure>
+      </div>
+      <figure class="shot"><img src="assets/share-settings.webp" alt="分享设置：链接、嵌入代码与数据传输加密" loading="lazy" width="1300" height="1396"></figure>
+    </div>
+    <figcaption>上：综合地图编排；下：访问者打开分享链接看到的纯地图页，可直接嵌入第三方系统；右：分享与加密设置。图层还可以发布到 GeoVerse Serve，以 XYZ 切片、TileJSON 或 OGC API – Features 对外提供。</figcaption>
+  </section>
+
+  <!-- 7. 更多能力（简述） -->
+  <section class="block" id="more">
+    <p class="kicker">07 · More</p>
+    <h2>更多能力</h2>
+    <div class="grid">
+      <div class="card"><h3>项目工作台</h3><p>项目卡片带实时缩略图，支持星标、最近打开、共享给我、模板与回收站。</p></div>
+      <div class="card"><h3>权限与多租户</h3><p>团队即租户；项目级所有者 / 可编辑 / 可评论三角色，服务端强制校验。</p></div>
+      <div class="card"><h3>平台管理后台</h3><p>监控总览、用户与角色、通知公告、站内信、底图资源、地区库、图标库、地图服务、参数与敏感词、在线会话与日志。</p></div>
+      <div class="card"><h3>国内坐标系</h3><p>GCJ-02、BD-09、天地图底图就地纠偏，数据统一以 WGS-84 存储。</p></div>
+      <div class="card"><h3>地图服务发布</h3><p>图层一键发布到 GeoVerse Serve，数据不复制，要素改了切片就更新。</p></div>
+      <div class="card"><h3>私有化部署</h3><p>Docker Compose 编排全栈，Nacos 注册配置，适配内网环境。</p></div>
+    </div>
+    <figure class="strip">
+      <div class="shot"><img src="assets/workspace-light.webp" alt="亮色主题下的项目工作台卡片" loading="lazy" width="1600" height="208"></div>
+      <figcaption>项目工作台（亮色主题）。</figcaption>
+    </figure>
+  </section>
+
+  <!-- 8. 技术栈 -->
+  <section class="block" id="stack">
+    <p class="kicker">08 · Architecture</p>
+    <h2>技术栈</h2>
+    <table class="stack-table">
+      <tr><th>前端</th><td>React 19 · TypeScript · Vite；GeoVerse SDK（OpenLayers 10 / MapLibre GL 5 双引擎门面、框架无关编辑引擎）</td></tr>
+      <tr><th>后端</th><td>Spring Boot 3.5 · JDK 21 · Spring Cloud Alibaba 微服务（网关 / 系统 / 基础设施 / 地理服务）</td></tr>
+      <tr><th>数据与基建</th><td>PostgreSQL 16 + PostGIS · Redis · MinIO / S3 · Nacos</td></tr>
+      <tr><th>AI</th><td>GeoVerse SAR 空间智能运行时，在浏览器内接入编辑会话，带操作审计与宏撤销</td></tr>
+      <tr><th>部署</th><td>Docker 镜像 + Compose 编排，支持私有化与内网部署</td></tr>
+    </table>
+  </section>
+
+  <section class="contact" id="contact">
+    <div>
+      <h2>想看完整演示？</h2>
+      <p>GeoVerse Live 目前为私有项目，暂未开源。欢迎联系预约演示、申请早期访问或洽谈私有化部署。</p>
+    </div>
+    <div class="cta">
+      <a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7">libra.liuyb@gmail.com</a>
+      <a class="btn" href="https://github.com/GeoVerseLabs">GeoVerse Labs on GitHub</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 GeoVerse Labs</span>
+    <span>截图中的示例数据来自 Natural Earth（公有领域）；底图 © OpenStreetMap contributors、© 高德地图。</span>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-label="查看大图"><img alt=""></div>
+<script>
+  (function () {
+    var lb = document.getElementById('lb');
+    var big = lb.querySelector('img');
+    document.querySelectorAll('.shot img').forEach(function (img) {
+      img.addEventListener('click', function () {
+        big.src = img.currentSrc || img.src;
+        big.alt = img.alt;
+        lb.classList.add('open');
+      });
+    });
+    function close() { lb.classList.remove('open'); big.removeAttribute('src'); }
+    lb.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  })();
+</script>
+</body>
+</html>

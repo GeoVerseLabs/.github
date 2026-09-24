@@ -15,6 +15,16 @@ feature-editing engine, and official Vue / React bindings.
 > product. [Try the playground →](https://geoverse-7yh.pages.dev/) or reach out below for
 > early access / licensing.
 
+**[GeoVerse Live](https://geoverselabs.github.io/.github/live/)** — a collaborative geodata editing
+platform built on GeoVerse SDK: switch between OpenLayers and MapLibre per project, professional
+feature editing with version history, thematic mapping, real-time co-editing and comments, an AI
+assistant that works on the current layer, and login-free sharing / embedding.
+
+[![GeoVerse Live — thematic map in the editor](https://raw.githubusercontent.com/GeoVerseLabs/.github/main/live/assets/editor-thematic-maplibre.webp)](https://geoverselabs.github.io/.github/live/)
+
+> GeoVerse Live is a private product (not open source). [Read the product brochure →](https://geoverselabs.github.io/.github/live/)
+> or reach out below for a demo.
+
 ## 📦 Open Source
 
 We open-source the building blocks we think the ecosystem needs, independent of the core SDK:
@@ -26,5 +36,5 @@ We open-source the building blocks we think the ecosystem needs, independent of 
 
 ## 📬 Contact
 
-- Licensing / early access to GeoVerse SDK: libra.liuyb@gmail.com
+- Licensing / early access / demos (GeoVerse SDK & GeoVerse Live): libra.liuyb@gmail.com
 - Issues & contributions: open an issue on the relevant repo above
