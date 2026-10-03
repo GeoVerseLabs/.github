@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320" width="1280" height="320" role="img" aria-label="GeoVerse Labs — Mapping infrastructure for the modern web, built for China's coordinate systems">
+  <style>
+    .t { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif; }
+    .m { font-family: ui-monospace, "SF Mono", Consolas, monospace; }
+    .road { stroke: #1d2a3d; stroke-width: 3; fill: none; stroke-linecap: round; }
+    .route { fill: none; stroke: url(#rg); stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 900; stroke-dashoffset: 900; animation: draw 6s ease-in-out infinite; }
+    .scan { animation: scan 6s ease-in-out infinite; }
+    .pulse { transform-origin: 1160px 86px; animation: pulse 2s ease-out infinite; }
+    @keyframes draw { 0% { stroke-dashoffset: 900; } 45%, 80% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -900; } }
+    @keyframes scan { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-260px); } }
+    @keyframes pulse { 0% { opacity: .9; transform: scale(.6); } 100% { opacity: 0; transform: scale(2.2); } }
+    @media (prefers-reduced-motion: reduce) { .route, .scan, .pulse { animation: none; stroke-dashoffset: 0; } }
+  </style>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0b0f19"/><stop offset="1" stop-color="#0a0c11"/></linearGradient>
+    <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f8cff"/><stop offset=".5" stop-color="#8b6cf6"/><stop offset="1" stop-color="#2fbf8a"/></linearGradient>
+    <linearGradient id="rg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4f8cff"/><stop offset=".5" stop-color="#b39dff"/><stop offset="1" stop-color="#2fbf8a"/></linearGradient>
+    <clipPath id="right"><rect x="760" y="0" width="520" height="320"/></clipPath>
+    <radialGradient id="glow" cx=".72" cy=".4" r=".55"><stop offset="0" stop-color="#8b6cf6" stop-opacity=".22"/><stop offset="1" stop-color="#8b6cf6" stop-opacity="0"/></radialGradient>
+  </defs>
+  <rect width="1280" height="320" rx="20" fill="url(#bg)"/>
+  <rect width="1280" height="320" rx="20" fill="url(#glow)"/>
+  <g opacity=".9">
+    <path class="road" d="M700 70 L1260 52 M690 160 L1270 170 M700 250 L1260 268 M790 20 L812 300 M930 20 L905 300 M1060 20 L1080 300 M1190 20 L1170 300 M720 300 L960 20"/>
+  </g>
+  <g clip-path="url(#right)">
+    <g class="scan"><rect x="1020" y="0" width="520" height="320" fill="#2fbf8a" opacity=".05"/><rect x="1019" y="0" width="2" height="320" fill="#e8eaf0" opacity=".5"/></g>
+  </g>
+  <path class="route" d="M760 268 L812 252 L905 168 L1060 164 L1080 86 L1160 86"/>
+  <circle cx="760" cy="268" r="8" fill="#e8eaf0"/>
+  <circle class="pulse" cx="1160" cy="86" r="14" fill="none" stroke="#fcd34d" stroke-width="3"/>
+  <circle cx="1160" cy="86" r="8" fill="#fcd34d"/>
+  <g transform="translate(56 54)">
+    <circle cx="32" cy="32" r="26" fill="none" stroke="url(#brand)" stroke-width="5"/>
+    <ellipse cx="32" cy="32" rx="11" ry="26" fill="none" stroke="url(#brand)" stroke-width="2.6" opacity=".75"/>
+    <path d="M7 32h50" stroke="url(#brand)" stroke-width="2.6" opacity=".75"/>
+    <path d="M17 44 27.5 30.5 37 36.5 47.5 20.5" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="47.5" cy="20.5" r="4.6" fill="#fff"/><circle cx="17" cy="44" r="3.2" fill="#fff"/>
+  </g>
+  <text class="t" x="138" y="100" font-size="40" font-weight="750" fill="#e8eaf0">GeoVerse <tspan fill="#b39dff" font-weight="500">Labs</tspan></text>
+  <text class="t" x="58" y="178" font-size="31" font-weight="700" fill="#e8eaf0">Mapping infrastructure for the modern web,</text>
+  <text class="t" x="58" y="218" font-size="31" font-weight="700" fill="url(#rg)">built for China's coordinate systems.</text>
+  <text class="m" x="58" y="270" font-size="17" fill="#6f778b">SDK · Live · Serve · SAR · Line Finder — OpenLayers / MapLibre · GCJ-02 / BD-09</text>
+</svg>
