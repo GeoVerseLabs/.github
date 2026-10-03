@@ -7,7 +7,11 @@
 <meta name="description" content="GeoVerse Live：协作式地理数据编辑平台。OpenLayers / MapLibre 双引擎、专业要素编辑与版本历史、专题制图、实时协作、AI 助手与开放发布。">
 <meta property="og:title" content="GeoVerse Live — 协作式地理数据编辑平台">
 <meta property="og:description" content="一套数据，两种渲染引擎；从编辑、协作到对外发布的一体化地图平台。">
-<meta property="og:image" content="assets/editor-thematic-maplibre.webp">
+<meta property="og:image" content="https://geoverselabs.github.io/.github/live/assets/editor-thematic-maplibre.webp">
+<meta property="og:url" content="https://geoverselabs.github.io/.github/live/">
+<meta property="og:site_name" content="GeoVerse Labs">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <meta name="color-scheme" content="dark">
 <style>
   :root {
@@ -51,7 +55,10 @@
   .nav .wrap { display: flex; align-items: center; gap: 24px; height: 56px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 650; color: var(--text); letter-spacing: .2px; }
   .brand:hover { text-decoration: none; }
-  .brand-mark { width: 22px; height: 22px; border-radius: 50%; background: conic-gradient(from 200deg, var(--ol), var(--accent), var(--libre), var(--ol)); box-shadow: 0 0 0 3px #1b2030 inset; }
+  .brand img { width: 24px; height: 24px; }
+  .crumb { color: var(--text-3); margin: 0 -14px; }
+  .brand-sub { font-weight: 650; color: var(--text); }
+  .brand-sub:hover { text-decoration: none; }
   .nav-links { display: flex; gap: 20px; margin-left: auto; font-size: 14px; }
   .nav-links a { color: var(--text-2); }
   .nav-links a:hover { color: var(--text); text-decoration: none; }
@@ -124,6 +131,9 @@
   .card p { margin: 0; color: var(--text-2); font-size: 14px; }
 
   .strip { margin-top: 20px; }
+  .fam { display: block; color: var(--text); position: relative; overflow: hidden; transition: border-color .2s; }
+  .fam:hover { text-decoration: none; border-color: #353c50; }
+  .fam::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, var(--c), transparent 80%); }
 
   /* stack table */
   .stack-table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
@@ -166,7 +176,9 @@
 
 <nav class="nav">
   <div class="wrap">
-    <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span>GeoVerse Live</a>
+    <a class="brand" href="../" title="GeoVerse Labs"><img src="../assets/logo.svg" alt="" width="24" height="24">GeoVerse Labs</a>
+    <span class="crumb" aria-hidden="true">/</span>
+    <a class="brand-sub" href="#top">Live</a>
     <div class="nav-links">
       <a href="#engines">双引擎</a>
       <a href="#editing">编辑</a>
@@ -174,6 +186,7 @@
       <a href="#collab">协作与 AI</a>
       <a href="#publish">开放发布</a>
       <a href="#more">更多能力</a>
+      <a href="#family">相关产品</a>
       <a href="#contact">联系我们</a>
     </div>
   </div>
@@ -181,12 +194,13 @@
 
 <header class="hero" id="top">
   <div class="wrap">
-    <span class="eyebrow"><b>产品手册</b> · 私有部署 · 早期访问</span>
+    <span class="eyebrow"><b>产品手册</b> · 私有部署 · 早期访问 · <a href="../">GeoVerse Labs 出品</a></span>
     <h1>GeoVerse Live<br><span class="grad">协作式地理数据编辑平台</span></h1>
     <p class="lead">一套数据，两种渲染引擎。GeoVerse Live 把要素编辑、版本管理、专题制图、多人协作、AI 助手和对外发布放进同一个浏览器工作台，底层由 GeoVerse SDK 驱动，原生支持国内坐标系。</p>
     <div class="cta">
       <a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7">预约演示</a>
       <a class="btn" href="#engines">浏览功能</a>
+      <a class="btn" href="../film/">▶ 52 秒宣传片</a>
     </div>
     <ul class="pills">
       <li class="pill ol">OpenLayers</li>
@@ -311,7 +325,7 @@
       </div>
       <figure class="shot"><img src="assets/share-settings.webp" alt="分享设置：链接、嵌入代码与数据传输加密" loading="lazy" width="1300" height="1396"></figure>
     </div>
-    <figcaption>上：综合地图编排；下：访问者打开分享链接看到的纯地图页，可直接嵌入第三方系统；右：分享与加密设置。图层还可以发布到 GeoVerse Serve，以 XYZ 切片、TileJSON 或 OGC API – Features 对外提供。</figcaption>
+    <figcaption>上：综合地图编排；下：访问者打开分享链接看到的纯地图页，可直接嵌入第三方系统；右：分享与加密设置。图层还可以发布到 <a href="../#p-serve">GeoVerse Serve</a>，以 XYZ 切片、TileJSON 或 OGC API – Features 对外提供。</figcaption>
   </section>
 
   <!-- 7. 更多能力（简述） -->
@@ -337,12 +351,27 @@
     <p class="kicker">08 · Architecture</p>
     <h2>技术栈</h2>
     <table class="stack-table">
-      <tr><th>前端</th><td>React 19 · TypeScript · Vite；GeoVerse SDK（OpenLayers 10 / MapLibre GL 5 双引擎门面、框架无关编辑引擎）</td></tr>
+      <tr><th>前端</th><td>React 19 · TypeScript · Vite；<a href="../#p-sdk">GeoVerse SDK</a>（OpenLayers 10 / MapLibre GL 5 双引擎门面、框架无关编辑引擎）</td></tr>
       <tr><th>后端</th><td>Spring Boot 3.5 · JDK 21 · Spring Cloud Alibaba 微服务（网关 / 系统 / 基础设施 / 地理服务）</td></tr>
-      <tr><th>数据与基建</th><td>PostgreSQL 16 + PostGIS · Redis · MinIO / S3 · Nacos</td></tr>
-      <tr><th>AI</th><td>GeoVerse SAR 空间智能运行时，在浏览器内接入编辑会话，带操作审计与宏撤销</td></tr>
+      <tr><th>数据与基建</th><td>PostgreSQL 16 + PostGIS（经 <a href="https://github.com/GeoVerseLabs/mybatis-plus-geometry">mybatis-plus-geometry</a> 存取几何）· Redis · MinIO / S3 · Nacos</td></tr>
+      <tr><th>AI</th><td><a href="../#p-sar">GeoVerse SAR</a> 空间智能运行时，在浏览器内接入编辑会话，带操作审计与宏撤销</td></tr>
       <tr><th>部署</th><td>Docker 镜像 + Compose 编排，支持私有化与内网部署</td></tr>
     </table>
+  </section>
+
+  <!-- 9. 同一条工具链 -->
+  <section class="block" id="family">
+    <p class="kicker">09 · GeoVerse Labs</p>
+    <h2>同一条工具链上的其他产品</h2>
+    <p class="sub">GeoVerse Live 是 GeoVerse Labs 空间工具链的应用层。下面这些构件可以单独使用，也都在 Live 里各司其职。</p>
+    <div class="grid family">
+      <a class="card fam" href="https://geoverse-7yh.pages.dev/" style="--c:#8b6cf6"><h3>GeoVerse SDK ↗</h3><p>Live 的地图与编辑底座：一套 API 跑在 OpenLayers 或 MapLibre 上。打开在线 Playground。</p></a>
+      <a class="card fam" href="https://github.com/GeoVerseLabs/geoverse-map-server" style="--c:#fbbf24"><h3>GeoVerse Serve ↗</h3><p>Live 图层的发布出口：单二进制 Go 服务，输出 MVT、WMTS、OGC API 与 MCP。MIT 开源。</p></a>
+      <a class="card fam" href="https://github.com/GeoVerseLabs/geoverse-sar" style="--c:#e879f9"><h3>GeoVerse SAR ↗</h3><p>Live AI 助手背后的运行时：能力即工具、单一漏斗、可撤销。MIT 开源，技术预览。</p></a>
+      <a class="card fam" href="https://geoverselabs.github.io/geoverse-line-finder/" style="--c:#22d3ee"><h3>GeoVerse Line Finder ↗</h3><p>零依赖 GeoJSON 寻路库，支持多楼层室内路线。打开在线示例。</p></a>
+      <a class="card fam" href="../film/" style="--c:#b39dff"><h3>▶ 52 秒宣传片</h3><p>从一个坐标到一条路线，一次看完整条工具链。</p></a>
+      <a class="card fam" href="../" style="--c:#2fbf8a"><h3>GeoVerse Labs 主页 →</h3><p>全部产品、在线体验、国内坐标系换算与开源项目。</p></a>
+    </div>
   </section>
 
   <section class="contact" id="contact">
@@ -352,7 +381,8 @@
     </div>
     <div class="cta">
       <a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7">libra.liuyb@gmail.com</a>
-      <a class="btn" href="https://github.com/GeoVerseLabs">GeoVerse Labs on GitHub</a>
+      <a class="btn" href="../">GeoVerse Labs 主页</a>
+      <a class="btn" href="https://github.com/GeoVerseLabs">GitHub</a>
     </div>
   </section>
 
@@ -360,7 +390,7 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 GeoVerse Labs</span>
+    <span>© 2026 <a href="../">GeoVerse Labs</a> · <a href="../brand/">品牌资源</a> · <a href="../film/">宣传片</a></span>
     <span>截图中的示例数据来自 Natural Earth（公有领域）；底图 © OpenStreetMap contributors、© 高德地图。</span>
   </div>
 </footer>
