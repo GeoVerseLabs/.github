@@ -49,12 +49,16 @@
   if (modal) {
     var video = modal.querySelector('video');
     var open = function (e) {
+      // let modified clicks open the interactive film page in a new tab
+      if (e && (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey)) return;
       if (e) e.preventDefault();
       var lang = window.gvLang();
       var src = video.getAttribute(lang === 'en' ? 'data-src-en' : 'data-src-zh');
       if (video.getAttribute('src') !== src) video.setAttribute('src', src);
       modal.classList.add('open');
-      try { video.currentTime = 0; video.play(); } catch (err) { /* autoplay blocked */ }
+      video.currentTime = 0;
+      var playing = video.play();
+      if (playing && typeof playing.catch === 'function') playing.catch(function () { /* autoplay blocked, interrupted or unsupported */ });
     };
     var close = function () { modal.classList.remove('open'); video.pause(); };
     document.querySelectorAll('[data-film]').forEach(function (a) { a.addEventListener('click', open); });

@@ -837,6 +837,8 @@
     if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
   });
   document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return; // leave browser shortcuts (Ctrl+L, Ctrl+F …) alone
+    if (e.target === scrub && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) return; // the range input seeks itself
     if (e.key === ' ') { e.preventDefault(); playing = !playing; seek(current); }
     else if (e.key === 'ArrowRight') seek(current + 2);
     else if (e.key === 'ArrowLeft') seek(current - 2);
@@ -845,7 +847,7 @@
     else if (e.key === 'f' || e.key === 'F') document.getElementById('fs').click();
   });
   var controls = document.getElementById('controls'), idleTimer = null;
-  function wake() { controls.classList.remove('idle'); clearTimeout(idleTimer); idleTimer = setTimeout(function () { if (playing) controls.classList.add('idle'); }, 2600); }
+  function wake() { controls.classList.remove('idle'); clearTimeout(idleTimer); idleTimer = setTimeout(function () { controls.classList.add('idle'); }, 2600); }
   ['mousemove', 'touchstart', 'keydown'].forEach(function (ev) { document.addEventListener(ev, wake, { passive: true }); });
 
   labelChapters();

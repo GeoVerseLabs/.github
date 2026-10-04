@@ -126,12 +126,14 @@
     <div class="logos">
       <div class="logo-card"><div class="stage"><img src="../assets/logo.svg" alt="GeoVerse Labs mark" width="120" height="120"></div><div class="meta"><span><span class="zh">图形标 · 深色底</span><span class="en">Mark · dark</span></span><a href="../assets/logo.svg" download>SVG ↓</a></div></div>
       <div class="logo-card"><div class="stage"><img src="../assets/logo-wordmark.svg" alt="GeoVerse Labs wordmark" width="360" height="64"></div><div class="meta"><span><span class="zh">横版组合 · 深色底</span><span class="en">Wordmark · dark</span></span><a href="../assets/logo-wordmark.svg" download>SVG ↓</a></div></div>
+      <div class="logo-card"><div class="stage light"><img src="../assets/logo-mono.svg" alt="GeoVerse Labs single-colour mark" width="120" height="120"></div><div class="meta"><span><span class="zh">单色图形标 · 浅色底</span><span class="en">Single-colour mark · light</span></span><a href="../assets/logo-mono.svg" download>SVG ↓</a></div></div>
+      <div class="logo-card"><div class="stage light"><img src="../assets/logo-wordmark-mono.svg" alt="GeoVerse Labs single-colour wordmark" width="360" height="64"></div><div class="meta"><span><span class="zh">单色横版组合 · 浅色底</span><span class="en">Single-colour wordmark · light</span></span><a href="../assets/logo-wordmark-mono.svg" download>SVG ↓</a></div></div>
       <div class="logo-card"><div class="stage grad"><img src="../assets/banner.svg" alt="GeoVerse Labs banner" width="1280" height="320"></div><div class="meta"><span><span class="zh">动态横幅（README 用）</span><span class="en">Animated banner (READMEs)</span></span><a href="../assets/banner.svg" download>SVG ↓</a></div></div>
     </div>
     <div class="rules">
       <div class="card"><h3 class="ok">✓ <span class="zh">推荐</span><span class="en">Do</span></h3>
-        <ul class="zh"><li>在深色背景上使用，四周至少留出标志高度 1/4 的空白</li><li>图形标最小 20 px；横版组合最小 120 px 宽</li><li>浅色背景请使用单色版本（填充 <code>#0a0c11</code>）</li></ul>
-        <ul class="en"><li>Use on dark backgrounds with clear space of at least ¼ of the mark's height</li><li>Minimum 20 px for the mark, 120 px wide for the wordmark</li><li>On light backgrounds use a single-colour version (fill <code>#0a0c11</code>)</li></ul>
+        <ul class="zh"><li>在深色背景上使用，四周至少留出标志高度 1/4 的空白</li><li>图形标最小 20 px；横版组合最小 120 px 宽</li><li>浅色背景请使用单色版本（<code>logo-mono.svg</code> / <code>logo-wordmark-mono.svg</code>，填充 <code>#0a0c11</code>）</li></ul>
+        <ul class="en"><li>Use on dark backgrounds with clear space of at least ¼ of the mark's height</li><li>Minimum 20 px for the mark, 120 px wide for the wordmark</li><li>On light backgrounds use the single-colour versions (<code>logo-mono.svg</code> / <code>logo-wordmark-mono.svg</code>, fill <code>#0a0c11</code>)</li></ul>
       </div>
       <div class="card"><h3 class="no">✕ <span class="zh">避免</span><span class="en">Don't</span></h3>
         <ul class="zh"><li>拉伸、旋转、改渐变方向或替换颜色</li><li>把路线单独拿出来当标志用</li><li>写成 "Geoverse"、"GEOVERSE"、"Geo Verse"</li></ul>
@@ -204,8 +206,8 @@
   <section class="block" id="media">
     <p class="kicker">06 · Media</p>
     <h2><span class="zh">截图与宣传片</span><span class="en">Screenshots &amp; film</span></h2>
-    <p class="sub zh">截图均来自真实产品与在线示例。示例数据：Natural Earth（公有领域）、OpenStreetMap 贡献者（ODbL）。转载请保留数据署名。</p>
-    <p class="sub en">All screenshots come from the real products and playgrounds. Sample data: Natural Earth (public domain) and OpenStreetMap contributors (ODbL) — please keep the attribution.</p>
+    <p class="sub zh">截图均来自真实产品与在线示例。示例数据：Natural Earth（公有领域）、OpenStreetMap 贡献者（ODbL）；底图 © OpenStreetMap contributors、© 高德地图。转载请保留数据与底图署名。</p>
+    <p class="sub en">All screenshots come from the real products and playgrounds. Sample data: Natural Earth (public domain) and OpenStreetMap contributors (ODbL); basemaps © OpenStreetMap contributors, © AutoNavi (Amap) — please keep the data and basemap attribution.</p>
     <div class="shots" id="shots"></div>
     <div class="dl">
       <a class="btn primary" href="../film/"><span class="zh">▶ 观看宣传片</span><span class="en">▶ Watch the film</span></a>
@@ -250,7 +252,7 @@
     function fallback() {
       var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
       document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); ok(); } catch (e) { done(false); }
+      try { done(document.execCommand('copy')); } catch (e) { done(false); }
       document.body.removeChild(ta);
     }
   }
@@ -261,7 +263,7 @@
       b.type = 'button'; b.className = 'sw';
       b.innerHTML = '<div class="chip" style="background:' + c[2] + '"></div><div class="info"><b><span class="en">' + c[0] + '</span><span class="zh">' + (c[1] || c[0]) + '</span></b><code>' + c[2] + '</code></div>';
       b.addEventListener('click', function () {
-        copyText(c[2], function (ok) { if (!ok) return; b.classList.add('copied'); setTimeout(function () { b.classList.remove('copied'); }, 1200); });
+        copyText(c[2], function (ok) { if (!ok) return; clearTimeout(b._t); b.classList.add('copied'); b._t = setTimeout(function () { b.classList.remove('copied'); }, 1200); });
       });
       box.appendChild(b);
     });
@@ -290,8 +292,14 @@
     var ps = d.querySelectorAll('p'), bs = d.querySelectorAll('.copy');
     ps[0].textContent = b[3]; ps[1].textContent = b[4];
     [0, 1].forEach(function (i) {
+      var label = bs[i].textContent;
       bs[i].addEventListener('click', function () {
-        copyText(b[3 + i], function (ok) { if (!ok) return; bs[i].classList.add('done'); var t = bs[i].textContent; bs[i].textContent = '✓'; setTimeout(function () { bs[i].classList.remove('done'); bs[i].textContent = t; }, 1200); });
+        copyText(b[3 + i], function (ok) {
+          if (!ok) return;
+          clearTimeout(bs[i]._t);
+          bs[i].classList.add('done'); bs[i].textContent = '✓';
+          bs[i]._t = setTimeout(function () { bs[i].classList.remove('done'); bs[i].textContent = label; }, 1200);
+        });
       });
     });
     cbBox.appendChild(d);

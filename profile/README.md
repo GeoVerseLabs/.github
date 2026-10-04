@@ -25,15 +25,15 @@ to the browser, and hand it to AI.
 
 [![GeoVerse Live — thematic map in the editor](https://raw.githubusercontent.com/GeoVerseLabs/.github/main/live/assets/editor-thematic-maplibre.webp)](https://geoverselabs.github.io/.github/live/)
 
-## 📦 Open source
+## 📦 Open source & source-available
 
-We open-source the building blocks we think the ecosystem needs, independent of the core SDK:
+We publish the building blocks we think the ecosystem needs — open source or source-available — separately from the core SDK:
 
 | Repo | What it is | License | Get it |
 |---|---|---|---|
 | [geoverse-line-finder](https://github.com/GeoVerseLabs/geoverse-line-finder) | Zero-dependency TypeScript routing on GeoJSON networks: A* / Dijkstra / ALT, snapping, multi-waypoint, **multi-level indoor routing**. [Playground ↗](https://geoverselabs.github.io/geoverse-line-finder/) | Apache-2.0 | `pnpm add geoverse-line-finder` |
 | [geoverse-map-server](https://github.com/GeoVerseLabs/geoverse-map-server) | **GeoVerse Serve** — a single pure-Go binary that publishes PostGIS, MySQL, PMTiles, MBTiles, GeoJSON and GeoPackage as MVT, WMTS, OGC API – Features and MCP | MIT | `make build` |
-| [geoverse-sar](https://github.com/GeoVerseLabs/geoverse-sar) | **GeoVerse SAR** — AI-native runtime for spatial apps: UI, AI tool calls, agents and MCP clients share one governed kernel (technical preview) | MIT | build from source |
+| [geoverse-sar](https://github.com/GeoVerseLabs/geoverse-sar) | **GeoVerse SAR** — AI-native runtime for spatial apps: UI, AI tool calls, agents and MCP clients share one governed kernel (technical preview) | MIT | build from source (geo packages need GeoVerse SDK access) |
 | [mybatis-plus-geometry](https://github.com/GeoVerseLabs/mybatis-plus-geometry) | Spring Boot starter bridging MyBatis Plus and JTS geometry types (MySQL / PostGIS) | Apache-2.0 | Maven Central `1.0.1` |
 | [geoverse-skills](https://github.com/GeoVerseLabs/geoverse-skills) | Spatial skills for AI agents — deterministic region layouts for racks, bays and booths, with an MCP App | BSL 1.1 (source-available) | `@geoverse/layout-mcp-app` |
 

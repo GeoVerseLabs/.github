@@ -24,12 +24,13 @@ GeoVerse Labs 做的是**一条可组合的空间应用工具链**：数据层�
 |---|---|
 | [`assets/logo.svg`](../assets/logo.svg) | 图形标（地球 + 路线），favicon、头像、小尺寸 |
 | [`assets/logo-wordmark.svg`](../assets/logo-wordmark.svg) | 横版组合（图形标 + "GeoVerse Labs"），页眉、幻灯片 |
+| [`assets/logo-mono.svg`](../assets/logo-mono.svg) · [`assets/logo-wordmark-mono.svg`](../assets/logo-wordmark-mono.svg) | 单色版（`#0a0c11`），浅色背景、打印 |
 | [`assets/banner.svg`](../assets/banner.svg) | 动态横幅（CSS 动画，尊重 `prefers-reduced-motion`），README 顶部 |
 | [`assets/og-card.png`](../assets/og-card.png) | 1200×630 社交分享卡 |
 
 - 含义：地球代表**坐标**，穿过它的折线代表**计算**（路线、编辑、发布）；渐变 = OpenLayers 蓝 → Verse 紫 → MapLibre 绿，即"双引擎 + 连接它们的我们"。
 - 留白 ≥ 标志高度的 1/4；图形标最小 20 px，横版组合最小宽 120 px。
-- 浅色背景使用单色版本（`#0a0c11`）。不拉伸、不旋转、不换色、不单独使用路线。
+- 浅色背景使用单色版本（`logo-mono.svg` / `logo-wordmark-mono.svg`，`#0a0c11`）。不拉伸、不旋转、不换色、不单独使用路线。
 - 文字写法：**GeoVerse Labs**（V 大写，中间无空格）。不写 Geoverse / GEOVERSE / Geo Verse。
 
 ## 3. 色彩
@@ -79,16 +80,18 @@ GeoVerse Labs 做的是**一条可组合的空间应用工具链**：数据层�
 | GeoVerse Live | 私有产品，可预约演示 / 私有化部署 | "免费注册""SaaS 已上线" | 目前以演示与私有化部署方式提供，没有公开注册入口 |
 | GeoVerse SAR | MIT 开源、**技术预览**、未发布 npm | "生产可用""稳定版" | 仓库四级状态口径：published = 无，production-supported = 否 |
 | GeoVerse Skills | BSL 1.1、源码可见 | "开源" | BSL 不是 OSI 认可的开源许可 |
+| GeoVerse Serve | MIT 开源，单二进制的瓦片 / OGC 服务 | "高并发""高性能网关" | 缓存层仍有已知缺口（冷缓存并发请求未合并、空瓦片无负缓存），没有并发承诺的依据 |
+| GeoVerse Line Finder | Apache-2.0 开源；浏览器 / Worker / Node 内存寻路（10⁵ 级坐标） | "适用于任何寻路""替代 OSRM" | 城市级以上路网、转向限制、实时路况不在边界内 |
 | 性能数字 | 带日期、数据集、轮数与复现方法 | "快 38 倍"之类脱离条件的倍数 | 单轮、跨构建产物的比较会凭空造出结论 |
 | 坐标偏移 | "通常几百米，随位置变化" | 一个固定值 | GCJ-02 是位置的非线性函数 |
 
-可以放心使用的数字（均有公开出处）：
+可以放心使用的数字（出处见右列；标注"内部"的出自内部工程文档，对外不提供链接）：
 
 | 数字 | 含义 | 出处 |
 |---|---|---|
-| 2 | 渲染引擎（OpenLayers 10 / MapLibre GL 5） | SDK 总览 |
-| 25 | `@geoverse/editor-core` 编辑命令 | SDK 模块地图 |
-| 8 | SDK 包数 | SDK 总览 |
+| 2 | 渲染引擎（OpenLayers 10 / MapLibre GL 5） | 内部 SDK 文档 |
+| 25 | `@geoverse/editor-core` 编辑命令 | 内部 SDK 文档 |
+| 8 | SDK 包数 | 内部 SDK 文档 |
 | 20+ | Live 绘制、改形与拓扑编辑工具 | Live 产品手册 |
 | 425 | SAR 测试数，全部不依赖真实 LLM | SAR README |
 | 135,417 | Line Finder 在线示例哥德堡 OSM 路网坐标数 | 在线示例 |

@@ -8,6 +8,8 @@
  *
  * Requirements: Node 18+, Playwright (with a Chromium build) and ffmpeg on PATH.
  *
+ *   # 0. install Playwright next to the repo — ES modules don't see global installs or NODE_PATH
+ *   npm i --no-save playwright        # don't commit node_modules/
  *   # 1. serve the repository root (any static server works)
  *   npx http-server -p 8702 -s .
  *   # 2. export (lang = zh | en)
@@ -19,7 +21,7 @@
  * Copy the MP4 to assets/film/ when you are happy with it.
  */
 import { chromium } from 'playwright';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 
@@ -37,6 +39,8 @@ const base = opt('base', 'http://127.0.0.1:8702');
 const fontCss = args.flatMap((a, i) => (a === '--font-css' ? [args[i + 1]] : []));
 
 const frames = join(out, 'frames');
+// start clean so frames from an earlier, longer export can't leak into this MP4
+rmSync(frames, { recursive: true, force: true });
 mkdirSync(frames, { recursive: true });
 
 const browser = await chromium.launch();
@@ -70,6 +74,7 @@ const mp4 = join(out, `geoverse-film-${lang}.mp4`);
 execFileSync('ffmpeg', [
   '-hide_banner', '-loglevel', 'error', '-y',
   '-framerate', String(fps), '-start_number', String(n0), '-i', join(frames, '%05d.jpg'),
+  '-frames:v', String(n1 - n0),
   '-c:v', 'libx264', '-preset', 'slow', '-crf', '22', '-pix_fmt', 'yuv420p',
   '-movflags', '+faststart', '-tune', 'animation', mp4,
 ], { stdio: 'inherit' });

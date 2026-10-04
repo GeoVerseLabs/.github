@@ -4,7 +4,7 @@
 
 > **使用前先读三条规矩**
 >
-> 1. **数字必须有出处。** 本文所有数字都标了来源；新写的数字也要能指回公开仓库、npm / Maven 页面或产品手册。找不到出处的数字不发。
+> 1. **数字必须有出处。** 本文所有数字都标了来源；新写的数字也要能指回公开仓库、npm / Maven 页面、产品手册，或（仅限闭源 SDK）内部 SDK 文档。找不到出处的数字不发。
 > 2. **状态与许可按原样写。** SDK 是商业闭源，Live 是私有产品，SAR 是技术预览，Skills 是 BSL 源码可见——不要写成"开源""已上线""生产可用"。详见 [BRAND.md §5](BRAND.md#5-对外口径护栏)。
 > 3. **先写结论，再给证据。** 读者多半只看第一句。
 
@@ -66,7 +66,7 @@ We also open-source the building blocks the ecosystem needs: GeoVerse Serve (a s
 | 50 字 | GeoVerse SDK 把 OpenLayers 与 MapLibre GL 统一在一套 API 之下，内置 GCJ-02 / BD-09 纠偏与不依赖地图库的要素编辑引擎，适合需要国内底图、专业编辑或双引擎灵活切换的 Web 地图产品。 | GeoVerse SDK unifies OpenLayers and MapLibre GL behind one API, with built-in GCJ-02 / BD-09 correction and a map-library-free editing engine — for web map products that need Chinese basemaps, professional editing or the freedom to switch engines. |
 | 适合谁 | 做 GIS / 测绘 / 规划 / 物流 / 园区类 Web 产品的前端团队 | Front-end teams building GIS, surveying, planning, logistics or campus apps |
 | CTA | [在线 Playground](https://geoverse-7yh.pages.dev/) · 申请早期访问 / 授权 | [Playground](https://geoverse-7yh.pages.dev/) · Request early access / licensing |
-| 出处 | KB `10-projects/geoverse-sdk/*`（8 个包、25 个命令） | |
+| 出处 | 内部 SDK 文档（8 个包、25 个命令） | |
 
 ### 3.2 GeoVerse Live
 
@@ -112,7 +112,7 @@ We also open-source the building blocks the ecosystem needs: GeoVerse Serve (a s
 | 卖点 1 | **算得对**：同一份 13.5 万坐标路网 300 次查询，0 条非最短路；geojson-path-finder 返回了 41 条。 | **Correct**: 300 queries on the same 135k-coordinate network, 0 non-shortest routes; geojson-path-finder returned 41. |
 | 卖点 2 | **算得快**：上述基准 306 ms vs 11.6 s；0.3.0 默认配置建图再快约 2 倍。 | **Fast**: 306 ms vs 11.6 s on that benchmark; 0.3.0 builds graphs ~2× faster by default. |
 | 卖点 3 | **能落地**：线段吸附与全程择优、多途经点与失败策略、多楼层室内寻路、按节点编号建拓扑，浏览器 / Worker / Node 通用。 | **Practical**: segment snapping with cost-optimal selection, multi-waypoint failure policies, multi-level indoor routing, node-id topology — browser, Worker or Node. |
-| 50 字 | GeoVerse Line Finder 是零依赖的 GeoJSON 路网寻路库，A* / Dijkstra / ALT 可切换，起终点可落在线段任意位置，支持多途经点与多楼层室内路线，Apache-2.0 开源。 | GeoVerse Line Finder is a zero-dependency GeoJSON routing library with switchable A* / Dijkstra / ALT engines, snapping anywhere on a segment, multi-waypoint and multi-level indoor routes. Apache-2.0. |
+| 50 字 | GeoVerse Line Finder 是零依赖的 GeoJSON 路网寻路库，A*（可选 ALT 加速）/ Dijkstra 可切换，起终点可落在线段任意位置，支持多途经点与多楼层室内路线，Apache-2.0 开源。 | GeoVerse Line Finder is a zero-dependency GeoJSON routing library with switchable A* (optionally ALT-accelerated) and Dijkstra engines, snapping anywhere on a segment, multi-waypoint and multi-level indoor routes. Apache-2.0. |
 | CTA | [在线示例](https://geoverselabs.github.io/geoverse-line-finder/) · `pnpm add geoverse-line-finder` | [Playground](https://geoverselabs.github.io/geoverse-line-finder/) · `pnpm add geoverse-line-finder` |
 | 出处 | 基准：2026-09-11，GPF large-network.json，300 对 × 5 轮中位数，仓库 `docs/BENCHMARK.md`；0.3.0 提速：`CHANGELOG.md`（`geoverse-line-finder@fe5439c`） | |
 
@@ -154,7 +154,7 @@ We also open-source the building blocks the ecosystem needs: GeoVerse Serve (a s
 于是写了 geoverse-line-finder（TypeScript，零运行时依赖，Apache-2.0）：
 
 - 同一份 13.5 万坐标路网、300 次查询：306 ms，0 条非最短路（对照组 11.6 s、41 条非最短）
-- A* / Dijkstra / ALT 地标 / 双向 Dijkstra 可切换，也能注册自己的引擎
+- A*（可选 ALT 地标加速）/ Dijkstra / 双向 Dijkstra 可切换，也能注册自己的引擎
 - 起终点吸附到线段任意位置；候选约束 + 全程择优；多途经点与失败策略
 - 0.3.0 新增：多楼层（电梯 / 楼梯 / 扶梯）、按节点编号建拓扑（OSM / OpenSidewalks）、建图约 2 倍提速
 

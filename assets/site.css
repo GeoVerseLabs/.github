@@ -140,7 +140,7 @@ footer.site .legal { display: flex; flex-wrap: wrap; justify-content: space-betw
 
 @media (max-width: 980px) {
   .nav-links { display: none; }
-  .nav-tools { margin-left: auto; }
+  .nav-tools, .nav-links + .nav-tools { margin-left: auto; }
   footer.site .cols { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 560px) {

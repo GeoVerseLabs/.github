@@ -333,7 +333,7 @@
         <li data-ids="sar sdk"><em>SAR → SDK</em><span class="zh">SAR 的 <code>engine-geo</code> 零改动包装 <code>@geoverse/editor-core</code>，把编辑命令变成可审计的能力。</span><span class="en">SAR's <code>engine-geo</code> wraps <code>@geoverse/editor-core</code> unchanged, turning editing commands into auditable capabilities.</span></li>
         <li data-ids="serve sdk live"><em>Serve → SDK / Live</em><span class="zh">Serve 只通过协议（MVT、PMTiles、OGC API）被消费，零代码依赖；Live 的图层可一键发布到 Serve。</span><span class="en">Serve is consumed purely over protocols (MVT, PMTiles, OGC API) — no code coupling; Live layers publish to Serve in one click.</span></li>
         <li data-ids="mpg live"><em>Live → mybatis-plus-geometry</em><span class="zh">Live 后端用 mybatis-plus-geometry + PostGIS 存取要素几何。</span><span class="en">Live's backend persists feature geometry through mybatis-plus-geometry + PostGIS.</span></li>
-        <li data-ids="lf skills serve"><em>Line Finder · Skills</em><span class="zh">寻路库与布局引擎都是可内嵌的确定性计算：浏览器、Worker、Node 或 Agent 工具里都能跑。</span><span class="en">The routing library and the layout engine are embeddable, deterministic computation — in the browser, a Worker, Node or an agent tool.</span></li>
+        <li data-ids="lf skills"><em>Line Finder · Skills</em><span class="zh">寻路库与布局引擎都是可内嵌的确定性计算：浏览器、Worker、Node 或 Agent 工具里都能跑。</span><span class="en">The routing library and the layout engine are embeddable, deterministic computation — in the browser, a Worker, Node or an agent tool.</span></li>
       </ul>
     </div>
   </section>
@@ -342,8 +342,8 @@
   <section class="block" id="products">
     <p class="kicker">02 · Products</p>
     <h2><span class="zh">产品与项目</span><span class="en">Products &amp; projects</span></h2>
-    <p class="sub zh">核心 SDK 与协作平台以商业方式提供；我们把生态需要的基础构件开源出来，独立于核心 SDK 演进。</p>
-    <p class="sub en">The core SDK and the collaboration platform are commercial; the building blocks the ecosystem needs are open source and evolve independently of the SDK.</p>
+    <p class="sub zh">核心 SDK 与协作平台以商业方式提供；生态需要的基础构件以开源或源码可见方式公开，独立于核心 SDK 发布。</p>
+    <p class="sub en">The core SDK and the collaboration platform are commercial; the building blocks the ecosystem needs are open source or source-available, released separately from the SDK.</p>
 
     <div class="products">
       <!-- SDK -->
@@ -459,13 +459,13 @@
             <p class="tagline zh">零依赖 TypeScript 库：在 GeoJSON 线网络上求带权最短路。</p>
             <p class="tagline en">A zero-dependency TypeScript library for weighted shortest paths on GeoJSON line networks.</p>
             <ul class="zh">
-              <li>A* / Dijkstra / ALT 地标 / 双向 Dijkstra 按名切换，也能注册自己的引擎</li>
+              <li>A*（可选 ALT 地标加速）/ Dijkstra / 双向 Dijkstra 按名切换，也能注册自己的引擎</li>
               <li>起终点吸附到线段任意位置；候选约束 + 全程择优；多途经点、跳过或直线兜底的失败策略</li>
               <li><b>0.3.0</b>：多楼层室内寻路（电梯 / 楼梯 / 扶梯）、按节点编号建拓扑，建图提速约 2 倍</li>
               <li>同一份 13.5 万坐标路网、300 次查询：306 ms，0 条非最短路；geojson-path-finder 需 11.6 s 且有 41 条非最短<sup>†</sup></li>
             </ul>
             <ul class="en">
-              <li>A*, Dijkstra, ALT landmarks and bidirectional Dijkstra, switchable by name — or register your own engine</li>
+              <li>A* (optionally ALT-accelerated), Dijkstra and bidirectional Dijkstra, switchable by name — or register your own engine</li>
               <li>Snap endpoints anywhere on a segment; constrained candidates with cost-optimal selection; multi-waypoint routes with skip / straight-line failure policies</li>
               <li><b>0.3.0</b>: multi-level indoor routing (elevators, stairs, escalators), node-id topology, ~2× faster graph builds</li>
               <li>Same 135k-coordinate network, 300 queries: 306 ms with 0 non-shortest routes; geojson-path-finder took 11.6 s and returned 41<sup>†</sup></li>
@@ -646,8 +646,8 @@
       <div class="principle">
         <span class="n">06</span>
         <h3><span class="zh">每个坑都沉淀成知识</span><span class="en">Every bug becomes knowledge</span></h3>
-        <p class="zh">内部知识库 90 余篇笔记、30 篇踩坑记录，一律按"症状 → 真因 → 修法 → 复发防线"写成，并定期与代码对照防腐。</p>
-        <p class="en">Our internal knowledge base holds 90+ notes and 30 post-mortems, each written as symptom → root cause → fix → regression guard, and re-verified against the code on a schedule.</p>
+        <p class="zh">内部知识库 70 余篇知识笔记，其中 30 篇踩坑记录按"症状 → 真因 → 修法 → 复发防线"写成，并定期与代码对照防腐。</p>
+        <p class="en">Our internal knowledge base holds 70+ notes, including 30 post-mortems written as symptom → root cause → fix → regression guard, and is re-verified against the code on a schedule.</p>
       </div>
     </div>
   </section>
@@ -664,7 +664,7 @@
         <tbody>
           <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-line-finder">geoverse-line-finder</a><br><span class="lang">TypeScript</span></td><td><span class="zh">GeoJSON 路网带权最短路，多楼层室内寻路</span><span class="en">Weighted shortest paths on GeoJSON networks, multi-level indoor routing</span></td><td><span class="badge oss"><i></i>Apache-2.0</span></td><td><code>pnpm add geoverse-line-finder</code></td></tr>
           <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-map-server">geoverse-map-server</a><br><span class="lang">Go</span></td><td><span class="zh">GeoVerse Serve：多数据源 → MVT / OGC / MCP</span><span class="en">GeoVerse Serve: many sources → MVT / OGC / MCP</span></td><td><span class="badge oss"><i></i>MIT</span></td><td><code>make build</code></td></tr>
-          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-sar">geoverse-sar</a><br><span class="lang">TypeScript</span></td><td><span class="zh">AI-native 空间应用运行时（技术预览，未发布 npm）</span><span class="en">AI-native spatial runtime (technical preview, not on npm yet)</span></td><td><span class="badge oss"><i></i>MIT</span></td><td><span class="zh">从源码构建</span><span class="en">Build from source</span></td></tr>
+          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-sar">geoverse-sar</a><br><span class="lang">TypeScript</span></td><td><span class="zh">AI-native 空间应用运行时（技术预览，未发布 npm）</span><span class="en">AI-native spatial runtime (technical preview, not on npm yet)</span></td><td><span class="badge oss"><i></i>MIT</span></td><td><span class="zh">从源码构建（geo 相关包需 GeoVerse SDK 访问权限）</span><span class="en">Build from source (geo packages need GeoVerse SDK access)</span></td></tr>
           <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/mybatis-plus-geometry">mybatis-plus-geometry</a><br><span class="lang">Java</span></td><td><span class="zh">MyBatis Plus ↔ JTS 几何，MySQL / PostGIS</span><span class="en">MyBatis Plus ↔ JTS geometry for MySQL / PostGIS</span></td><td><span class="badge oss"><i></i>Apache-2.0</span></td><td><code>io.github.geoverselabs:mybatis-plus-geometry-spring-boot-starter:1.0.1</code></td></tr>
           <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-skills">geoverse-skills</a><br><span class="lang">Markdown · Node</span></td><td><span class="zh">AI Agent 空间技能（区域布局生成）</span><span class="en">Spatial skills for AI agents (region layout generation)</span></td><td><span class="badge src"><i></i>BSL 1.1</span></td><td><code>@geoverse/layout-mcp-app</code></td></tr>
         </tbody>
@@ -682,7 +682,7 @@
       <li style="--c:var(--c-lf)"><time datetime="2026-09-14">2026-09-14</time><b>Line Finder 0.2.0</b><p class="zh">候选吸附与全程择优、一对多与代价矩阵、线性参照、拓扑诊断、ALT 地标加速与图序列化进 Worker。</p><p class="en">Candidate snapping with cost-optimal selection, one-to-many and cost matrices, linear referencing, topology diagnostics, ALT landmarks and graph serialisation for Workers.</p></li>
       <li style="--c:var(--c-lf)"><time datetime="2026-09-11">2026-09-11</time><b><span class="zh">Line Finder 开源发布</span><span class="en">Line Finder open-sourced</span></b><p class="zh">0.1.0 以 Apache-2.0 发布到 npm，CI 带 npm provenance。</p><p class="en">0.1.0 released on npm under Apache-2.0, with npm provenance from CI.</p></li>
       <li style="--c:var(--c-skills)"><time datetime="2026-07-17">2026-07</time><b><span class="zh">布局引擎与 MCP App</span><span class="en">Layout engine &amp; MCP App</span></b><p class="zh"><code>@geoverse/layout-engine</code> 0.7 与 <code>@geoverse/layout-mcp-app</code> 0.5 发布，配合 geoverse-skills 的区域布局技能。</p><p class="en"><code>@geoverse/layout-engine</code> 0.7 and <code>@geoverse/layout-mcp-app</code> 0.5 released, powering the region-layout skill in geoverse-skills.</p></li>
-      <li style="--c:var(--c-mpg)"><time datetime="2025-07-15">2025-07</time><b>mybatis-plus-geometry 1.0.x</b><p class="zh">1.0.0 首发 Maven Central；1.0.1 补齐 Multi* 与 GeometryCollection 全部几何类型。</p><p class="en">1.0.0 shipped to Maven Central; 1.0.1 completed every Multi* type and GeometryCollection.</p></li>
+      <li style="--c:var(--c-mpg)"><time datetime="2026-07-15">2026-07</time><b>mybatis-plus-geometry 1.0.x</b><p class="zh">1.0.0 首发 Maven Central；1.0.1 补齐 Multi* 与 GeometryCollection 全部几何类型。</p><p class="en">1.0.0 shipped to Maven Central; 1.0.1 completed every Multi* type and GeometryCollection.</p></li>
     </ul>
   </section>
 
@@ -974,21 +974,22 @@
     cv.width = W * DPR; cv.height = H * DPR;
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
     build(); run = null;
-    if (reduce) { newRun(0); run.t0 = -(run.explore + run.draw); frame(0); }
+    if (reduce) { newRun(0); run.t0 = -(run.explore + run.draw); frame(0); updateReadout(0); }
   }
 
   function setFromEvent(e) {
     var r = cv.getBoundingClientRect();
     pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
     if (held) split = Math.max(.04, Math.min(.96, pointer.x / W));
-    if (reduce) frame(performance.now());
+    // reduced motion: repaint the finished route in place instead of advancing the animation
+    if (reduce) { frame(0); updateReadout(0); }
   }
   cv.addEventListener('pointerdown', function (e) { held = true; setFromEvent(e); try { cv.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ } });
   cv.addEventListener('pointermove', setFromEvent);
   var release = function () { held = false; releasedAt = performance.now(); };
   cv.addEventListener('pointerup', release);
   cv.addEventListener('pointercancel', release);
-  cv.addEventListener('pointerleave', function () { pointer = null; if (held) release(); });
+  cv.addEventListener('pointerleave', function () { pointer = null; if (held) release(); if (reduce) { frame(0); updateReadout(0); } });
 
   if ('ResizeObserver' in window) new ResizeObserver(resize).observe(box); else window.addEventListener('resize', resize);
   if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(box);
