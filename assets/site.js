@@ -22,6 +22,7 @@
     document.querySelectorAll('.lang-btn').forEach(function (b) {
       b.textContent = en ? '中文' : 'EN';
       b.setAttribute('aria-label', en ? '切换到中文' : 'Switch to English');
+      b.setAttribute('lang', en ? 'zh-CN' : 'en');
     });
     document.dispatchEvent(new CustomEvent('gv:lang', { detail: { lang: en ? 'en' : 'zh' } }));
   }

@@ -22,7 +22,7 @@ GeoVerse Labs 组织主页（GitHub Pages）配套的公开宣传素材。内部
 | Line Finder 动图 | [`assets/film/line-finder-teaser.gif`](../assets/film/line-finder-teaser.gif) |
 | 海报 / 示意图 | [`assets/film/poster.webp`](../assets/film/poster.webp) · [`still-engines.webp`](../assets/film/still-engines.webp) |
 | 标志 | [`assets/logo.svg`](../assets/logo.svg) · [`logo-wordmark.svg`](../assets/logo-wordmark.svg) · [`logo-mono.svg`](../assets/logo-mono.svg) · [`logo-wordmark-mono.svg`](../assets/logo-wordmark-mono.svg) · [`banner.svg`](../assets/banner.svg) |
-| 社交分享卡 | [`assets/og-card.png`](../assets/og-card.png)（1200×630） |
+| 社交分享卡 | [`assets/og-card.png`](../assets/og-card.png)（1200×630，主页 / 品牌页）· [`live/assets/og-live.jpg`](../live/assets/og-live.jpg)（1200×630，Live 产品手册；由首图 `editor-thematic-maplibre.webp` 裁切，换首图时同步重做） |
 | 产品截图 | [`live/assets/`](../live/assets/) · [`assets/shots/`](../assets/shots/) |
 
 ## 改动时的检查清单
