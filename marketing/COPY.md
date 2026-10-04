@@ -5,7 +5,7 @@
 > **使用前先读三条规矩**
 >
 > 1. **数字必须有出处。** 本文所有数字都标了来源；新写的数字也要能指回公开仓库、npm / Maven 页面、产品手册，或（仅限闭源 SDK）内部 SDK 文档。找不到出处的数字不发。
-> 2. **状态与许可按原样写。** SDK 是商业闭源，Live 是私有产品，SAR 是技术预览，Skills 是 BSL 源码可见——不要写成"开源""已上线""生产可用"。详见 [BRAND.md §5](BRAND.md#5-对外口径护栏)。
+> 2. **状态与许可按原样写。** SDK 是商业闭源，Live 是私有产品，SAR 是技术预览，Skills 仓库是 BSL 源码可见、它依赖的 `@geoverse/layout-*` npm 包是商业许可（仅限评估）——不要写成"开源""已上线""生产可用"。详见 [BRAND.md §5](BRAND.md#5-对外口径护栏)。
 > 3. **先写结论，再给证据。** 读者多半只看第一句。
 
 ---
@@ -122,15 +122,20 @@ We also open-source the building blocks the ecosystem needs: GeoVerse Serve (a s
 |---|---|---|
 | 一句话 | Spring Boot starter，打通 MyBatis Plus 与 JTS 几何类型。 | A Spring Boot starter bridging MyBatis Plus and JTS geometry types. |
 | 卖点 | MySQL 与 PostGIS 自动识别 · 8 类几何注解 · Jackson GeoJSON 开箱即用 · Maven Central 1.0.1 | Auto-detects MySQL / PostGIS · 8 geometry annotations · Jackson GeoJSON out of the box · Maven Central 1.0.1 |
-| CTA | [GitHub](https://github.com/GeoVerseLabs/mybatis-plus-geometry) · Apache-2.0 | |
+| 50 字 | mybatis-plus-geometry 让 MyBatis Plus 实体直接使用 JTS 几何字段：自动识别 MySQL 与 PostGIS，注解声明字段类型，WKB 自动转换，REST 接口直接输出 GeoJSON。Apache-2.0，Maven Central 可得。 | mybatis-plus-geometry lets MyBatis Plus entities use JTS geometry fields directly: MySQL and PostGIS are auto-detected, annotations declare field types, WKB is converted for you and REST APIs return GeoJSON. Apache-2.0, on Maven Central. |
+| 适合谁 | 用 Spring Boot + MyBatis Plus 存取空间数据的后端团队 | Backend teams storing spatial data with Spring Boot and MyBatis Plus |
+| CTA | [GitHub](https://github.com/GeoVerseLabs/mybatis-plus-geometry) · Apache-2.0 | [GitHub](https://github.com/GeoVerseLabs/mybatis-plus-geometry) · Apache-2.0 |
 
 ### 3.7 GeoVerse Skills
 
 | | 中文 | English |
 |---|---|---|
 | 一句话 | 面向 AI Agent 的空间技能：把设施网格与摆放规则变成确定性、可校验的布局。 | Spatial skills for AI agents: turn facility grids and placement rules into deterministic, validated layouts. |
-| 卖点 | `generate-region-layout` 技能 · `@geoverse/layout-engine` 0.7 · `@geoverse/layout-mcp-app` 0.5（交互地图卡片 + 离线 HTML） | `generate-region-layout` skill · `@geoverse/layout-engine` 0.7 · `@geoverse/layout-mcp-app` 0.5 (interactive map card + offline HTML) |
-| 必带说明 | BSL 1.1 源码可见，不是 OSI 开源许可。 | BSL 1.1 source-available — not an OSI open-source licence. |
+| 卖点 | `generate-region-layout` 技能 · 运行时 `@geoverse/layout-engine` 0.7 · `@geoverse/layout-mcp-app` 0.5（交互地图卡片 + 离线 HTML） | `generate-region-layout` skill · runtime `@geoverse/layout-engine` 0.7 · `@geoverse/layout-mcp-app` 0.5 (interactive map card + offline HTML) |
+| 50 字 | GeoVerse Skills 给 AI Agent 提供空间技能：把设施网格、矩形与摆放、编号规则变成确定性、可校验的布局，适用于货架、库位、车位与展位规划，带评测用例与安装自检。 | GeoVerse Skills gives AI agents spatial skills: it turns facility grids, rectangles and placement and numbering rules into deterministic, validated layouts for racks, bins, parking bays and booths, with evals and installation self-checks. |
+| 适合谁 | 用 AI Agent 做仓储、园区、停车场等空间布局规划的团队 | Teams using AI agents to plan warehouse, campus or parking layouts |
+| 必带说明 | Skill 仓库是 BSL 1.1 源码可见，不是 OSI 开源许可；运行时 npm 包 `@geoverse/layout-*` 采用 GeoVerse 商业许可 v1.0，免费用于内部非生产评估，生产使用需商业授权。 | The skill repo is BSL 1.1 source-available, not an OSI open-source licence; its runtime npm packages `@geoverse/layout-*` use the GeoVerse Commercial License v1.0 — free for internal non-production evaluation, production use needs a commercial licence. |
+| CTA | [GitHub](https://github.com/GeoVerseLabs/geoverse-skills) · 商业授权请联系 libra.liuyb@gmail.com | [GitHub](https://github.com/GeoVerseLabs/geoverse-skills) · commercial licensing: libra.liuyb@gmail.com |
 
 ## 4. 社区与社媒模板 · Social & community
 
@@ -296,4 +301,4 @@ GeoVerse Labs
 | GCJ-02 是什么？ | 国内地图依法使用的加密偏移坐标，与 WGS-84 通常相差几百米；它是基准面偏移而不是投影。 | The legally mandated offset coordinate system used by Chinese maps — typically a few hundred metres from WGS-84. It's a datum shift, not a projection. |
 | Live 能私有化部署吗？ | 可以，全栈 Docker Compose 编排，适配内网。 | Yes — the full stack ships as Docker Compose and works on private networks. |
 | SAR 能上生产吗？ | 目前是技术预览，包未发布 npm，不建议生产使用。 | Not yet — it's a technical preview, not on npm. |
-| Skills 是开源的吗？ | BSL 1.1 源码可见，不是 OSI 意义上的开源。 | It's BSL 1.1 source-available, not OSI open source. |
+| Skills 是开源的吗？ | Skill 仓库是 BSL 1.1 源码可见，不是 OSI 意义上的开源；它运行时依赖的 `@geoverse/layout-*` npm 包是商业许可，只允许内部非生产评估。 | The skill repo is BSL 1.1 source-available, not OSI open source; the `@geoverse/layout-*` npm packages it runs on are commercially licensed for internal, non-production evaluation only. |
