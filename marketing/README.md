@@ -29,6 +29,6 @@ GeoVerse Labs 组织主页（GitHub Pages）配套的公开宣传素材。内部
 
 1. 新数字能指回公开出处吗？新数字先补进私有知识库 `60-reference/brand-positioning.md` 第四节（出处、日期 / 版本、失效条件），再同步到 [BRAND.md §5](BRAND.md#5-对外口径护栏) 的数字表。
 2. 状态与许可的措辞和护栏表一致吗？
-3. 中英文两份都改了吗？（主页与品牌页的文案成对写在 `.zh` / `.en` 元素里）
+3. 中英文两份都改了吗？（主页、品牌页与 Live 产品手册的文案成对写在 `.zh` / `.en` 元素里；图片 `alt`、`aria-label`、按语言变化的链接用 `data-alt-*` / `data-label-*` / `data-href-*`）
 4. `profile/README.md` 与根目录 `README.md` 保持一致了吗？
 5. 宣传片里的数字变了的话，按 [FILM-SCRIPT.md · 更新流程](FILM-SCRIPT.md#更新流程) 重新导出。

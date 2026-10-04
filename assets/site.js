@@ -12,6 +12,13 @@
     document.querySelectorAll('[data-href-zh][data-href-en]').forEach(function (a) {
       a.setAttribute('href', a.getAttribute(en ? 'data-href-en' : 'data-href-zh'));
     });
+    // attributes can't be paired with .zh/.en elements, so swap them in place
+    document.querySelectorAll('[data-alt-zh][data-alt-en]').forEach(function (el) {
+      el.setAttribute('alt', el.getAttribute(en ? 'data-alt-en' : 'data-alt-zh'));
+    });
+    document.querySelectorAll('[data-label-zh][data-label-en]').forEach(function (el) {
+      el.setAttribute('aria-label', el.getAttribute(en ? 'data-label-en' : 'data-label-zh'));
+    });
     document.querySelectorAll('.lang-btn').forEach(function (b) {
       b.textContent = en ? '中文' : 'EN';
       b.setAttribute('aria-label', en ? '切换到中文' : 'Switch to English');

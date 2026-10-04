@@ -118,10 +118,10 @@ GeoVerse Labs 做的是**一条可组合的空间应用工具链**：数据层�
 | 路径 | 页面 | 说明 |
 |---|---|---|
 | `/` | [组织主页](https://geoverselabs.github.io/.github/) | 工具链、产品、在线体验、坐标换算、工程方法、开源、动态、联系 |
-| `/live/` | [GeoVerse Live 产品手册](https://geoverselabs.github.io/.github/live/) | 逐项功能截图 |
+| `/live/` | [GeoVerse Live 产品手册](https://geoverselabs.github.io/.github/live/) | 逐项功能截图，中英双语（截图为产品中文界面） |
 | `/film/` | [宣传片网页版](https://geoverselabs.github.io/.github/film/) | 可拖动、可切语言、可嵌入 |
 | `/brand/` | [品牌资源](https://geoverselabs.github.io/.github/brand/) | 标志、配色、命名、标准文案、媒体素材 |
 | `/404.html` | 404 | 引导回主页 |
 | 外部 | [SDK Playground](https://geoverse-7yh.pages.dev/) · [Line Finder Playground](https://geoverselabs.github.io/geoverse-line-finder/) | 由各自仓库部署 |
 
-共享样式与脚本：`assets/site.css`（色板 token、导航、按钮、页脚、中英切换）、`assets/site.js`（语言切换、看大图、宣传片弹窗）、`assets/coords.js`（坐标换算）。Live 产品手册保持自包含的内联样式，色板与 `site.css` 一致。
+共享样式与脚本：`assets/site.css`（色板 token、导航、按钮、页脚、中英切换）、`assets/site.js`（语言切换——含 `data-href-*` / `data-alt-*` / `data-label-*` 属性互换、看大图、宣传片弹窗）、`assets/coords.js`（坐标换算）。Live 产品手册保持自包含的内联样式（色板与 `site.css` 一致），语言切换复用 `site.js`，语言选择通过 `localStorage` 的 `gv-lang` 在各页面间共享。

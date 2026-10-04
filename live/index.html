@@ -1,18 +1,39 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-title-zh="GeoVerse Live 产品手册 — GeoVerse Labs" data-title-en="GeoVerse Live — Product brochure · GeoVerse Labs">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GeoVerse Live 产品手册</title>
-<meta name="description" content="GeoVerse Live：协作式地理数据编辑平台。OpenLayers / MapLibre 双引擎、专业要素编辑与版本历史、专题制图、实时协作、AI 助手与开放发布。">
-<meta property="og:title" content="GeoVerse Live — 协作式地理数据编辑平台">
-<meta property="og:description" content="一套数据，两种渲染引擎；从编辑、协作到对外发布的一体化地图平台。">
-<meta property="og:image" content="https://geoverselabs.github.io/.github/live/assets/editor-thematic-maplibre.webp">
-<meta property="og:url" content="https://geoverselabs.github.io/.github/live/">
+<title>GeoVerse Live 产品手册 — GeoVerse Labs</title>
+<meta name="description" content="GeoVerse Live：协作式地理数据编辑平台——OpenLayers / MapLibre 双引擎、专业要素编辑与版本历史、专题制图、实时协作、AI 助手与开放发布。A collaborative geodata editing platform: dual OpenLayers / MapLibre engines, versioned feature editing, thematic mapping, real-time collaboration, an AI assistant and open sharing.">
+<meta property="og:type" content="website">
 <meta property="og:site_name" content="GeoVerse Labs">
+<meta property="og:title" content="GeoVerse Live — 协作式地理数据编辑平台 · Collaborative geodata editing platform">
+<meta property="og:description" content="一套数据，两种渲染引擎。One dataset, two rendering engines — editing, collaboration, AI and publishing in one browser workspace.">
+<meta property="og:url" content="https://geoverselabs.github.io/.github/live/">
+<meta property="og:image" content="https://geoverselabs.github.io/.github/live/assets/og-live.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="zh-CN" href="https://geoverselabs.github.io/.github/live/?lang=zh">
+<link rel="alternate" hreflang="en" href="https://geoverselabs.github.io/.github/live/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://geoverselabs.github.io/.github/live/">
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <meta name="color-scheme" content="dark">
+<script>
+  // Pick the language before first paint: ?lang= > saved choice (shared with the rest of the site) > browser language.
+  (function () {
+    var l = null;
+    try {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q === 'en' || q === 'zh') { l = q; localStorage.setItem('gv-lang', q); }
+      else { l = localStorage.getItem('gv-lang'); }
+    } catch (e) { /* storage unavailable */ }
+    if (!l) l = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+    if (l === 'en') document.documentElement.classList.add('en');
+  })();
+</script>
 <style>
   :root {
     --bg: #0a0c11;
@@ -155,12 +176,24 @@
   .lb.open { display: flex; }
   .lb img { max-width: 100%; max-height: 100%; border-radius: 10px; box-shadow: 0 20px 60px rgba(0,0,0,.6); }
 
+  /* i18n: <html class="en"> shows .en and hides .zh — same contract as assets/site.css */
+  html:not(.en) .en { display: none !important; }
+  html.en .zh { display: none !important; }
+  .nav-tools { display: flex; align-items: center; margin-left: 8px; }
+  .lang-btn { font: 600 12px/1 var(--font); color: var(--text-2); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 7px 11px; cursor: pointer; }
+  .lang-btn:hover { color: var(--text); border-color: #353c50; }
+  .hero figcaption { margin-top: 12px; }
+  @media (max-width: 1120px) {
+    .nav-links { gap: 14px; font-size: 13px; }
+  }
+
   @media (max-width: 900px) {
     .feature, .feature.flip, .tri, .duo { grid-template-columns: 1fr; gap: 28px; }
     .feature.flip .copy { order: 0; }
     .grid { grid-template-columns: 1fr 1fr; }
     .stats { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
+    .nav-tools { margin-left: auto; }
   }
   @media (max-width: 560px) {
     .grid { grid-template-columns: 1fr; }
@@ -174,214 +207,249 @@
 </head>
 <body>
 
-<nav class="nav">
+<nav class="nav" aria-label="Primary">
   <div class="wrap">
     <a class="brand" href="../" title="GeoVerse Labs"><img src="../assets/logo.svg" alt="" width="24" height="24">GeoVerse Labs</a>
     <span class="crumb" aria-hidden="true">/</span>
     <a class="brand-sub" href="#top">Live</a>
     <div class="nav-links">
-      <a href="#engines">双引擎</a>
-      <a href="#editing">编辑</a>
-      <a href="#thematic">专题制图</a>
-      <a href="#collab">协作与 AI</a>
-      <a href="#publish">开放发布</a>
-      <a href="#more">更多能力</a>
-      <a href="#family">相关产品</a>
-      <a href="#contact">联系我们</a>
+      <a href="#engines"><span class="zh">双引擎</span><span class="en">Engines</span></a>
+      <a href="#editing"><span class="zh">编辑</span><span class="en">Editing</span></a>
+      <a href="#thematic"><span class="zh">专题制图</span><span class="en">Thematic maps</span></a>
+      <a href="#collab"><span class="zh">协作与 AI</span><span class="en">Collab &amp; AI</span></a>
+      <a href="#publish"><span class="zh">开放发布</span><span class="en">Sharing</span></a>
+      <a href="#more"><span class="zh">更多能力</span><span class="en">More</span></a>
+      <a href="#family"><span class="zh">相关产品</span><span class="en">Toolchain</span></a>
+      <a href="#contact"><span class="zh">联系我们</span><span class="en">Contact</span></a>
     </div>
+    <div class="nav-tools"><button class="lang-btn" type="button">EN</button></div>
   </div>
 </nav>
 
 <header class="hero" id="top">
   <div class="wrap">
-    <span class="eyebrow"><b>产品手册</b> · 私有部署 · 早期访问 · <a href="../">GeoVerse Labs 出品</a></span>
-    <h1>GeoVerse Live<br><span class="grad">协作式地理数据编辑平台</span></h1>
-    <p class="lead">一套数据，两种渲染引擎。GeoVerse Live 把要素编辑、版本管理、专题制图、多人协作、AI 助手和对外发布放进同一个浏览器工作台，底层由 GeoVerse SDK 驱动，原生支持国内坐标系。</p>
+    <span class="eyebrow">
+      <span class="zh"><b>产品手册</b> · 私有部署 · 早期访问 · <a href="../">GeoVerse Labs 出品</a></span>
+      <span class="en"><b>Product brochure</b> · Private deployment · Early access · <a href="../">by GeoVerse Labs</a></span>
+    </span>
+    <h1>GeoVerse Live<br><span class="grad"><span class="zh">协作式地理数据编辑平台</span><span class="en">The collaborative geodata editing platform</span></span></h1>
+    <p class="lead zh">一套数据，两种渲染引擎。GeoVerse Live 把要素编辑、版本管理、专题制图、多人协作、AI 助手和对外发布放进同一个浏览器工作台，底层由 GeoVerse SDK 驱动，原生支持国内坐标系。</p>
+    <p class="lead en">One dataset, two rendering engines. GeoVerse Live brings feature editing, versioning, thematic mapping, real-time collaboration, an AI assistant and publishing into a single browser workspace — powered by GeoVerse SDK, with native support for China's coordinate systems.</p>
     <div class="cta">
-      <a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7">预约演示</a>
-      <a class="btn" href="#engines">浏览功能</a>
-      <a class="btn" href="../film/">▶ 52 秒宣传片</a>
+      <a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7" data-href-zh="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7" data-href-en="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20demo%20request"><span class="zh">预约演示</span><span class="en">Book a demo</span></a>
+      <a class="btn" href="#engines"><span class="zh">浏览功能</span><span class="en">Explore features</span></a>
+      <a class="btn" href="../film/"><span class="zh">▶ 52 秒宣传片</span><span class="en">▶ 52-second film</span></a>
     </div>
     <ul class="pills">
       <li class="pill ol">OpenLayers</li>
       <li class="pill libre">MapLibre GL</li>
       <li class="pill">GCJ-02 / BD-09</li>
-      <li class="pill">实时协作</li>
-      <li class="pill">AI 自然语言编辑</li>
-      <li class="pill">多租户 · RBAC</li>
+      <li class="pill"><span class="zh">实时协作</span><span class="en">Real-time collaboration</span></li>
+      <li class="pill"><span class="zh">AI 自然语言编辑</span><span class="en">Natural-language AI editing</span></li>
+      <li class="pill"><span class="zh">多租户 · RBAC</span><span class="en">Multi-tenant · RBAC</span></li>
     </ul>
     <figure class="shot">
-      <img src="assets/editor-thematic-maplibre.webp" alt="GeoVerse Live 编辑器：世界各国按人均 GDP 分级着色，叠加世界主要城市点图层" width="1600" height="742">
+      <img src="assets/editor-thematic-maplibre.webp" alt="GeoVerse Live 编辑器：世界各国按人均 GDP 分级着色，叠加世界主要城市点图层" data-alt-zh="GeoVerse Live 编辑器：世界各国按人均 GDP 分级着色，叠加世界主要城市点图层" data-alt-en="GeoVerse Live editor: countries classed by GDP per capita, with a layer of major world cities on top" width="1600" height="738">
     </figure>
+    <figcaption class="en">Screenshots on this page show the product's Chinese interface; the UI is also available in English.</figcaption>
     <div class="stats">
-      <div class="stat"><b>2</b><span>渲染引擎，一键切换</span></div>
-      <div class="stat"><b>20+</b><span>绘制、改形与拓扑编辑工具</span></div>
-      <div class="stat"><b>3</b><span>项目角色：所有者 / 可编辑 / 可评论</span></div>
-      <div class="stat"><b>中 / EN</b><span>界面双语，暗色与亮色主题</span></div>
+      <div class="stat"><b>2</b><span class="zh">渲染引擎，一键切换</span><span class="en">rendering engines, one click to switch</span></div>
+      <div class="stat"><b>20+</b><span class="zh">绘制、改形与拓扑编辑工具</span><span class="en">drawing, reshaping and topology tools</span></div>
+      <div class="stat"><b>3</b><span class="zh">项目角色：所有者 / 可编辑 / 可评论</span><span class="en">project roles: owner / editor / commenter</span></div>
+      <div class="stat"><b>中 / EN</b><span class="zh">界面双语，暗色与亮色主题</span><span class="en">bilingual UI, dark and light themes</span></div>
     </div>
   </div>
 </header>
 
 <main class="wrap">
 
-  <!-- 1. 双引擎 -->
+  <!-- 1. 双引擎 / Dual engine -->
   <section class="block" id="engines">
     <p class="kicker">01 · Dual Engine</p>
-    <h2>同一个项目，OpenLayers 与 MapLibre 随时切换</h2>
-    <p class="sub">渲染引擎是项目的一个属性。图层、样式、专题规则和协作数据在两条引擎上完全通用，切换后打开就是同一张图。OpenLayers 轨原生适配高德、天地图等 GCJ-02 底图，MapLibre 轨提供矢量瓦片与平滑缩放。</p>
+    <h2><span class="zh">同一个项目，OpenLayers 与 MapLibre 随时切换</span><span class="en">One project — switch between OpenLayers and MapLibre at any time</span></h2>
+    <p class="sub zh">渲染引擎是项目的一个属性。图层、样式、专题规则和协作数据在两条引擎上完全通用，切换后打开就是同一张图。OpenLayers 轨原生适配高德、天地图等 GCJ-02 底图，MapLibre 轨提供矢量瓦片与平滑缩放。</p>
+    <p class="sub en">The rendering engine is simply a project setting. Layers, styles, thematic rules and collaboration data work identically on both engines, so after a switch you open exactly the same map. The OpenLayers track natively supports Chinese GCJ-02 basemaps such as Amap and Tianditu; the MapLibre track adds vector tiles and smooth zooming.</p>
     <div class="duo">
       <figure>
-        <span class="tag"><i style="background:var(--libre)"></i>MapLibre GL · OpenStreetMap 底图</span>
-        <div class="shot"><img src="assets/editor-thematic-maplibre.webp" alt="MapLibre 引擎下的专题图" loading="lazy" width="1600" height="742"></div>
+        <span class="tag"><i style="background:var(--libre)"></i><span class="zh">MapLibre GL · OpenStreetMap 底图</span><span class="en">MapLibre GL · OpenStreetMap basemap</span></span>
+        <div class="shot"><img src="assets/editor-thematic-maplibre.webp" alt="MapLibre 引擎下的专题图" data-alt-zh="MapLibre 引擎下的专题图" data-alt-en="The thematic map rendered by the MapLibre engine" loading="lazy" width="1600" height="738"></div>
       </figure>
       <figure>
-        <span class="tag"><i style="background:var(--ol)"></i>OpenLayers · 高德矢量底图（GCJ-02）</span>
-        <div class="shot"><img src="assets/editor-thematic-openlayers.webp" alt="OpenLayers 引擎下的同一张专题图" loading="lazy" width="1600" height="742"></div>
+        <span class="tag"><i style="background:var(--ol)"></i><span class="zh">OpenLayers · 高德矢量底图（GCJ-02）</span><span class="en">OpenLayers · Amap vector basemap (GCJ-02)</span></span>
+        <div class="shot"><img src="assets/editor-thematic-openlayers.webp" alt="OpenLayers 引擎下的同一张专题图" data-alt-zh="OpenLayers 引擎下的同一张专题图" data-alt-en="The same thematic map rendered by the OpenLayers engine" loading="lazy" width="1600" height="738"></div>
       </figure>
     </div>
-    <figcaption>同一项目、同一套分级规则，分别在两种引擎下渲染。</figcaption>
+    <figcaption><span class="zh">同一项目、同一套分级规则，分别在两种引擎下渲染。</span><span class="en">The same project and the same classification rules, rendered by each engine.</span></figcaption>
   </section>
 
-  <!-- 2. 编辑 -->
+  <!-- 2. 编辑 / Editing -->
   <section class="block" id="editing">
     <div class="feature">
       <div class="copy">
         <p class="kicker">02 · Editing &amp; History</p>
-        <h2>专业要素编辑，每一次提交都有版本</h2>
-        <p class="sub">面向测绘和规划数据的编辑器，编辑先落在浏览器本地会话，确认后一次提交到服务端。</p>
-        <ul class="points">
+        <h2><span class="zh">专业要素编辑，每一次提交都有版本</span><span class="en">Professional feature editing — every commit is a version</span></h2>
+        <p class="sub zh">面向测绘和规划数据的编辑器，编辑先落在浏览器本地会话，确认后一次提交到服务端。</p>
+        <p class="sub en">An editor built for surveying and planning data. Edits land in a local browser session first and reach the server in a single commit once you confirm.</p>
+        <ul class="points zh">
           <li><b>绘制与改形</b>：点、线、面、矩形、圆；移动、顶点编辑、旋转缩放变换、镜像、复制粘贴</li>
           <li><b>拓扑工具</b>：打断、切面、合并、开洞 / 填洞 / 消洞，吸附与对齐辅助线</li>
           <li><b>撤销重做与乐观锁</b>：多人改同一要素时自动检测冲突，按字段三路合并</li>
           <li><b>版本历史</b>：逐版本查看、对比差异、一键回滚</li>
         </ul>
+        <ul class="points en">
+          <li><b>Draw and reshape</b>: points, lines, polygons, rectangles and circles; move, vertex editing, rotate and scale, mirror, copy and paste</li>
+          <li><b>Topology tools</b>: split lines, cut polygons, merge, punch / fill / remove holes, with snapping and alignment guides</li>
+          <li><b>Undo/redo and optimistic locking</b>: when several people edit the same feature, conflicts are detected automatically and merged field by field (three-way merge)</li>
+          <li><b>Version history</b>: browse any version, compare differences, roll back in one click</li>
+        </ul>
       </div>
-      <figure class="shot"><img src="assets/edit-history.webp" alt="选中线要素显示顶点手柄，右侧为 v1 至 v13 的版本历史" loading="lazy" width="1600" height="742"></figure>
+      <figure class="shot"><img src="assets/edit-history.webp" alt="选中线要素显示顶点手柄，右侧为 v1 至 v13 的版本历史" data-alt-zh="选中线要素显示顶点手柄，右侧为 v1 至 v13 的版本历史" data-alt-en="A selected line showing its vertex handles, with versions v1 to v13 in the history panel on the right" loading="lazy" width="1600" height="738"></figure>
     </div>
   </section>
 
-  <!-- 3. 专题制图 -->
+  <!-- 3. 专题制图 / Thematic mapping -->
   <section class="block" id="thematic">
     <div class="feature flip">
       <div class="copy">
         <p class="kicker">03 · Thematic Mapping</p>
-        <h2>按属性出专题图，规则、直方图、图例联动</h2>
-        <p class="sub">在「高级样式」工作台里选字段、选方法，几秒生成分类或分级规则，画布实时预览。</p>
-        <ul class="points">
+        <h2><span class="zh">按属性出专题图，规则、直方图、图例联动</span><span class="en">Thematic maps from attributes — rules, histogram and legend stay in sync</span></h2>
+        <p class="sub zh">在「高级样式」工作台里选字段、选方法，几秒生成分类或分级规则，画布实时预览。</p>
+        <p class="sub en">In the Advanced Style workbench, pick a field and a method to generate categorized or graduated rules in seconds, with a live preview on the canvas.</p>
+        <ul class="points zh">
           <li><b>分类 / 分级</b>：自然断点、分位数、等距或手工断点</li>
           <li><b>归一化</b>：人口密度、人均指标等「字段 ÷ 字段」一步完成</li>
           <li><b>色带</b>：定性配色、连续与发散色带，含色觉友好（CVD）方案</li>
           <li><b>富样式</b>：图标库（Maki / Temaki / 自定义）、线型、文本标注、动画路径</li>
         </ul>
+        <ul class="points en">
+          <li><b>Categorized / graduated</b>: natural breaks, quantiles, equal intervals or manual breaks</li>
+          <li><b>Normalization</b>: population density, per-capita figures and other "field ÷ field" ratios in one step</li>
+          <li><b>Colour ramps</b>: qualitative, sequential and diverging palettes, including colour-vision-deficiency (CVD) friendly schemes</li>
+          <li><b>Rich styling</b>: icon libraries (Maki / Temaki / custom), line patterns, text labels, animated paths</li>
+        </ul>
       </div>
-      <figure class="shot"><img src="assets/thematic-style.webp" alt="高级样式工作台：按人均 GDP 自然断点分 5 级，右侧直方图显示各档数量" loading="lazy" width="1600" height="742"></figure>
+      <figure class="shot"><img src="assets/thematic-style.webp" alt="高级样式工作台：按人均 GDP 自然断点分 5 级，右侧直方图显示各档数量" data-alt-zh="高级样式工作台：按人均 GDP 自然断点分 5 级，右侧直方图显示各档数量" data-alt-en="Advanced Style workbench: GDP per capita in 5 natural-breaks classes, with a histogram of class counts on the right" loading="lazy" width="1600" height="738"></figure>
     </div>
   </section>
 
-  <!-- 4. 数据接入 -->
+  <!-- 4. 数据接入 / Data in & out -->
   <section class="block" id="data">
     <div class="feature">
       <div class="copy">
         <p class="kicker">04 · Data In &amp; Out</p>
-        <h2>数据进得来，也出得去</h2>
-        <p class="sub">拖入文件先做结构预检和几何校验，给出要素数、几何类型和字段，确认后才落库。</p>
-        <ul class="points">
+        <h2><span class="zh">数据进得来，也出得去</span><span class="en">Data comes in — and goes out</span></h2>
+        <p class="sub zh">拖入文件先做结构预检和几何校验，给出要素数、几何类型和字段，确认后才落库。</p>
+        <p class="sub en">Dropped files are checked for structure and geometry validity first. You see the feature count, geometry types and fields, and nothing is stored until you confirm.</p>
+        <ul class="points zh">
           <li><b>文件导入</b>：GeoJSON、Shapefile（.zip），可指定源坐标系</li>
           <li><b>数据源连接</b>：PostGIS、REST、WMS、S3 / MinIO</li>
           <li><b>导出</b>：按图层导出 GeoJSON</li>
           <li><b>空间数据库</b>：PostgreSQL + PostGIS 存储，服务端做几何有效性校验</li>
         </ul>
+        <ul class="points en">
+          <li><b>File import</b>: GeoJSON and Shapefile (.zip), with a selectable source coordinate system</li>
+          <li><b>Data-source connections</b>: PostGIS, REST, WMS, S3 / MinIO</li>
+          <li><b>Export</b>: GeoJSON per layer</li>
+          <li><b>Spatial database</b>: stored in PostgreSQL + PostGIS, with server-side geometry validation</li>
+        </ul>
       </div>
-      <figure class="shot"><img src="assets/import-preview.webp" alt="导入预览：176 个要素、几何类型与属性字段" loading="lazy" width="1080" height="960"></figure>
+      <figure class="shot"><img src="assets/import-preview.webp" alt="导入预览：176 个要素、几何类型与属性字段" data-alt-zh="导入预览：176 个要素、几何类型与属性字段" data-alt-en="Import preview: 176 features, their geometry types and attribute fields" loading="lazy" width="1080" height="960"></figure>
     </div>
   </section>
 
-  <!-- 5. 协作与 AI -->
+  <!-- 5. 协作与 AI / Collaboration & AI -->
   <section class="block" id="collab">
     <p class="kicker">05 · Collaboration &amp; AI</p>
-    <h2>多人一起改图，AI 帮你查和改</h2>
-    <p class="sub">项目成员实时在线：在线状态、光标、变更广播和评论即时同步；AI 助手用自然语言操作当前图层。</p>
+    <h2><span class="zh">多人一起改图，AI 帮你查和改</span><span class="en">Edit maps together — and let AI look things up and make changes</span></h2>
+    <p class="sub zh">项目成员实时在线：在线状态、光标、变更广播和评论即时同步；AI 助手用自然语言操作当前图层。</p>
+    <p class="sub en">Project members work together live: presence, cursors, change broadcasts and comments sync instantly, and the AI assistant works on the current layer in plain language.</p>
     <div class="duo">
       <figure>
-        <div class="shot"><img src="assets/collab-comments.webp" alt="评论锚定到选中的城市要素，可定位、标记已解决和回复" loading="lazy" width="1600" height="742"></div>
-        <figcaption><b style="color:var(--text)">评论锚定到要素</b>：定位、回复、标记已解决，支持贴图；站内信与通知实时推送。</figcaption>
+        <div class="shot"><img src="assets/collab-comments.webp" alt="评论锚定到选中的城市要素，可定位、标记已解决和回复" data-alt-zh="评论锚定到选中的城市要素，可定位、标记已解决和回复" data-alt-en="A comment anchored to a selected city feature, with jump-to, resolve and reply actions" loading="lazy" width="1600" height="738"></div>
+        <figcaption class="zh"><b style="color:var(--text)">评论锚定到要素</b>：定位、回复、标记已解决，支持贴图；站内信与通知实时推送。</figcaption>
+        <figcaption class="en"><b style="color:var(--text)">Comments anchored to features</b>: jump to, reply and resolve, with image attachments; in-app messages and notifications arrive in real time.</figcaption>
       </figure>
       <figure>
-        <div class="shot"><img src="assets/ai-assistant.webp" alt="AI 助手回答当前图层人口最多的 5 个城市，并展示调用的工具" loading="lazy" width="1600" height="742"></div>
-        <figcaption><b style="color:var(--text)">AI 助手</b>：调用了哪些工具、查了什么全部透明。AI 的修改只落在本地会话，可撤销，点「提交」才保存。</figcaption>
+        <div class="shot"><img src="assets/ai-assistant.webp" alt="AI 助手回答当前图层人口最多的 5 个城市，并展示调用的工具" data-alt-zh="AI 助手回答当前图层人口最多的 5 个城市，并展示调用的工具" data-alt-en="The AI assistant listing the 5 most populous cities on the current layer and showing the tools it called" loading="lazy" width="1600" height="738"></div>
+        <figcaption class="zh"><b style="color:var(--text)">AI 助手</b>：调用了哪些工具、查了什么全部透明。AI 的修改只落在本地会话，可撤销，点「提交」才保存。</figcaption>
+        <figcaption class="en"><b style="color:var(--text)">AI assistant</b>: every tool call and query is shown. AI edits stay in your local session and can be undone; nothing is saved until you click Commit.</figcaption>
       </figure>
     </div>
   </section>
 
-  <!-- 6. 开放发布 -->
+  <!-- 6. 开放发布 / Open & share -->
   <section class="block" id="publish">
     <p class="kicker">06 · Open &amp; Share</p>
-    <h2>把图层组合成地图，分享给不需要登录的人</h2>
-    <p class="sub">「综合地图」可以跨项目叠加有权限的图层，生成免登录的分享链接或 iframe 嵌入代码。数据端点支持 AES-GCM 密文传输，可限定允许嵌入的来源。</p>
+    <h2><span class="zh">把图层组合成地图，分享给不需要登录的人</span><span class="en">Combine layers into a map and share it — no sign-in required</span></h2>
+    <p class="sub zh">「综合地图」可以跨项目叠加有权限的图层，生成免登录的分享链接或 iframe 嵌入代码。数据端点支持 AES-GCM 密文传输，可限定允许嵌入的来源。</p>
+    <p class="sub en">A composite map can stack any layers you have access to across projects, then generate a login-free share link or an iframe embed code. Data endpoints support AES-GCM encrypted transport and can be limited to approved embedding origins.</p>
     <div class="tri">
       <div class="stack">
-        <figure class="shot"><img src="assets/open-map-composer.webp" alt="综合地图编排：左侧图层列表与不透明度，右侧加入图层与底图设置" loading="lazy" width="1600" height="742"></figure>
-        <figure class="shot"><img src="assets/embed-viewer.webp" alt="访问者打开分享链接看到的纯地图页（局部）" loading="lazy" width="1340" height="798"></figure>
+        <figure class="shot"><img src="assets/open-map-composer.webp" alt="综合地图编排：左侧图层列表与不透明度，右侧加入图层与底图设置" data-alt-zh="综合地图编排：左侧图层列表与不透明度，右侧加入图层与底图设置" data-alt-en="Composite map editor: the layer list and opacity on the left, adding layers and basemap settings on the right" loading="lazy" width="1600" height="738"></figure>
+        <figure class="shot"><img src="assets/embed-viewer.webp" alt="访问者打开分享链接看到的纯地图页（局部）" data-alt-zh="访问者打开分享链接看到的纯地图页（局部）" data-alt-en="The map-only page a visitor sees after opening a share link (detail)" loading="lazy" width="1340" height="798"></figure>
       </div>
-      <figure class="shot"><img src="assets/share-settings.webp" alt="分享设置：链接、嵌入代码与数据传输加密" loading="lazy" width="1300" height="1396"></figure>
+      <figure class="shot"><img src="assets/share-settings.webp" alt="分享设置：链接、嵌入代码与数据传输加密" data-alt-zh="分享设置：链接、嵌入代码与数据传输加密" data-alt-en="Sharing settings: link, embed code and transport encryption" loading="lazy" width="1300" height="1396"></figure>
     </div>
-    <figcaption>上：综合地图编排；下：访问者打开分享链接看到的纯地图页，可直接嵌入第三方系统；右：分享与加密设置。图层还可以发布到 <a href="../#p-serve">GeoVerse Serve</a>，以 XYZ 切片、TileJSON 或 OGC API – Features 对外提供。</figcaption>
+    <figcaption class="zh">上：综合地图编排；下：访问者打开分享链接看到的纯地图页，可直接嵌入第三方系统；右：分享与加密设置。图层还可以发布到 <a href="../#p-serve">GeoVerse Serve</a>，以 XYZ 切片、TileJSON 或 OGC API – Features 对外提供。</figcaption>
+    <figcaption class="en">Top: building a composite map. Bottom: the map-only page a visitor sees from a share link, ready to embed in third-party systems. Right: sharing and encryption settings. Layers can also be published to <a href="../#p-serve">GeoVerse Serve</a> as XYZ tiles, TileJSON or OGC API – Features.</figcaption>
   </section>
 
-  <!-- 7. 更多能力（简述） -->
+  <!-- 7. 更多能力 / More -->
   <section class="block" id="more">
     <p class="kicker">07 · More</p>
-    <h2>更多能力</h2>
+    <h2><span class="zh">更多能力</span><span class="en">More capabilities</span></h2>
     <div class="grid">
-      <div class="card"><h3>项目工作台</h3><p>项目卡片带实时缩略图，支持星标、最近打开、共享给我、模板与回收站。</p></div>
-      <div class="card"><h3>权限与多租户</h3><p>团队即租户；项目级所有者 / 可编辑 / 可评论三角色，服务端强制校验。</p></div>
-      <div class="card"><h3>平台管理后台</h3><p>监控总览、用户与角色、通知公告、站内信、底图资源、地区库、图标库、地图服务、参数与敏感词、在线会话与日志。</p></div>
-      <div class="card"><h3>国内坐标系</h3><p>GCJ-02、BD-09、天地图底图就地纠偏，数据统一以 WGS-84 存储。</p></div>
-      <div class="card"><h3>地图服务发布</h3><p>图层一键发布到 GeoVerse Serve，数据不复制，要素改了切片就更新。</p></div>
-      <div class="card"><h3>私有化部署</h3><p>Docker Compose 编排全栈，Nacos 注册配置，适配内网环境。</p></div>
+      <div class="card"><h3><span class="zh">项目工作台</span><span class="en">Project workspace</span></h3><p class="zh">项目卡片带实时缩略图，支持星标、最近打开、共享给我、模板与回收站。</p><p class="en">Project cards with live thumbnails, plus starred, recently opened, shared with me, templates and trash.</p></div>
+      <div class="card"><h3><span class="zh">权限与多租户</span><span class="en">Permissions and multi-tenancy</span></h3><p class="zh">团队即租户；项目级所有者 / 可编辑 / 可评论三角色，服务端强制校验。</p><p class="en">Each team is a tenant. Three project-level roles (owner / editor / commenter) are enforced on the server.</p></div>
+      <div class="card"><h3><span class="zh">平台管理后台</span><span class="en">Admin console</span></h3><p class="zh">监控总览、用户与角色、通知公告、站内信、底图资源、地区库、图标库、地图服务、参数与敏感词、在线会话与日志。</p><p class="en">Monitoring overview, users and roles, announcements, in-app messages, basemaps, region library, icon library, map services, parameters and sensitive-word filters, online sessions and logs.</p></div>
+      <div class="card"><h3><span class="zh">国内坐标系</span><span class="en">China's coordinate systems</span></h3><p class="zh">GCJ-02、BD-09、天地图底图就地纠偏，数据统一以 WGS-84 存储。</p><p class="en">GCJ-02, BD-09 and Tianditu basemaps are corrected in place; all data is stored in WGS-84.</p></div>
+      <div class="card"><h3><span class="zh">地图服务发布</span><span class="en">Map service publishing</span></h3><p class="zh">图层一键发布到 GeoVerse Serve，数据不复制，要素改了切片就更新。</p><p class="en">Publish a layer to GeoVerse Serve in one click. The data isn't copied, so tiles update as soon as features change.</p></div>
+      <div class="card"><h3><span class="zh">私有化部署</span><span class="en">Private deployment</span></h3><p class="zh">Docker Compose 编排全栈，Nacos 注册配置，适配内网环境。</p><p class="en">The full stack runs on Docker Compose, with Nacos for service registration and configuration, and works on private networks.</p></div>
     </div>
     <figure class="strip">
-      <div class="shot"><img src="assets/workspace-light.webp" alt="亮色主题下的项目工作台卡片" loading="lazy" width="1600" height="208"></div>
-      <figcaption>项目工作台（亮色主题）。</figcaption>
+      <div class="shot"><img src="assets/workspace-light.webp" alt="亮色主题下的项目工作台卡片" data-alt-zh="亮色主题下的项目工作台卡片" data-alt-en="Project workspace cards in the light theme" loading="lazy" width="1600" height="208"></div>
+      <figcaption><span class="zh">项目工作台（亮色主题）。</span><span class="en">Project workspace (light theme).</span></figcaption>
     </figure>
   </section>
 
-  <!-- 8. 技术栈 -->
+  <!-- 8. 技术栈 / Architecture -->
   <section class="block" id="stack">
     <p class="kicker">08 · Architecture</p>
-    <h2>技术栈</h2>
+    <h2><span class="zh">技术栈</span><span class="en">Technology stack</span></h2>
     <table class="stack-table">
-      <tr><th>前端</th><td>React 19 · TypeScript · Vite；<a href="../#p-sdk">GeoVerse SDK</a>（OpenLayers 10 / MapLibre GL 5 双引擎门面、框架无关编辑引擎）</td></tr>
-      <tr><th>后端</th><td>Spring Boot 3.5 · JDK 21 · Spring Cloud Alibaba 微服务（网关 / 系统 / 基础设施 / 地理服务）</td></tr>
-      <tr><th>数据与基建</th><td>PostgreSQL 16 + PostGIS（经 <a href="https://github.com/GeoVerseLabs/mybatis-plus-geometry">mybatis-plus-geometry</a> 存取几何）· Redis · MinIO / S3 · Nacos</td></tr>
-      <tr><th>AI</th><td><a href="../#p-sar">GeoVerse SAR</a> 空间智能运行时，在浏览器内接入编辑会话，带操作审计与宏撤销</td></tr>
-      <tr><th>部署</th><td>Docker 镜像 + Compose 编排，支持私有化与内网部署</td></tr>
+      <tr><th><span class="zh">前端</span><span class="en">Frontend</span></th><td><span class="zh">React 19 · TypeScript · Vite；<a href="../#p-sdk">GeoVerse SDK</a>（OpenLayers 10 / MapLibre GL 5 双引擎门面、框架无关编辑引擎）</span><span class="en">React 19 · TypeScript · Vite; <a href="../#p-sdk">GeoVerse SDK</a> (dual-engine facade over OpenLayers 10 / MapLibre GL 5, framework-agnostic editing engine)</span></td></tr>
+      <tr><th><span class="zh">后端</span><span class="en">Backend</span></th><td><span class="zh">Spring Boot 3.5 · JDK 21 · Spring Cloud Alibaba 微服务（网关 / 系统 / 基础设施 / 地理服务）</span><span class="en">Spring Boot 3.5 · JDK 21 · Spring Cloud Alibaba microservices (gateway / system / infrastructure / geo services)</span></td></tr>
+      <tr><th><span class="zh">数据与基建</span><span class="en">Data and infrastructure</span></th><td><span class="zh">PostgreSQL 16 + PostGIS（经 <a href="https://github.com/GeoVerseLabs/mybatis-plus-geometry">mybatis-plus-geometry</a> 存取几何）· Redis · MinIO / S3 · Nacos</span><span class="en">PostgreSQL 16 + PostGIS (geometry persisted via <a href="https://github.com/GeoVerseLabs/mybatis-plus-geometry">mybatis-plus-geometry</a>) · Redis · MinIO / S3 · Nacos</span></td></tr>
+      <tr><th>AI</th><td><span class="zh"><a href="../#p-sar">GeoVerse SAR</a> 空间智能运行时，在浏览器内接入编辑会话，带操作审计与宏撤销</span><span class="en"><a href="../#p-sar">GeoVerse SAR</a> spatial runtime, connected to the editing session in the browser, with an operation audit trail and macro undo</span></td></tr>
+      <tr><th><span class="zh">部署</span><span class="en">Deployment</span></th><td><span class="zh">Docker 镜像 + Compose 编排，支持私有化与内网部署</span><span class="en">Docker images orchestrated with Compose, for private and on-premises (intranet) deployment</span></td></tr>
     </table>
   </section>
 
-  <!-- 9. 同一条工具链 -->
+  <!-- 9. 同一条工具链 / Toolchain -->
   <section class="block" id="family">
     <p class="kicker">09 · GeoVerse Labs</p>
-    <h2>同一条工具链上的其他产品</h2>
-    <p class="sub">GeoVerse Live 是 GeoVerse Labs 空间工具链的应用层。下面这些构件可以单独使用，也都在 Live 里各司其职。</p>
+    <h2><span class="zh">同一条工具链上的其他产品</span><span class="en">Other products in the same toolchain</span></h2>
+    <p class="sub zh">GeoVerse Live 是 GeoVerse Labs 空间工具链的应用层。下面这些构件可以单独使用，也都在 Live 里各司其职。</p>
+    <p class="sub en">GeoVerse Live is the application layer of the GeoVerse Labs spatial toolchain. Each building block below works on its own, and each has its own job inside Live.</p>
     <div class="grid family">
-      <a class="card fam" href="https://geoverse-7yh.pages.dev/" style="--c:#8b6cf6"><h3>GeoVerse SDK ↗</h3><p>Live 的地图与编辑底座：一套 API 跑在 OpenLayers 或 MapLibre 上。打开在线 Playground。</p></a>
-      <a class="card fam" href="https://github.com/GeoVerseLabs/geoverse-map-server" style="--c:#fbbf24"><h3>GeoVerse Serve ↗</h3><p>Live 图层的发布出口：单二进制 Go 服务，输出 MVT、WMTS、OGC API 与 MCP。MIT 开源。</p></a>
-      <a class="card fam" href="https://github.com/GeoVerseLabs/geoverse-sar" style="--c:#e879f9"><h3>GeoVerse SAR ↗</h3><p>Live AI 助手背后的运行时：能力即工具、单一漏斗、可撤销。MIT 开源，技术预览。</p></a>
-      <a class="card fam" href="https://geoverselabs.github.io/geoverse-line-finder/" style="--c:#22d3ee"><h3>GeoVerse Line Finder ↗</h3><p>零依赖 GeoJSON 寻路库，支持多楼层室内路线。打开在线示例。</p></a>
-      <a class="card fam" href="../film/" style="--c:#b39dff"><h3>▶ 52 秒宣传片</h3><p>从一个坐标到一条路线，一次看完整条工具链。</p></a>
-      <a class="card fam" href="../" style="--c:#2fbf8a"><h3>GeoVerse Labs 主页 →</h3><p>全部产品、在线体验、国内坐标系换算与开源项目。</p></a>
+      <a class="card fam" href="https://geoverse-7yh.pages.dev/" style="--c:#8b6cf6"><h3>GeoVerse SDK ↗</h3><p class="zh">Live 的地图与编辑底座：一套 API 跑在 OpenLayers 或 MapLibre 上。打开在线 Playground。</p><p class="en">Live's mapping and editing foundation: one API on either OpenLayers or MapLibre. Opens the online playground.</p></a>
+      <a class="card fam" href="https://github.com/GeoVerseLabs/geoverse-map-server" style="--c:#fbbf24"><h3>GeoVerse Serve ↗</h3><p class="zh">Live 图层的发布出口：单二进制 Go 服务，输出 MVT、WMTS、OGC API 与 MCP。MIT 开源。</p><p class="en">Where Live layers get published: a single Go binary serving MVT, WMTS, OGC API and MCP. MIT open source.</p></a>
+      <a class="card fam" href="https://github.com/GeoVerseLabs/geoverse-sar" style="--c:#e879f9"><h3>GeoVerse SAR ↗</h3><p class="zh">Live AI 助手背后的运行时：能力即工具、单一漏斗、可撤销。MIT 开源，技术预览。</p><p class="en">The runtime behind Live's AI assistant: capabilities as tools, a single governed funnel, undoable changes. MIT open source, technical preview.</p></a>
+      <a class="card fam" href="https://geoverselabs.github.io/geoverse-line-finder/" style="--c:#22d3ee"><h3>GeoVerse Line Finder ↗</h3><p class="zh">零依赖 GeoJSON 寻路库，支持多楼层室内路线。打开在线示例。</p><p class="en">Zero-dependency GeoJSON routing library with multi-level indoor routes. Opens the online playground.</p></a>
+      <a class="card fam" href="../film/" style="--c:#b39dff"><h3><span class="zh">▶ 52 秒宣传片</span><span class="en">▶ 52-second film</span></h3><p class="zh">从一个坐标到一条路线，一次看完整条工具链。</p><p class="en">From a single coordinate to a route — the whole toolchain at a glance.</p></a>
+      <a class="card fam" href="../" style="--c:#2fbf8a"><h3><span class="zh">GeoVerse Labs 主页 →</span><span class="en">GeoVerse Labs home →</span></h3><p class="zh">全部产品、在线体验、国内坐标系换算与开源项目。</p><p class="en">All products, live demos, China coordinate conversion and open-source projects.</p></a>
     </div>
   </section>
 
   <section class="contact" id="contact">
     <div>
-      <h2>想看完整演示？</h2>
-      <p>GeoVerse Live 目前为私有项目，暂未开源。欢迎联系预约演示、申请早期访问或洽谈私有化部署。</p>
+      <h2><span class="zh">想看完整演示？</span><span class="en">Want to see the full demo?</span></h2>
+      <p class="zh">GeoVerse Live 目前为私有项目，暂未开源。欢迎联系预约演示、申请早期访问或洽谈私有化部署。</p>
+      <p class="en">GeoVerse Live is a private product and is not open source. Get in touch to book a demo, request early access or discuss private deployment.</p>
     </div>
     <div class="cta">
-      <a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7">libra.liuyb@gmail.com</a>
-      <a class="btn" href="../">GeoVerse Labs 主页</a>
+      <a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7" data-href-zh="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20%E6%BC%94%E7%A4%BA%E7%94%B3%E8%AF%B7" data-href-en="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20demo%20request">libra.liuyb@gmail.com</a>
+      <a class="btn" href="../"><span class="zh">GeoVerse Labs 主页</span><span class="en">GeoVerse Labs home</span></a>
       <a class="btn" href="https://github.com/GeoVerseLabs">GitHub</a>
     </div>
   </section>
@@ -390,12 +458,13 @@
 
 <footer>
   <div class="wrap">
-    <span>© 2026 <a href="../">GeoVerse Labs</a> · <a href="../brand/">品牌资源</a> · <a href="../film/">宣传片</a></span>
-    <span>截图中的示例数据来自 Natural Earth（公有领域）；底图 © OpenStreetMap contributors、© 高德地图。</span>
+    <span>© 2026 <a href="../">GeoVerse Labs</a> · <a href="../brand/"><span class="zh">品牌资源</span><span class="en">Brand kit</span></a> · <a href="../film/"><span class="zh">宣传片</span><span class="en">Film</span></a></span>
+    <span class="zh">截图中的示例数据来自 Natural Earth（公有领域）；底图 © OpenStreetMap contributors、© 高德地图。</span>
+    <span class="en">Sample data in screenshots: Natural Earth (public domain); basemaps © OpenStreetMap contributors, © AutoNavi (Amap).</span>
   </div>
 </footer>
 
-<div class="lb" id="lb" role="dialog" aria-label="查看大图"><img alt=""></div>
+<div class="lb" id="lb" role="dialog" aria-label="查看大图" data-label-zh="查看大图" data-label-en="Image preview"><img alt=""></div>
 <script>
   (function () {
     var lb = document.getElementById('lb');
@@ -412,5 +481,6 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   })();
 </script>
+<script src="../assets/site.js"></script>
 </body>
 </html>
