@@ -333,7 +333,7 @@
         <li data-ids="sar sdk"><em>SAR → SDK</em><span class="zh">SAR 的 <code>engine-geo</code> 零改动包装 <code>@geoverse/editor-core</code>，把编辑命令变成可审计的能力。</span><span class="en">SAR's <code>engine-geo</code> wraps <code>@geoverse/editor-core</code> unchanged, turning editing commands into auditable capabilities.</span></li>
         <li data-ids="serve sdk live"><em>Serve → SDK / Live</em><span class="zh">Serve 只通过协议（MVT、PMTiles、OGC API）被消费，零代码依赖；Live 的图层可一键发布到 Serve。</span><span class="en">Serve is consumed purely over protocols (MVT, PMTiles, OGC API) — no code coupling; Live layers publish to Serve in one click.</span></li>
         <li data-ids="mpg live"><em>Live → mybatis-plus-geometry</em><span class="zh">Live 后端用 mybatis-plus-geometry + PostGIS 存取要素几何。</span><span class="en">Live's backend persists feature geometry through mybatis-plus-geometry + PostGIS.</span></li>
-        <li data-ids="lf skills"><em>Line Finder · Skills</em><span class="zh">寻路库与布局引擎都是可内嵌的确定性计算：浏览器、Worker、Node 或 Agent 工具里都能跑。</span><span class="en">The routing library and the layout engine are embeddable, deterministic computation — in the browser, a Worker, Node or an agent tool.</span></li>
+        <li data-ids="lf skills"><em>Line Finder · Skills</em><span class="zh">寻路库与布局引擎都是确定性计算：Line Finder 可内嵌在浏览器、Worker 或 Node 里；布局引擎跑在 Node 与 Agent 工具里（商业评估许可）。</span><span class="en">Both are deterministic computation: Line Finder embeds in the browser, a Worker or Node; the layout engine runs in Node and agent tools (commercial evaluation licence).</span></li>
       </ul>
     </div>
   </section>
@@ -492,13 +492,13 @@
         <p class="tagline en">A Spring Boot starter bridging MyBatis Plus and JTS geometry types.</p>
         <ul class="zh">
           <li>MySQL 8 与 PostgreSQL / PostGIS 自动识别，零配置</li>
-          <li>Point 到 GeometryCollection 共 8 类几何注解，WKB 自动转换</li>
+          <li>8 类几何字段注解（Point 到 GeometryCollection 7 种类型 + 通用 Geometry），WKB 自动转换</li>
           <li>Jackson GeoJSON 序列化开箱即用，REST 接口直接吐 GeoJSON</li>
           <li>Java 17+，Spring Boot 2.7+ / 3.x</li>
         </ul>
         <ul class="en">
           <li>Auto-detects MySQL 8 and PostgreSQL / PostGIS — zero configuration</li>
-          <li>Annotations for 8 geometry types from Point to GeometryCollection, WKB conversion built in</li>
+          <li>8 geometry field annotations (Point through GeometryCollection, plus generic Geometry), WKB conversion built in</li>
           <li>Jackson GeoJSON serialisation out of the box for REST APIs</li>
           <li>Java 17+, Spring Boot 2.7+ / 3.x</li>
         </ul>
@@ -656,8 +656,8 @@
   <section class="block" id="opensource">
     <p class="kicker">07 · Open source</p>
     <h2><span class="zh">开源与源码可见</span><span class="en">Open source &amp; source-available</span></h2>
-    <p class="sub zh">欢迎 Issue 与 PR，贡献方式见各仓库的 README 或 CONTRIBUTING。发现安全问题请不要公开提 Issue，发邮件到 libra.liuyb@gmail.com。</p>
-    <p class="sub en">Issues and PRs are welcome — see each repository's README or CONTRIBUTING for how to contribute. Please report security issues privately to libra.liuyb@gmail.com rather than in a public issue.</p>
+    <p class="sub zh">欢迎 Issue 与 PR；有 CONTRIBUTING 的仓库请先读它。发现安全问题请不要公开提 Issue，发邮件到 libra.liuyb@gmail.com。</p>
+    <p class="sub en">Issues and PRs are welcome — where a repository has a CONTRIBUTING guide, please read it first. Please report security issues privately to libra.liuyb@gmail.com rather than in a public issue.</p>
     <div class="table-scroll">
       <table class="oss-table">
         <thead><tr><th><span class="zh">仓库</span><span class="en">Repository</span></th><th><span class="zh">是什么</span><span class="en">What it is</span></th><th><span class="zh">许可</span><span class="en">License</span></th><th><span class="zh">获取</span><span class="en">Get it</span></th></tr></thead>

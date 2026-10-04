@@ -4,7 +4,7 @@
 
 > **使用前先读三条规矩**
 >
-> 1. **数字必须有出处。** 本文所有数字都标了来源；新写的数字也要能指回公开仓库、npm / Maven 页面、产品手册，或（仅限闭源 SDK）内部 SDK 文档。找不到出处的数字不发。
+> 1. **数字必须有出处。** 本文所有数字都标了来源；新写的数字也要能指回公开仓库、npm / Maven 页面、产品手册，或（仅限闭源 SDK 与内部工程实践，须注明“内部”）内部文档。找不到出处的数字不发。
 > 2. **状态与许可按原样写。** SDK 是商业闭源，Live 是私有产品，SAR 是技术预览，Skills 仓库是 BSL 源码可见、它依赖的 `@geoverse/layout-*` npm 包是商业许可（仅限评估）——不要写成"开源""已上线""生产可用"。详见 [BRAND.md §5](BRAND.md#5-对外口径护栏)。
 > 3. **先写结论，再给证据。** 读者多半只看第一句。
 
@@ -135,7 +135,7 @@ We also open-source the building blocks the ecosystem needs: GeoVerse Serve (a s
 | 50 字 | GeoVerse Skills 给 AI Agent 提供空间技能：把设施网格、矩形与摆放、编号规则变成确定性、可校验的布局，适用于货架、库位、车位与展位规划，带评测用例与安装自检。 | GeoVerse Skills gives AI agents spatial skills: it turns facility grids, rectangles and placement and numbering rules into deterministic, validated layouts for racks, bins, parking bays and booths, with evals and installation self-checks. |
 | 适合谁 | 用 AI Agent 做仓储、园区、停车场等空间布局规划的团队 | Teams using AI agents to plan warehouse, campus or parking layouts |
 | 必带说明 | Skill 仓库是 BSL 1.1 源码可见，不是 OSI 开源许可；运行时 npm 包 `@geoverse/layout-*` 采用 GeoVerse 商业许可 v1.0，免费用于内部非生产评估，生产使用需商业授权。 | The skill repo is BSL 1.1 source-available, not an OSI open-source licence; its runtime npm packages `@geoverse/layout-*` use the GeoVerse Commercial License v1.0 — free for internal non-production evaluation, production use needs a commercial licence. |
-| CTA | [GitHub](https://github.com/GeoVerseLabs/geoverse-skills) · 商业授权请联系 libra.liuyb@gmail.com | [GitHub](https://github.com/GeoVerseLabs/geoverse-skills) · commercial licensing: libra.liuyb@gmail.com |
+| CTA | [GitHub](https://github.com/GeoVerseLabs/geoverse-skills) · 商业授权：见仓库 `LICENSE` 中的联系方式 | [GitHub](https://github.com/GeoVerseLabs/geoverse-skills) · commercial licensing: see the contact in the repository's `LICENSE` |
 
 ## 4. 社区与社媒模板 · Social & community
 

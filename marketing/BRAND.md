@@ -80,7 +80,7 @@ GeoVerse Labs 做的是**一条可组合的空间应用工具链**：数据层�
 | GeoVerse Live | 私有产品，可预约演示 / 私有化部署 | "免费注册""SaaS 已上线" | 目前以演示与私有化部署方式提供，没有公开注册入口 |
 | GeoVerse SAR | MIT 开源、**技术预览**、未发布 npm | "生产可用""稳定版" | 仓库四级状态口径：published = 无，production-supported = 否 |
 | GeoVerse Skills（`geoverse-skills` 仓库） | BSL 1.1、源码可见 | "开源" | BSL 不是 OSI 认可的开源许可 |
-| `@geoverse/layout-engine` / `@geoverse/layout-mcp-app` | GeoVerse 商业许可 v1.0，免费用于内部非生产评估，生产使用需商业授权 | "开源""BSL""免费商用" | npm 包内 LICENSE 为 GeoVerse Commercial License Agreement v1.0，源码不公开 |
+| `@geoverse/layout-engine` / `@geoverse/layout-mcp-app` | GeoVerse 商业许可 v1.0，免费用于内部非生产评估，生产使用需商业授权 | "开源""BSL""免费商用" | npm 包内 LICENSE 为 GeoVerse Commercial License Agreement v1.0；没有公开源码仓库，许可禁止再分发与生产使用 |
 | GeoVerse Serve | MIT 开源，单二进制的瓦片 / OGC 服务 | "高并发""高性能网关" | 缓存层仍有已知缺口（冷缓存并发请求未合并、空瓦片无负缓存），没有并发承诺的依据 |
 | GeoVerse Line Finder | Apache-2.0 开源；浏览器 / Worker / Node 内存寻路（10⁵ 级坐标） | "适用于任何寻路""替代 OSRM" | 城市级以上路网、转向限制、实时路况不在边界内 |
 | 性能数字 | 带日期、数据集、轮数与复现方法 | "快 38 倍"之类脱离条件的倍数 | 单轮、跨构建产物的比较会凭空造出结论 |
@@ -102,7 +102,7 @@ GeoVerse Labs 做的是**一条可组合的空间应用工具链**：数据层�
 | 1 | GeoVerse Serve 是单个纯 Go 二进制（无 CGO） | Serve README |
 | 16 | SAR 包数 | SAR README |
 | 3 | Live 项目角色：所有者 / 可编辑 / 可评论 | Live 产品手册 |
-| 8 类 | mybatis-plus-geometry 支持的几何注解（Point 到 GeometryCollection） | mybatis-plus-geometry README |
+| 8 类 | mybatis-plus-geometry 几何字段注解：Point 到 GeometryCollection 7 种具体类型 + 通用 Geometry | mybatis-plus-geometry README |
 | 555 m / 1378 m | 北京天安门附近 WGS-84 → GCJ-02 / BD-09 的偏移（公开近似算法） | `assets/coords.js` 实时计算 |
 | 70+ / 30 | 知识笔记数 / 其中的踩坑记录数 | 内部知识库（按目录计数，不含索引页） |
 
