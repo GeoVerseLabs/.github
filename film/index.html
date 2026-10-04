@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoVerse Labs — 宣传片 · Film</title>
+<meta name="description" content="GeoVerse Labs 52 秒宣传片：国内坐标系、双引擎地图 SDK、协作编辑平台、AI 空间运行时、瓦片服务与浏览器内寻路。">
+<meta property="og:type" content="video.other">
+<meta property="og:title" content="GeoVerse Labs — Film">
+<meta property="og:description" content="The whole spatial toolchain in 52 seconds.">
+<meta property="og:url" content="https://geoverselabs.github.io/.github/film/">
+<meta property="og:image" content="https://geoverselabs.github.io/.github/assets/film/poster.webp">
+<meta property="og:video" content="https://geoverselabs.github.io/.github/assets/film/geoverse-film-en.mp4">
+<meta name="theme-color" content="#05070b">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<style>
+  :root {
+    --bg: #05070b;
+    --font: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Zen Hei", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, "DejaVu Sans Mono", monospace;
+    color-scheme: dark;
+  }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: #e8eaf0; font-family: var(--font); overflow: hidden; }
+  .stage { position: fixed; inset: 0; display: grid; place-items: center; }
+  #film { width: min(100vw, calc(100vh * 16 / 9)); height: auto; aspect-ratio: 16 / 9; display: block; }
+  #film text { font-family: var(--font); }
+  #film .mono { font-family: var(--mono); }
+  .controls {
+    position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+    width: min(980px, calc(100vw - 24px)); box-sizing: border-box;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 10px 14px; border-radius: 14px;
+    background: rgba(14, 17, 25, .86); border: 1px solid #232837; backdrop-filter: blur(8px);
+    font: 13px/1.2 var(--font); transition: opacity .3s;
+  }
+  .controls.idle { opacity: 0; pointer-events: none; }
+  .controls button, .controls a {
+    font: 600 13px/1 var(--font); color: #e8eaf0; background: #181d2a; border: 1px solid #2f3548;
+    border-radius: 8px; padding: 8px 11px; cursor: pointer; text-decoration: none; white-space: nowrap;
+  }
+  .controls button:hover, .controls a:hover { border-color: #4a5370; }
+  #scrub { flex: 1 1 240px; accent-color: #8b6cf6; min-width: 160px; }
+  #time { font: 12px var(--mono); color: #a4abbd; min-width: 96px; text-align: center; }
+  .chapters { display: flex; gap: 4px; flex-wrap: wrap; }
+  .chapters button { padding: 6px 8px; font-size: 12px; color: #a4abbd; }
+  .chapters button.on { color: #fff; background: #8b6cf6; border-color: #8b6cf6; }
+  body.capture .controls, body.embed .controls { display: none; }
+  @media (max-width: 640px) { .chapters { display: none; } .controls { gap: 6px; padding: 8px; } }
+</style>
+<script>
+  (function () {
+    var l = null, q = new URLSearchParams(location.search);
+    if (q.get('lang') === 'en' || q.get('lang') === 'zh') l = q.get('lang');
+    else { try { l = localStorage.getItem('gv-lang'); } catch (e) { /* ignore */ } }
+    if (!l) l = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+    window.__lang = l;
+    document.documentElement.lang = l === 'en' ? 'en' : 'zh-CN';
+  })();
+</script>
+</head>
+<body>
+<div class="stage">
+  <svg id="film" viewBox="0 0 1920 1080" role="img" aria-label="GeoVerse Labs film"></svg>
+</div>
+<div class="controls" id="controls">
+  <button type="button" id="play" aria-label="Play / pause">❚❚</button>
+  <input type="range" id="scrub" min="0" max="52000" step="10" value="0" aria-label="Seek">
+  <span id="time">00:00 / 00:52</span>
+  <div class="chapters" id="chapters"></div>
+  <button type="button" id="lang">EN</button>
+  <a id="dl" href="../assets/film/geoverse-film-zh.mp4" download>MP4 ↓</a>
+  <button type="button" id="fs" aria-label="Fullscreen">⛶</button>
+  <a href="../">GeoVerse Labs ↗</a>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var NS = 'http://www.w3.org/2000/svg';
+  var svg = document.getElementById('film');
+  var Q = new URLSearchParams(location.search);
+  var CAPTURE = Q.get('capture') === '1';
+  var EMBED = Q.get('embed') === '1';
+  if (CAPTURE) document.body.classList.add('capture');
+  if (EMBED) document.body.classList.add('embed');
+  var LANG = window.__lang;
+  var TOTAL = 52;
+
+  /* ---------------- helpers ---------------- */
+  function el(tag, attrs, parent) {
+    var e = document.createElementNS(NS, tag);
+    if (attrs) for (var k in attrs) e.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(e);
+    return e;
+  }
+  function set(e, attrs) { for (var k in attrs) e.setAttribute(k, attrs[k]); }
+  function clamp(v, a, b) { return Math.max(a === undefined ? 0 : a, Math.min(b === undefined ? 1 : b, v)); }
+  function seg(t, a, b) { return clamp((t - a) / (b - a)); }
+  function ease(x) { return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; }
+  function easeOut(x) { return 1 - Math.pow(1 - x, 3); }
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function rng(seed) { var s = seed; return function () { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; }; }
+  var I18N = [];
+  function txt(parent, attrs, zh, en) {
+    var t = el('text', attrs, parent);
+    I18N.push({ el: t, zh: zh, en: en });
+    t.textContent = LANG === 'en' ? en : zh;
+    return t;
+  }
+  function relabel() {
+    I18N.forEach(function (r) { r.el.textContent = LANG === 'en' ? r.en : r.zh; });
+    fitPills();
+  }
+  var PILLS = [];
+  function pill(parent, x, y, color, zh, en, opts) {
+    opts = opts || {};
+    var g = el('g', { transform: 'translate(' + x + ' ' + y + ')' }, parent);
+    var h = opts.h || 52, fs = opts.fs || 24;
+    var r = el('rect', { x: 0, y: -h / 2, height: h, rx: h / 2, fill: opts.fill || 'rgba(16,19,26,.92)', stroke: opts.stroke || '#2f3548', 'stroke-width': 1.5 }, g);
+    var dot = el('circle', { cx: h / 2, cy: 0, r: fs * .3, fill: color }, g);
+    var t = txt(g, { x: h / 2 + fs * .75, y: fs * .36, 'font-size': fs, 'font-weight': opts.weight || 600, fill: opts.textFill || '#e8eaf0', class: opts.mono ? 'mono' : '' }, zh, en === undefined ? zh : en);
+    var p = { g: g, rect: r, text: t, h: h, fs: fs, align: opts.align || 'left', x: x, y: y, dot: dot };
+    PILLS.push(p);
+    return p;
+  }
+  function fitPills() {
+    PILLS.forEach(function (p) {
+      var w = p.text.getComputedTextLength() + p.h / 2 + p.fs * .75 + p.h * .45;
+      p.rect.setAttribute('width', w);
+      p.w = w;
+      if (p.align === 'right') p.g.setAttribute('transform', 'translate(' + (p.x - w) + ' ' + p.y + ')');
+      if (p.align === 'center') p.g.setAttribute('transform', 'translate(' + (p.x - w / 2) + ' ' + p.y + ')');
+    });
+  }
+  function caption(g, zh, en, subZh, subEn) {
+    var c = el('g', {}, g);
+    var main = txt(c, { x: 960, y: 940, 'text-anchor': 'middle', 'font-size': 54, 'font-weight': 700, fill: '#f2f4f8' }, zh, en);
+    var sub = subZh ? txt(c, { x: 960, y: 1000, 'text-anchor': 'middle', 'font-size': 29, fill: '#a4abbd' }, subZh, subEn) : null;
+    return {
+      g: c,
+      show: function (lt, a, b) {
+        var i = easeOut(seg(lt, a, a + .6)), o = b === undefined ? 1 : 1 - seg(lt, b, b + .4);
+        c.setAttribute('opacity', Math.min(i, o));
+        c.setAttribute('transform', 'translate(0 ' + (1 - i) * 18 + ')');
+      }
+    };
+  }
+
+  /* ---------------- defs + backdrop ---------------- */
+  var defs = el('defs');
+  defs.innerHTML =
+    '<linearGradient id="brand" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f8cff"/><stop offset=".5" stop-color="#8b6cf6"/><stop offset="1" stop-color="#2fbf8a"/></linearGradient>' +
+    '<linearGradient id="brandH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4f8cff"/><stop offset=".5" stop-color="#b39dff"/><stop offset="1" stop-color="#2fbf8a"/></linearGradient>' +
+    '<radialGradient id="vig" cx=".5" cy=".45" r=".75"><stop offset="0" stop-color="#101626"/><stop offset=".6" stop-color="#070a10"/><stop offset="1" stop-color="#030406"/></radialGradient>' +
+    '<pattern id="dots" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1.2" fill="#1a2030"/></pattern>' +
+    '<filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>' +
+    '<filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="22"/></filter>' +
+    '<clipPath id="frameClip"><rect x="240" y="170" width="1440" height="630" rx="22"/></clipPath>' +
+    '<clipPath id="clipL"><rect id="clipLr" x="240" y="170" width="720" height="630"/></clipPath>' +
+    '<clipPath id="clipR"><rect id="clipRr" x="960" y="170" width="720" height="630"/></clipPath>';
+  el('rect', { width: 1920, height: 1080, fill: 'url(#vig)' });
+  el('rect', { width: 1920, height: 1080, fill: 'url(#dots)', opacity: .7 });
+  var glowBlob = el('circle', { cx: 960, cy: 470, r: 420, fill: '#8b6cf6', opacity: .08, filter: 'url(#soft)' });
+
+  var SCENES = [];
+  function scene(start, end, titleZh, titleEn) {
+    var g = el('g', { display: 'none' });
+    var s = { start: start, end: end, g: g, update: function () {}, zh: titleZh, en: titleEn };
+    SCENES.push(s);
+    return s;
+  }
+
+  /* =========================================================
+     S1 · ORIGIN  (0 – 6)
+     ========================================================= */
+  var s1 = scene(0, 6, '坐标', 'Origin');
+  (function () {
+    var root = el('g', {}, s1.g);
+    var globe = el('g', {}, root);
+    var R = 230;
+    var outer = el('circle', { r: R, fill: 'none', stroke: 'url(#brand)', 'stroke-width': 6, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, globe);
+    var mer = [];
+    for (var k = 0; k < 6; k++) mer.push(el('ellipse', { rx: R, ry: R, fill: 'none', stroke: '#8b6cf6', 'stroke-width': 2, opacity: 0 }, globe));
+    var par = [];
+    [-60, -30, 0, 30, 60].forEach(function (lat) {
+      var rx = R * Math.cos(lat * Math.PI / 180);
+      par.push(el('ellipse', { cx: 0, cy: -R * Math.sin(lat * Math.PI / 180), rx: rx, ry: rx * .16, fill: 'none', stroke: '#4f8cff', 'stroke-width': 2, opacity: 0 }, globe));
+    });
+    var D = { x: 92, y: -118 };
+    var rings = [0, 1].map(function () { return el('circle', { cx: D.x, cy: D.y, r: 10, fill: 'none', stroke: '#fcd34d', 'stroke-width': 3, opacity: 0 }, globe); });
+    var dot = el('circle', { cx: D.x, cy: D.y, r: 11, fill: '#fcd34d', opacity: 0, filter: 'url(#glow)' }, globe);
+    var coord = el('text', { x: 960, y: 790, 'text-anchor': 'middle', 'font-size': 34, fill: '#fcd34d', class: 'mono', 'letter-spacing': 2 }, root);
+    var COORD = '39.9087° N   116.3974° E';
+    var cap = caption(s1.g, '每一张地图，都从一个坐标开始。', 'Every map starts with a coordinate.');
+    s1.update = function (lt) {
+      set(outer, { 'stroke-dashoffset': 1 - ease(seg(lt, .2, 1.6)) });
+      var ph = lt * .55;
+      mer.forEach(function (m, i) {
+        set(m, { rx: Math.abs(R * Math.cos(ph + i * Math.PI / 6)), opacity: .5 * seg(lt, .6, 1.6) });
+      });
+      par.forEach(function (p) { p.setAttribute('opacity', .35 * seg(lt, .8, 1.8)); });
+      var a = seg(lt, 1.4, 1.8);
+      dot.setAttribute('opacity', a);
+      rings.forEach(function (r, i) {
+        var f = ((lt * 1.1) + i * .5) % 1;
+        set(r, { r: 12 + f * 46, opacity: a * (1 - f) });
+      });
+      var n = Math.floor(seg(lt, 1.8, 3.0) * COORD.length);
+      coord.textContent = COORD.slice(0, n) + (n < COORD.length && lt > 1.8 && Math.floor(lt * 4) % 2 ? '▍' : '');
+      coord.setAttribute('opacity', 1 - seg(lt, 4.9, 5.4));
+      cap.show(lt, 1.0, 4.9);
+      var z = 1 + 5 * ease(seg(lt, 4.9, 6.2));
+      globe.setAttribute('transform', 'translate(960 450) translate(' + D.x + ' ' + D.y + ') scale(' + z + ') translate(' + (-D.x) + ' ' + (-D.y) + ')');
+    };
+  })();
+
+  /* =========================================================
+     S2 · THREE COORDINATE SYSTEMS  (6 – 13)
+     ========================================================= */
+  var s2 = scene(6, 13, '坐标系', 'CRS');
+  (function () {
+    var tag = pill(s2.g, 120, 110, '#8b6cf6', 'GeoVerse SDK · 国内坐标系', 'GeoVerse SDK · China CRS');
+    var streets = el('g', { opacity: 0 }, s2.g);
+    var st = el('g', { transform: 'rotate(-8 960 520)' }, streets);
+    for (var x = 120; x <= 1800; x += 120) el('line', { x1: x, y1: 140, x2: x, y2: 900, stroke: x % 480 === 0 ? '#25314a' : '#161d2b', 'stroke-width': x % 480 === 0 ? 9 : 4 }, st);
+    for (var y = 160; y <= 900; y += 110) el('line', { x1: 80, y1: y, x2: 1840, y2: y, stroke: y === 600 ? '#25314a' : '#161d2b', 'stroke-width': y === 600 ? 9 : 4 }, st);
+    var C = { x: 820, y: 570 }, G = { x: 820 + 192, y: 570 - 56 }, B = { x: 820 + 390, y: 570 - 296 };
+    function marker(color, label, sub, left) {
+      var g = el('g', { opacity: 0 }, s2.g);
+      var dx = left ? -36 : 36, anchor = left ? 'end' : 'start';
+      el('circle', { r: 30, fill: color, opacity: .18 }, g);
+      el('circle', { r: 13, fill: color, stroke: '#05070b', 'stroke-width': 3 }, g);
+      var l = txt(g, { x: dx, y: -8, 'font-size': 30, 'font-weight': 700, fill: color, class: 'mono', 'text-anchor': anchor }, label[0], label[1]);
+      var s = txt(g, { x: dx, y: 28, 'font-size': 23, fill: '#a4abbd', 'text-anchor': anchor }, sub[0], sub[1]);
+      return { g: g, l: l, s: s };
+    }
+    var aW = el('line', { stroke: '#6f778b', 'stroke-width': 3, 'stroke-dasharray': '8 8' }, s2.g);
+    var aB = el('line', { stroke: '#6f778b', 'stroke-width': 3, 'stroke-dasharray': '8 8' }, s2.g);
+    var mB = marker('#fb7185', ['BD-09', 'BD-09'], ['百度 · +1378 m', 'Baidu · +1,378 m']);
+    var mG = marker('#fbbf24', ['GCJ-02', 'GCJ-02'], ['高德 / 腾讯 · +555 m', 'Amap / Tencent · +555 m']);
+    var mW = marker('#ffffff', ['WGS-84', 'WGS-84'], ['真实位置 · GPS', 'True position · GPS'], true);
+    var check = el('circle', { cx: C.x, cy: C.y, r: 40, fill: 'none', stroke: '#2fbf8a', 'stroke-width': 4, opacity: 0 }, s2.g);
+    var cap1 = caption(s2.g, '在中国，同一个点有三套坐标。', 'In China, one place has three sets of coordinates.',
+      'WGS-84 · GCJ-02 · BD-09——相差数百米，甚至上千米', 'WGS-84 · GCJ-02 · BD-09 — hundreds of metres, even a kilometre apart');
+    var cap2 = caption(s2.g, 'GeoVerse 对外恒为 WGS-84，纠偏在引擎里完成。', 'GeoVerse speaks WGS-84. Correction happens inside the engine.',
+      'OpenLayers 在投影层纠偏，MapLibre 在数据出入边界纠偏', 'At the projection layer in OpenLayers, at the data boundary in MapLibre');
+    s2.update = function (lt) {
+      tag.g.setAttribute('opacity', seg(lt, .1, .6));
+      streets.setAttribute('opacity', seg(lt, 0, .7));
+      var w = easeOut(seg(lt, .3, .8));
+      set(mW.g, { opacity: w, transform: 'translate(' + C.x + ' ' + C.y + ') scale(' + (.6 + .4 * w) + ')' });
+      var back = ease(seg(lt, 4.4, 5.4));
+      var g1 = ease(seg(lt, 1.2, 2.2)) * (1 - back), b1 = ease(seg(lt, 2.4, 3.4)) * (1 - back);
+      var gx = lerp(C.x, G.x, g1), gy = lerp(C.y, G.y, g1);
+      var bx = lerp(gx, B.x, b1), by = lerp(gy, B.y, b1);
+      set(mG.g, { opacity: seg(lt, 1.2, 1.5) * (1 - seg(lt, 5.1, 5.4)), transform: 'translate(' + gx + ' ' + gy + ')' });
+      set(mB.g, { opacity: seg(lt, 2.4, 2.7) * (1 - seg(lt, 5.1, 5.4)), transform: 'translate(' + bx + ' ' + by + ')' });
+      mG.s.setAttribute('opacity', seg(lt, 2.0, 2.4)); mB.s.setAttribute('opacity', seg(lt, 3.2, 3.6));
+      set(aW, { x1: C.x, y1: C.y, x2: gx, y2: gy, opacity: seg(lt, 1.4, 1.8) * (1 - back) });
+      set(aB, { x1: gx, y1: gy, x2: bx, y2: by, opacity: seg(lt, 2.6, 3.0) * (1 - back) });
+      var ck = seg(lt, 5.3, 5.9);
+      set(check, { opacity: ck * (1 - seg(lt, 6.6, 7)), r: 30 + ck * 26 });
+      streets.setAttribute('transform', 'translate(' + (1 - back) * -16 + ' ' + (1 - back) * 6 + ')');
+      cap1.show(lt, .7, 4.2);
+      cap2.show(lt, 4.6);
+    };
+  })();
+
+  /* =========================================================
+     S3 · DUAL ENGINE (SDK)  (13 – 20)
+     ========================================================= */
+  var s3 = scene(13, 20, '双引擎', 'Engines');
+  (function () {
+    var tag = pill(s3.g, 120, 110, '#8b6cf6', 'GeoVerse SDK', 'GeoVerse SDK');
+    var frame = el('g', { 'clip-path': 'url(#frameClip)' }, s3.g);
+    var r = rng(13);
+    function riverY(x) { return 520 + 80 * Math.sin((x - 240) / 230) - (x - 240) * .04; }
+    var riverD = 'M 200 ' + riverY(200);
+    for (var x = 220; x <= 1720; x += 20) riverD += ' L ' + x + ' ' + riverY(x).toFixed(1);
+    var blocks = [];
+    for (var bx = 250; bx < 1680; bx += 70) for (var by = 180; by < 800; by += 70) {
+      if (Math.abs(by + 20 - riverY(bx + 20)) < 75 || r() < .42) continue;
+      var w = 22 + r() * 30, h = 22 + r() * 30;
+      blocks.push([bx + 8 + r() * 10, by + 8 + r() * 10, w, h]);
+    }
+    var parks = ['M 300 210 L 520 200 L 540 330 L 330 360 Z', 'M 1300 640 L 1520 610 L 1560 760 L 1330 790 Z', 'M 820 210 L 980 220 L 960 300 L 800 290 Z'];
+    var majors = ['M 240 330 L 1680 300', 'M 240 700 L 1680 730', 'M 560 170 L 600 800', 'M 1180 170 L 1150 800', 'M 240 800 L 900 170'];
+    function city(st, clip) {
+      var g = el('g', { 'clip-path': 'url(#' + clip + ')' }, frame);
+      el('rect', { x: 240, y: 170, width: 1440, height: 630, fill: st.bg }, g);
+      var grid = el('g', { stroke: st.minor, 'stroke-width': st.minorW }, g);
+      for (var x2 = 240; x2 <= 1680; x2 += 70) el('line', { x1: x2, y1: 170, x2: x2 + 20, y2: 800 }, grid);
+      for (var y2 = 170; y2 <= 800; y2 += 70) el('line', { x1: 240, y1: y2, x2: 1680, y2: y2 - 14 }, grid);
+      parks.forEach(function (d) { el('path', { d: d, fill: st.park }, g); });
+      el('path', { d: riverD, fill: 'none', stroke: st.water, 'stroke-width': 64, 'stroke-linecap': 'round' }, g);
+      var bg = el('g', { fill: st.bldg }, g);
+      blocks.forEach(function (b) { el('rect', { x: b[0], y: b[1], width: b[2], height: b[3], rx: st.round }, bg); });
+      var mg = el('g', { fill: 'none', stroke: st.major, 'stroke-width': st.majorW, 'stroke-linecap': 'round', filter: st.glow ? 'url(#glow)' : null }, g);
+      if (!st.glow) mg.removeAttribute('filter');
+      majors.forEach(function (d) { el('path', { d: d }, mg); });
+      if (st.tiles) {
+        var tg = el('g', { stroke: 'rgba(79,140,255,.14)', 'stroke-width': 1.5 }, g);
+        for (var x3 = 240; x3 <= 1680; x3 += 256) el('line', { x1: x3, y1: 170, x2: x3, y2: 800 }, tg);
+        for (var y3 = 170; y3 <= 800; y3 += 256) el('line', { x1: 240, y1: y3, x2: 1680, y2: y3 }, tg);
+      }
+      return g;
+    }
+    city({ bg: '#0d1424', minor: '#1b2741', minorW: 3, park: '#13283d', water: '#1c3f70', bldg: '#18233c', round: 0, major: '#4f8cff', majorW: 9, tiles: true }, 'clipL');
+    city({ bg: '#0a1613', minor: '#163029', minorW: 3.5, park: '#113a2d', water: '#13493d', bldg: '#14302a', round: 5, major: '#2fbf8a', majorW: 10, glow: true }, 'clipR');
+    el('rect', { x: 240, y: 170, width: 1440, height: 630, rx: 22, fill: 'none', stroke: '#2f3548', 'stroke-width': 2 }, s3.g);
+    var divider = el('g', {}, s3.g);
+    el('rect', { x: -2, y: 170, width: 4, height: 630, fill: '#fff', opacity: .9 }, divider);
+    el('circle', { cx: 0, cy: 485, r: 26, fill: '#e8eaf0' }, divider);
+    el('text', { x: 0, y: 494, 'text-anchor': 'middle', 'font-size': 24, 'font-weight': 700, fill: '#0a0c11' }, divider).textContent = '‹ ›';
+    var cl = pill(s3.g, 268, 214, '#4f8cff', 'OpenLayers 10', 'OpenLayers 10');
+    var cr = pill(s3.g, 1652, 214, '#2fbf8a', 'MapLibre GL 5', 'MapLibre GL 5', { align: 'right' });
+    var code = el('g', { transform: 'translate(272 640)' }, s3.g);
+    el('rect', { width: 620, height: 128, rx: 16, fill: 'rgba(8,10,16,.9)', stroke: '#2f3548', 'stroke-width': 1.5 }, code);
+    var l1 = el('text', { x: 28, y: 52, 'font-size': 27, class: 'mono' }, code);
+    var l2 = el('text', { x: 28, y: 98, 'font-size': 27, class: 'mono' }, code);
+    function codeLine(t, engine, on, color) {
+      t.innerHTML = '<tspan fill="' + (on ? color : '#4a5370') + '">' + (on ? '▸ ' : '  ') + '</tspan>' +
+        '<tspan fill="' + (on ? '#7dd3fc' : '#3a4258') + '">createMap</tspan><tspan fill="' + (on ? '#cfd5e4' : '#3a4258') + '">({ engine: </tspan>' +
+        '<tspan fill="' + (on ? '#86efac' : '#3a4258') + '">\'' + engine + '\'</tspan><tspan fill="' + (on ? '#cfd5e4' : '#3a4258') + '"> })</tspan>';
+    }
+    var cap = caption(s3.g, '一套 API，两种渲染引擎。', 'One API. Two rendering engines.',
+      '坐标恒为 WGS-84；引擎独有能力走 getEngine() 逃生舱', 'Coordinates stay WGS-84; engine-only features through the getEngine() escape hatch');
+    var clipL = document.getElementById('clipLr'), clipR = document.getElementById('clipRr');
+    var lastActive = null;
+    s3.update = function (lt) {
+      tag.g.setAttribute('opacity', seg(lt, .1, .6));
+      var sx;
+      if (lt < 1) sx = 1680;
+      else if (lt < 2.4) sx = lerp(1680, 240, ease(seg(lt, 1, 2.4)));
+      else if (lt < 3.6) sx = lerp(240, 960, ease(seg(lt, 2.4, 3.6)));
+      else sx = 960 + 300 * Math.sin((lt - 3.6) * 1.5);
+      set(clipL, { width: Math.max(0, sx - 240) });
+      set(clipR, { x: sx, width: Math.max(0, 1680 - sx) });
+      divider.setAttribute('transform', 'translate(' + sx + ' 0)');
+      divider.setAttribute('opacity', seg(lt, .8, 1.1));
+      cl.g.setAttribute('opacity', clamp((sx - 300) / 300));
+      cr.g.setAttribute('opacity', clamp((1620 - sx) / 300));
+      var active = sx > 960 ? 'ol' : 'libre';
+      if (active !== lastActive) {
+        codeLine(l1, 'ol', active === 'ol', '#4f8cff');
+        codeLine(l2, 'libre', active === 'libre', '#2fbf8a');
+        lastActive = active;
+      }
+      code.setAttribute('opacity', seg(lt, 1.2, 1.7));
+      cap.show(lt, .6);
+    };
+  })();
+
+  /* =========================================================
+     S4 · EDITING & COLLABORATION (Live)  (20 – 27)
+     ========================================================= */
+  var s4 = scene(20, 27, '编辑协作', 'Editing');
+  (function () {
+    var tag = pill(s4.g, 120, 110, '#4f8cff', 'GeoVerse Live', 'GeoVerse Live');
+    var win = el('g', {}, s4.g);
+    el('rect', { x: 240, y: 160, width: 1440, height: 640, rx: 22, fill: '#0d111a', stroke: '#2f3548', 'stroke-width': 2 }, win);
+    el('path', { d: 'M 262 160 H 1658 A 22 22 0 0 1 1680 182 V 210 H 240 V 182 A 22 22 0 0 1 262 160 Z', fill: '#141823' }, win);
+    ['#fb7185', '#fbbf24', '#34d399'].forEach(function (c, i) { el('circle', { cx: 272 + i * 26, cy: 185, r: 7, fill: c, opacity: .8 }, win); });
+    txt(win, { x: 960, y: 194, 'text-anchor': 'middle', 'font-size': 22, fill: '#a4abbd' }, 'GeoVerse Live · 城市更新规划', 'GeoVerse Live · Urban renewal plan');
+    el('rect', { x: 240, y: 210, width: 70, height: 590, fill: '#10141e' }, win);
+    for (var i = 0; i < 7; i++) el('rect', { x: 257, y: 232 + i * 64, width: 36, height: 36, rx: 9, fill: i === 3 ? '#8b6cf6' : '#1d2333' }, win);
+    var map = el('g', {}, win);
+    el('rect', { x: 310, y: 210, width: 1060, height: 590, fill: '#0e1420' }, map);
+    var mg = el('g', { stroke: '#1a2233', 'stroke-width': 6 }, map);
+    el('line', { x1: 310, y1: 470, x2: 1370, y2: 500 }, mg); el('line', { x1: 760, y1: 210, x2: 820, y2: 800 }, mg);
+    el('line', { x1: 310, y1: 760, x2: 1370, y2: 610 }, mg);
+    var gl = el('g', { stroke: '#141b29', 'stroke-width': 2 }, map);
+    for (var x = 310; x < 1370; x += 60) el('line', { x1: x, y1: 210, x2: x, y2: 800 }, gl);
+    for (var y = 210; y < 800; y += 60) el('line', { x1: 310, y1: y, x2: 1370, y2: y }, gl);
+    // history panel
+    el('rect', { x: 1370, y: 210, width: 310, height: 590, fill: '#10141e' }, win);
+    el('path', { d: 'M 1370 210 V 800', stroke: '#232837', 'stroke-width': 2 }, win);
+    txt(win, { x: 1396, y: 254, 'font-size': 22, 'font-weight': 700, fill: '#e8eaf0' }, '版本历史', 'History');
+    var vers = [
+      ['v13', '三路合并 ✓', 'Three-way merge ✓', '#2fbf8a', 5.4],
+      ['v12', '移动顶点 · B', 'Move vertex · B', '#2fbf8a', 4.5],
+      ['v11', '新建要素 · A', 'New feature · A', '#8b6cf6', 2.8]
+    ];
+    var vEls = vers.map(function (v) {
+      var g = el('g', { opacity: 0 }, win);
+      el('rect', { x: 0, y: 0, width: 270, height: 64, rx: 12, fill: '#181d2a', stroke: '#2f3548' }, g);
+      el('circle', { cx: 24, cy: 32, r: 7, fill: v[3] }, g);
+      el('text', { x: 42, y: 41, 'font-size': 22, 'font-weight': 700, fill: '#e8eaf0', class: 'mono' }, g).textContent = v[0];
+      txt(g, { x: 98, y: 40, 'font-size': 18, fill: '#a4abbd' }, v[1], v[2]);
+      return { g: g, t: v[4] };
+    });
+    var P = [[560, 320], [860, 270], [1040, 410], [980, 630], [700, 690], [520, 520]];
+    var drag = [1110, 470];
+    var fill = el('path', { fill: '#8b6cf6', 'fill-opacity': 0, stroke: 'none' }, map);
+    var edge = el('path', { fill: 'none', stroke: '#b39dff', 'stroke-width': 4, 'stroke-linejoin': 'round' }, map);
+    var handles = P.map(function () { return el('rect', { width: 16, height: 16, x: -8, y: -8, fill: '#0e1420', stroke: '#b39dff', 'stroke-width': 3, opacity: 0 }, map); });
+    function cursor(color, name) {
+      var g = el('g', { opacity: 0 }, s4.g);
+      el('path', { d: 'M0 0 L0 34 L9 26 L16 42 L22 39 L15 24 L27 24 Z', fill: color, stroke: '#05070b', 'stroke-width': 2 }, g);
+      var lab = el('g', { transform: 'translate(24 46)' }, g);
+      var r = el('rect', { x: 0, y: 0, height: 32, rx: 8, fill: color }, lab);
+      var t = txt(lab, { x: 10, y: 23, 'font-size': 19, 'font-weight': 700, fill: '#05070b' }, name[0], name[1]);
+      return { g: g, r: r, t: t };
+    }
+    var cA = cursor('#b39dff', ['编辑者 A', 'Editor A']);
+    var cB = cursor('#5fe0b0', ['编辑者 B', 'Editor B']);
+    var bubble = el('g', { opacity: 0 }, s4.g);
+    var bub = el('rect', { x: 0, y: 0, height: 60, rx: 14, fill: '#f2f4f8' }, bubble);
+    el('path', { d: 'M 26 0 L 20 -18 L 48 0 Z', fill: '#f2f4f8' }, bubble);
+    var bubT = txt(bubble, { x: 20, y: 39, 'font-size': 22, 'font-weight': 600, fill: '#0a0c11' }, '边界已对齐道路 · 已解决 ✓', 'Boundary follows the road · Resolved ✓');
+    var cap = caption(s4.g, '专业编辑 · 版本历史 · 实时协作', 'Precise editing · Version history · Live collaboration',
+      '多人同时改图，冲突自动检测、按字段三路合并', 'Edit together — conflicts are detected and merged field by field');
+    function curPos(lt) {
+      // cursor A walks the vertices, then rests
+      var T0 = .3, dt = .38;
+      if (lt < T0) return [P[0][0] - 120, P[0][1] + 80];
+      for (var i = 0; i < P.length; i++) {
+        var a = T0 + i * dt;
+        if (lt < a + dt) {
+          var from = i === 0 ? [P[0][0] - 120, P[0][1] + 80] : P[i - 1];
+          var f = ease(seg(lt, a - (i === 0 ? 0 : dt * .9), a));
+          return [lerp(from[0], P[i][0], f), lerp(from[1], P[i][1], f)];
+        }
+      }
+      var f2 = ease(seg(lt, T0 + P.length * dt, T0 + P.length * dt + .35));
+      return [lerp(P[P.length - 1][0], P[0][0], f2), lerp(P[P.length - 1][1], P[0][1], f2)];
+    }
+    s4.update = function (lt) {
+      tag.g.setAttribute('opacity', seg(lt, .1, .6));
+      var T0 = .3, dt = .38;
+      var placed = Math.min(P.length, Math.max(0, Math.floor((lt - T0) / dt) + 1));
+      var dragF = ease(seg(lt, 3.3, 4.3));
+      var pts = P.map(function (p, i) { return i === 2 ? [lerp(p[0], drag[0], dragF), lerp(p[1], drag[1], dragF)] : p; });
+      var cp = curPos(lt);
+      var closed = lt > T0 + P.length * dt + .35;
+      var d = '';
+      for (var i = 0; i < placed; i++) d += (i ? ' L ' : 'M ') + pts[i][0] + ' ' + pts[i][1];
+      if (placed && !closed) d += ' L ' + cp[0] + ' ' + cp[1];
+      if (closed) d += ' Z';
+      edge.setAttribute('d', d || 'M 0 0');
+      fill.setAttribute('d', closed ? d : 'M 0 0');
+      fill.setAttribute('fill-opacity', .2 * seg(lt, 2.6, 3.0));
+      handles.forEach(function (h, i) { set(h, { opacity: i < placed ? 1 : 0, transform: 'translate(' + pts[i][0] + ' ' + pts[i][1] + ')', stroke: i === 2 && dragF > 0 && dragF < 1 ? '#5fe0b0' : '#b39dff' }); });
+      set(cA.g, { opacity: seg(lt, .1, .4) * (1 - seg(lt, 3.2, 3.6)), transform: 'translate(' + cp[0] + ' ' + cp[1] + ')' });
+      var bp = lt < 3.3 ? [lerp(1500, P[2][0], ease(seg(lt, 2.6, 3.3))), lerp(760, P[2][1], ease(seg(lt, 2.6, 3.3)))] : pts[2];
+      set(cB.g, { opacity: seg(lt, 2.6, 2.9), transform: 'translate(' + bp[0] + ' ' + bp[1] + ')' });
+      vEls.forEach(function (v, i) {
+        var a = easeOut(seg(lt, v.t, v.t + .4));
+        var slot = vEls.filter(function (w) { return lt >= w.t; }).indexOf(v);
+        var ytarget = 282 + (vEls.filter(function (w) { return lt >= w.t && w.t > v.t; }).length) * 78;
+        set(v.g, { opacity: a, transform: 'translate(' + (1390 + (1 - a) * 60) + ' ' + ytarget + ')' });
+        if (slot < 0) v.g.setAttribute('opacity', 0);
+      });
+      set(bubble, { opacity: easeOut(seg(lt, 5.0, 5.4)), transform: 'translate(' + (pts[3][0] - 30) + ' ' + (pts[3][1] + 36 + (1 - easeOut(seg(lt, 5.0, 5.4))) * 12) + ')' });
+      cap.show(lt, .6);
+    };
+    s4.fit = function () {
+      [cA, cB].forEach(function (c) { c.r.setAttribute('width', c.t.getComputedTextLength() + 20); });
+      bub.setAttribute('width', bubT.getComputedTextLength() + 40);
+    };
+  })();
+
+  /* =========================================================
+     S5 · AI RUNTIME (SAR)  (27 – 34)
+     ========================================================= */
+  var s5 = scene(27, 34, 'AI', 'AI');
+  (function () {
+    var tag = pill(s5.g, 120, 110, '#e879f9', 'GeoVerse SAR', 'GeoVerse SAR');
+    var map = el('g', {}, s5.g);
+    el('rect', { x: 240, y: 170, width: 800, height: 630, rx: 22, fill: '#0c111b', stroke: '#2f3548', 'stroke-width': 2 }, map);
+    el('path', { d: 'M 300 300 C 420 250 560 330 640 270 S 860 240 980 320 L 990 520 C 880 600 760 540 640 620 S 380 700 300 640 Z', fill: '#121a2a', stroke: '#1f2a40', 'stroke-width': 3 }, map);
+    el('path', { d: 'M 420 260 L 470 690 M 700 250 L 760 700 M 300 470 L 990 440', stroke: '#1a2335', 'stroke-width': 3, fill: 'none' }, map);
+    var r = rng(5);
+    var cities = [];
+    for (var i = 0; i < 16; i++) cities.push({ x: 320 + r() * 640, y: 260 + r() * 400, pop: Math.pow(r(), 2.2) });
+    cities.sort(function (a, b) { return b.pop - a.pop; });
+    var dots = cities.map(function (c, i) {
+      var g = el('g', { transform: 'translate(' + c.x + ' ' + c.y + ')' }, map);
+      var ring = el('circle', { r: 10, fill: 'none', stroke: '#ef4444', 'stroke-width': 3, opacity: 0 }, g);
+      var d = el('circle', { r: 7 + c.pop * 20, fill: '#4f8cff', 'fill-opacity': .75, stroke: '#9cc0ff', 'stroke-width': 2 }, g);
+      return { d: d, ring: ring, top: i < 5, base: 7 + c.pop * 20 };
+    });
+    var chat = el('g', {}, s5.g);
+    el('rect', { x: 1080, y: 170, width: 600, height: 630, rx: 22, fill: '#0e121b', stroke: '#2f3548', 'stroke-width': 2 }, chat);
+    txt(chat, { x: 1110, y: 218, 'font-size': 22, 'font-weight': 700, fill: '#e8eaf0' }, 'AI 助手 · 当前图层：城市', 'AI assistant · layer: cities');
+    var ub = el('g', { opacity: 0 }, chat);
+    el('rect', { x: 1110, y: 248, width: 540, height: 70, rx: 16, fill: '#8b6cf6' }, ub);
+    var uT = el('text', { x: 1134, y: 291, 'font-size': 22, 'font-weight': 600, fill: '#fff' }, ub);
+    var MSG = { zh: '把人口最多的 5 个城市标成红色', en: 'Highlight the 5 most populous cities in red' };
+    var steps = [
+      ['① 查询要素 · 按人口排序 · 前 5', '① Query features · by population · top 5', 1.5],
+      ['② 预览变更 · dryRun · 5 个要素', '② Preview change · dryRun · 5 features', 2.0],
+      ['③ 等待你的确认 → 提交', '③ Awaiting your approval → commit', 2.5]
+    ];
+    var sEls = steps.map(function (s, i) {
+      var g = el('g', { opacity: 0 }, chat);
+      el('rect', { x: 1110, y: 350 + i * 76, width: 540, height: 60, rx: 12, fill: '#141a26', stroke: '#2a3144' }, g);
+      var st = el('circle', { cx: 1136, cy: 380 + i * 76, r: 7, fill: '#fbbf24' }, g);
+      txt(g, { x: 1156, y: 387 + i * 76, 'font-size': 19, fill: '#cfd5e4', class: 'mono' }, s[0], s[1]);
+      return { g: g, st: st, t: s[2] };
+    });
+    var approve = el('g', { opacity: 0 }, chat);
+    var apR = el('rect', { x: 1110, y: 590, width: 200, height: 56, rx: 12, fill: '#2fbf8a' }, approve);
+    txt(approve, { x: 1210, y: 626, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 700, fill: '#05070b' }, '批准并提交', 'Approve');
+    var audit = el('g', { opacity: 0 }, chat);
+    el('rect', { x: 1110, y: 676, width: 540, height: 96, rx: 12, fill: '#141a26', stroke: '#2a3144' }, audit);
+    txt(audit, { x: 1134, y: 714, 'font-size': 21, fill: '#a4abbd', class: 'mono' }, '审计日志 · 3 次调用已入账', 'audit log · 3 invocations recorded', null);
+    txt(audit, { x: 1134, y: 752, 'font-size': 21, fill: '#e879f9', class: 'mono' }, '↶ 一次撤销，整组回退', '↶ one undo reverts the whole step');
+    var cap = caption(s5.g, 'AI 和人，走同一个漏斗。', 'AI goes through the same funnel as people.',
+      '可预览、可审计、可撤销——提交由你决定', 'Previewable, auditable, undoable — you decide what gets committed');
+    s5.update = function (lt) {
+      tag.g.setAttribute('opacity', seg(lt, .1, .6));
+      ub.setAttribute('opacity', seg(lt, .3, .6));
+      var m = LANG === 'en' ? MSG.en : MSG.zh;
+      uT.textContent = m.slice(0, Math.floor(seg(lt, .4, 1.3) * m.length));
+      sEls.forEach(function (s, i) {
+        s.g.setAttribute('opacity', easeOut(seg(lt, s.t, s.t + .3)));
+        s.st.setAttribute('fill', lt > (i < 2 ? s.t + .45 : 3.3) ? '#2fbf8a' : '#fbbf24');
+      });
+      var ap = seg(lt, 2.8, 3.1);
+      approve.setAttribute('opacity', ap * (1 - seg(lt, 3.9, 4.2) * .5));
+      apR.setAttribute('fill', lt > 3.2 && lt < 3.5 ? '#5fe0b0' : '#2fbf8a');
+      var red = seg(lt, 3.4, 4.0);
+      dots.forEach(function (d, i) {
+        if (!d.top) return;
+        var f = seg(lt, 3.4 + i * .08, 3.8 + i * .08);
+        set(d.d, { fill: f > .5 ? '#ef4444' : '#4f8cff', stroke: f > .5 ? '#fca5a5' : '#9cc0ff', r: d.base * (1 + .25 * Math.sin(f * Math.PI)) });
+        var pf = ((lt - 3.4) * .9 + i * .2) % 1;
+        set(d.ring, { r: d.base + 6 + pf * 26, opacity: red * (1 - pf) });
+      });
+      audit.setAttribute('opacity', easeOut(seg(lt, 4.3, 4.7)));
+      cap.show(lt, .6);
+    };
+  })();
+
+  /* =========================================================
+     S6 · SERVE  (34 – 40)
+     ========================================================= */
+  var s6 = scene(34, 40, '服务', 'Serve');
+  (function () {
+    var tag = pill(s6.g, 120, 110, '#fbbf24', 'GeoVerse Serve', 'GeoVerse Serve');
+    var src = ['PostGIS', 'MySQL 8', 'PMTiles', 'MBTiles', 'GeoJSON', 'GeoPackage'];
+    var out = ['MVT · XYZ', 'WMTS 1.0', 'TileJSON 3.0', 'OGC API – Features', 'MCP'];
+    var C = { x: 960, y: 470 };
+    var curves = [], parts = [];
+    var wires = el('g', { fill: 'none', stroke: '#232b3d', 'stroke-width': 3 }, s6.g);
+    var pg = el('g', {}, s6.g);
+    var srcP = src.map(function (s, i) {
+      var y = 225 + i * 92;
+      var p = pill(s6.g, 250, y, '#fbbf24', s, s, { h: 60, fs: 25 });
+      curves.push({ a: [560, y], c1: [700, y], c2: [660, C.y], b: [780, C.y], d: 0, i: i });
+      return p;
+    });
+    var outP = out.map(function (s, i) {
+      var y = 255 + i * 100;
+      var p = pill(s6.g, 1360, y, '#2fbf8a', s, s, { h: 60, fs: 25 });
+      curves.push({ a: [1140, C.y], c1: [1240, C.y], c2: [1240, y], b: [1360, y], d: 1, i: i });
+      return p;
+    });
+    curves.forEach(function (c) {
+      c.path = el('path', { d: 'M' + c.a + ' C' + c.c1 + ' ' + c.c2 + ' ' + c.b }, wires);
+      for (var k = 0; k < 3; k++) parts.push({ c: c, k: k, e: el('circle', { r: 6, fill: c.d ? '#5fe0b0' : '#fcd34d', opacity: 0 }, pg) });
+    });
+    var box = el('g', {}, s6.g);
+    var glow = el('rect', { x: 780, y: 360, width: 360, height: 220, rx: 26, fill: '#fbbf24', opacity: .14, filter: 'url(#soft)' }, box);
+    el('rect', { x: 780, y: 360, width: 360, height: 220, rx: 26, fill: '#11151f', stroke: '#fbbf24', 'stroke-width': 3 }, box);
+    el('text', { x: 960, y: 462, 'text-anchor': 'middle', 'font-size': 46, 'font-weight': 700, fill: '#fde68a', class: 'mono' }, box).textContent = 'geoverse';
+    txt(box, { x: 960, y: 510, 'text-anchor': 'middle', 'font-size': 20, fill: '#a4abbd' }, '单二进制 · 纯 Go · 无 CGO', 'single binary · pure Go · no CGO');
+    var log = el('g', {}, s6.g);
+    var LINES = [
+      'GET  /tiles/roads/14/13489/6208.pbf   200  cache hit',
+      'GET  /collections/cities/items?bbox=…  200  GeoJSON',
+      'GET  /tiles/places.json               200  TileJSON',
+      'GET  /tiles/roads/14/13490/6208.pbf   304  ETag',
+      'POST /mcp  tools/call  query_features  200'
+    ];
+    var logEls = LINES.map(function (l) { return el('text', { x: 960, y: 0, 'text-anchor': 'middle', 'font-size': 20, fill: '#6f778b', class: 'mono', opacity: 0 }, log); });
+    logEls.forEach(function (e, i) { e.textContent = LINES[i]; });
+    function bez(c, u) {
+      var v = 1 - u;
+      return [v * v * v * c.a[0] + 3 * v * v * u * c.c1[0] + 3 * v * u * u * c.c2[0] + u * u * u * c.b[0],
+              v * v * v * c.a[1] + 3 * v * v * u * c.c1[1] + 3 * v * u * u * c.c2[1] + u * u * u * c.b[1]];
+    }
+    s6.fit = function () {
+      curves.forEach(function (c) {
+        if (c.d) return;
+        var p = srcP[c.i];
+        c.a = [p.x + (p.w || 300) + 10, p.y];
+        c.c1 = [c.a[0] + 140, p.y];
+        c.path.setAttribute('d', 'M' + c.a + ' C' + c.c1 + ' ' + c.c2 + ' ' + c.b);
+      });
+    };
+    var cap = caption(s6.g, '一个二进制，把数据发布成标准服务。', 'One binary turns your data into standard services.',
+      'PostGIS · MySQL · PMTiles → MVT · WMTS · OGC API · MCP', 'PostGIS · MySQL · PMTiles → MVT · WMTS · OGC API · MCP');
+    s6.update = function (lt) {
+      tag.g.setAttribute('opacity', seg(lt, .1, .6));
+      srcP.forEach(function (p, i) { var a = easeOut(seg(lt, .1 + i * .08, .5 + i * .08)); set(p.g, { opacity: a, transform: 'translate(' + (250 - (1 - a) * 40) + ' ' + p.y + ')' }); });
+      outP.forEach(function (p, i) { var a = easeOut(seg(lt, 1.3 + i * .1, 1.7 + i * .1)); set(p.g, { opacity: a, transform: 'translate(' + (1360 + (1 - a) * 40) + ' ' + p.y + ')' }); });
+      box.setAttribute('opacity', easeOut(seg(lt, .5, .9)));
+      glow.setAttribute('opacity', .1 + .08 * Math.sin(lt * 4));
+      wires.setAttribute('opacity', seg(lt, .5, 1));
+      parts.forEach(function (p) {
+        var start = p.c.d ? 1.4 : .7;
+        if (lt < start) { p.e.setAttribute('opacity', 0); return; }
+        var u = ((lt - start) * .55 + p.k / 3 + p.c.i * .11) % 1;
+        var q = bez(p.c, u);
+        set(p.e, { cx: q[0], cy: q[1], opacity: Math.sin(u * Math.PI) });
+      });
+      var n = Math.floor(clamp((lt - 1.6) / .55, 0, LINES.length));
+      logEls.forEach(function (e, i) {
+        var vis = i < n && i >= n - 3;
+        var row = i - Math.max(0, n - 3);
+        set(e, { y: 650 + row * 34, opacity: vis ? (i === n - 1 ? 1 : .55) : 0, fill: i === n - 1 ? '#cfd5e4' : '#6f778b' });
+      });
+      cap.show(lt, .5);
+    };
+  })();
+
+  /* =========================================================
+     S7 · LINE FINDER  (40 – 46)
+     ========================================================= */
+  var s7 = scene(40, 46, '寻路', 'Routing');
+  (function () {
+    var tag = pill(s7.g, 120, 110, '#22d3ee', 'GeoVerse Line Finder', 'GeoVerse Line Finder');
+    var area = { x: 240, y: 170, w: 1000, h: 630 };
+    el('rect', { x: area.x, y: area.y, width: area.w, height: area.h, rx: 22, fill: '#0a1218', stroke: '#2f3548', 'stroke-width': 2 }, s7.g);
+    var r = rng(46), cols = 14, rows = 8, nodes = [], adj = [], edges = [];
+    var gx = (area.w - 120) / (cols - 1), gy = (area.h - 120) / (rows - 1);
+    for (var i = 0; i < rows; i++) for (var j = 0; j < cols; j++) {
+      nodes.push({ x: area.x + 60 + j * gx + (r() - .5) * gx * .55, y: area.y + 60 + i * gy + (r() - .5) * gy * .55 });
+      adj.push([]);
+    }
+    function id(i, j) { return i * cols + j; }
+    function add(a, b, fast) {
+      var dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y, L = Math.sqrt(dx * dx + dy * dy);
+      var e = { a: a, b: b, w: L * (fast ? .55 : 1), fast: fast };
+      edges.push(e); adj[a].push(e); adj[b].push(e);
+    }
+    for (i = 0; i < rows; i++) for (j = 0; j < cols; j++) {
+      if (j + 1 < cols && (i === 4 || r() < .85)) add(id(i, j), id(i, j + 1), i === 4);
+      if (i + 1 < rows && (j === 9 || r() < .8)) add(id(i, j), id(i + 1, j), j === 9);
+      if (i + 1 < rows && j + 1 < cols && r() < .12) add(id(i, j), id(i + 1, j + 1), false);
+    }
+    var base = el('g', { stroke: '#1d3340', 'stroke-linecap': 'round' }, s7.g);
+    edges.forEach(function (e) { el('line', { x1: nodes[e.a].x, y1: nodes[e.a].y, x2: nodes[e.b].x, y2: nodes[e.b].y, 'stroke-width': e.fast ? 7 : 3.5, stroke: e.fast ? '#24505e' : '#1d3340' }, base); });
+    // A* (admissible: straight line × cheapest weight factor)
+    var S = id(6, 0), T = id(1, 13);
+    var g = nodes.map(function () { return Infinity; }), par = nodes.map(function () { return null; }), done = nodes.map(function () { return false; }), order = [];
+    function h(u) { var dx = nodes[u].x - nodes[T].x, dy = nodes[u].y - nodes[T].y; return Math.sqrt(dx * dx + dy * dy) * .55; }
+    g[S] = 0; var open = [S];
+    while (open.length) {
+      var bi = 0; for (i = 1; i < open.length; i++) if (g[open[i]] + h(open[i]) < g[open[bi]] + h(open[bi])) bi = i;
+      var u = open.splice(bi, 1)[0]; if (done[u]) continue; done[u] = true; order.push(u); if (u === T) break;
+      adj[u].forEach(function (e) { var v = e.a === u ? e.b : e.a; if (done[v]) return; var nd = g[u] + e.w; if (nd < g[v]) { g[v] = nd; par[v] = e; open.push(v); } });
+    }
+    var path = [T]; var cur = T; while (cur !== S) { cur = par[cur].a === cur ? par[cur].b : par[cur].a; path.unshift(cur); }
+    var seen = el('path', { fill: 'none', stroke: 'rgba(34,211,238,.45)', 'stroke-width': 3.5, 'stroke-linecap': 'round' }, s7.g);
+    var settled = order.map(function (n) { return el('circle', { cx: nodes[n].x, cy: nodes[n].y, r: 5, fill: '#22d3ee', opacity: 0 }, s7.g); });
+    var routeD = path.map(function (n, k) { return (k ? 'L' : 'M') + nodes[n].x.toFixed(1) + ' ' + nodes[n].y.toFixed(1); }).join(' ');
+    var route = el('path', { d: routeD, fill: 'none', stroke: '#67e8f9', 'stroke-width': 9, 'stroke-linejoin': 'round', 'stroke-linecap': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1, filter: 'url(#glow)' }, s7.g);
+    [S, T].forEach(function (n, k) {
+      el('circle', { cx: nodes[n].x, cy: nodes[n].y, r: 20, fill: 'none', stroke: k ? '#fcd34d' : '#22d3ee', 'stroke-width': 5 }, s7.g);
+      el('circle', { cx: nodes[n].x, cy: nodes[n].y, r: 10, fill: '#fff' }, s7.g);
+    });
+    var algo = el('text', { x: area.x + 26, y: area.y + 44, 'font-size': 22, fill: '#6f778b', class: 'mono' }, s7.g);
+    // right panel
+    var panel = el('g', {}, s7.g);
+    var big = el('text', { x: 1290, y: 262, 'font-size': 86, 'font-weight': 800, fill: '#e8eaf0', class: 'mono' }, panel);
+    txt(panel, { x: 1294, y: 306, 'font-size': 25, fill: '#a4abbd' }, '个坐标的 OSM 路网 · 浏览器内建图', 'OSM coordinates · graph built in-browser');
+    var chips = [pill(panel, 1290, 362, '#22d3ee', '零依赖', 'Zero deps', { h: 50, fs: 22 }), pill(panel, 1450, 362, '#22d3ee', 'A* · Dijkstra · ALT', 'A* · Dijkstra · ALT', { h: 50, fs: 22 })];
+    var floors = el('g', { opacity: 0 }, s7.g);
+    var F = [['F3', 470], ['F2', 580], ['F1', 690]];
+    F.forEach(function (f) {
+      el('path', { d: 'M 1330 ' + f[1] + ' L 1600 ' + f[1] + ' L 1660 ' + (f[1] + 70) + ' L 1390 ' + (f[1] + 70) + ' Z', fill: 'rgba(34,211,238,.06)', stroke: '#24505e', 'stroke-width': 2.5 }, floors);
+      el('text', { x: 1300, y: f[1] + 44, 'font-size': 22, 'font-weight': 700, fill: '#6f778b', class: 'mono', 'text-anchor': 'end' }, floors).textContent = f[0];
+    });
+    var fr = el('path', { d: 'M 1410 742 L 1520 742 L 1520 522 L 1590 522', fill: 'none', stroke: '#67e8f9', 'stroke-width': 6, 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, floors);
+    el('rect', { x: 1508, y: 510, width: 24, height: 244, rx: 6, fill: 'none', stroke: '#fcd34d', 'stroke-width': 2, 'stroke-dasharray': '6 6' }, floors);
+    txt(floors, { x: 1545, y: 640, 'font-size': 20, fill: '#fcd34d' }, '电梯', 'Elevator');
+    var fl = txt(s7.g, { x: 1290, y: 800, 'font-size': 22, fill: '#a4abbd' }, '多楼层 · 电梯 / 楼梯 / 扶梯', 'Multi-level · elevators / stairs / escalators');
+    s7.fit = function () { chips[1].g.setAttribute('transform', 'translate(' + (1290 + chips[0].w + 12) + ' 362)'); };
+    var cap = caption(s7.g, '在浏览器里，算出最短的那条路。', 'Find the shortest path — right in the browser.',
+      '零依赖 TypeScript · 带权最短路 · 多楼层室内寻路', 'Zero-dependency TypeScript · weighted shortest paths · multi-level indoor routing');
+    s7.update = function (lt) {
+      tag.g.setAttribute('opacity', seg(lt, .1, .6));
+      var k = Math.floor(order.length * seg(lt, .4, 2.3));
+      var d = '';
+      for (var i = 0; i < k; i++) { var e = par[order[i]]; if (e) d += 'M' + nodes[e.a].x.toFixed(1) + ' ' + nodes[e.a].y.toFixed(1) + 'L' + nodes[e.b].x.toFixed(1) + ' ' + nodes[e.b].y.toFixed(1); }
+      seen.setAttribute('d', d || 'M0 0');
+      settled.forEach(function (c, i) { c.setAttribute('opacity', i < k ? (i > k - 5 && lt < 2.3 ? 1 : .7) : 0); });
+      route.setAttribute('stroke-dashoffset', 1 - ease(seg(lt, 2.3, 3.2)));
+      algo.textContent = 'A* · settled ' + k + ' / ' + nodes.length;
+      big.textContent = Math.round(135417 * easeOut(seg(lt, .3, 1.8))).toLocaleString('en-US');
+      panel.setAttribute('opacity', seg(lt, .2, .6));
+      chips.forEach(function (c, i) { c.g.setAttribute('opacity', seg(lt, 1.2 + i * .2, 1.6 + i * .2)); });
+      floors.setAttribute('opacity', seg(lt, 3.0, 3.4));
+      fr.setAttribute('stroke-dashoffset', 1 - ease(seg(lt, 3.3, 4.6)));
+      fl.setAttribute('opacity', seg(lt, 3.4, 3.8));
+      cap.show(lt, .5);
+    };
+  })();
+
+  /* =========================================================
+     S8 · FINALE  (46 – 52)
+     ========================================================= */
+  var s8 = scene(46, 52, '全景', 'Finale');
+  (function () {
+    var stack = el('g', {}, s8.g);
+    var ROWS = [
+      [['应用', 'Apps'], [['GeoVerse Live', '#4f8cff']]],
+      [['智能', 'AI'], [['GeoVerse SAR', '#e879f9'], ['GeoVerse Skills', '#fb7185']]],
+      [['前端', 'Client'], [['GeoVerse SDK', '#8b6cf6'], ['Line Finder', '#22d3ee']]],
+      [['服务', 'Serving'], [['GeoVerse Serve', '#fbbf24']]],
+      [['数据', 'Data'], [['mybatis-plus-geometry', '#34d399']]]
+    ];
+    var rows = ROWS.map(function (row, i) {
+      var g = el('g', { opacity: 0 }, stack);
+      var y = 250 + i * 104;
+      el('rect', { x: 480, y: y - 42, width: 960, height: 84, rx: 18, fill: 'rgba(20,24,35,.85)', stroke: '#232837', 'stroke-width': 1.5 }, g);
+      txt(g, { x: 516, y: y + 9, 'font-size': 22, 'font-weight': 600, fill: '#6f778b', class: 'mono', 'letter-spacing': 2 }, row[0][0].toUpperCase(), row[0][1].toUpperCase());
+      var ps = row[1].map(function (p, k) { return pill(g, 690 + k * 330, y, p[1], p[0], p[0], { h: 56, fs: 25 }); });
+      return { g: g, y: y, ps: ps };
+    });
+    var logo = el('g', { opacity: 0 }, s8.g);
+    var L = el('g', { transform: 'translate(960 400) scale(3.2) translate(-32 -32)' }, logo);
+    var lc = el('circle', { cx: 32, cy: 32, r: 26, fill: 'none', stroke: 'url(#brand)', 'stroke-width': 5, pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, L);
+    var le = el('ellipse', { cx: 32, cy: 32, rx: 11, ry: 26, fill: 'none', stroke: 'url(#brand)', 'stroke-width': 2.6, opacity: 0 }, L);
+    var lh = el('path', { d: 'M7 32h50', stroke: 'url(#brand)', 'stroke-width': 2.6, opacity: 0 }, L);
+    var lr = el('path', { d: 'M17 44 27.5 30.5 37 36.5 47.5 20.5', fill: 'none', stroke: '#fff', 'stroke-width': 4.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, L);
+    var ld1 = el('circle', { cx: 47.5, cy: 20.5, r: 4.6, fill: '#fff', opacity: 0 }, L);
+    var ld2 = el('circle', { cx: 17, cy: 44, r: 3.2, fill: '#fff', opacity: 0 }, L);
+    var word = el('text', { x: 960, y: 640, 'text-anchor': 'middle', 'font-size': 104, 'font-weight': 800, fill: '#f2f4f8', 'letter-spacing': 1, opacity: 0 }, s8.g);
+    word.innerHTML = 'GeoVerse <tspan fill="#b39dff" font-weight="500">Labs</tspan>';
+    var tagline = txt(s8.g, { x: 960, y: 722, 'text-anchor': 'middle', 'font-size': 38, fill: '#a4abbd', opacity: 0 }, '为中国坐标系而生的 Web 地图基础设施', "Mapping infrastructure for the modern web, built for China's coordinate systems");
+    var url = el('text', { x: 960, y: 810, 'text-anchor': 'middle', 'font-size': 32, fill: '#b39dff', class: 'mono', opacity: 0 }, s8.g);
+    url.textContent = 'geoverselabs.github.io/.github';
+    var bar = el('rect', { x: 760, y: 846, width: 400, height: 4, rx: 2, fill: 'url(#brandH)', opacity: 0 }, s8.g);
+    s8.update = function (lt) {
+      rows.forEach(function (r, i) {
+        var a = easeOut(seg(lt, .15 + i * .16, .55 + i * .16));
+        set(r.g, { opacity: a, transform: 'translate(0 ' + (1 - a) * 30 + ')' });
+      });
+      var out = ease(seg(lt, 2.5, 3.1));
+      stack.setAttribute('opacity', 1 - out);
+      stack.setAttribute('transform', 'translate(960 450) scale(' + (1 - .12 * out) + ') translate(-960 -450)');
+      var a = seg(lt, 2.8, 3.1);
+      logo.setAttribute('opacity', a);
+      lc.setAttribute('stroke-dashoffset', 1 - ease(seg(lt, 2.8, 3.6)));
+      le.setAttribute('opacity', .75 * seg(lt, 3.2, 3.6)); lh.setAttribute('opacity', .75 * seg(lt, 3.3, 3.7));
+      lr.setAttribute('stroke-dashoffset', 1 - ease(seg(lt, 3.4, 4.0)));
+      ld2.setAttribute('opacity', seg(lt, 3.4, 3.5)); ld1.setAttribute('opacity', seg(lt, 3.9, 4.0));
+      var w = easeOut(seg(lt, 3.6, 4.1));
+      set(word, { opacity: w, transform: 'translate(0 ' + (1 - w) * 20 + ')' });
+      tagline.setAttribute('opacity', easeOut(seg(lt, 4.0, 4.5)));
+      url.setAttribute('opacity', easeOut(seg(lt, 4.3, 4.8)));
+      bar.setAttribute('opacity', seg(lt, 4.4, 4.9));
+      bar.setAttribute('width', 400 * ease(seg(lt, 4.4, 5.2)));
+      bar.setAttribute('x', 960 - 200 * ease(seg(lt, 4.4, 5.2)));
+    };
+  })();
+
+  /* ---------------- global chrome ---------------- */
+  var brand = el('g', { transform: 'translate(1800 110)' });
+  var bl = el('g', { transform: 'translate(-300 -20) scale(.62)' }, brand);
+  el('circle', { cx: 32, cy: 32, r: 26, fill: 'none', stroke: 'url(#brand)', 'stroke-width': 5 }, bl);
+  el('path', { d: 'M17 44 27.5 30.5 37 36.5 47.5 20.5', fill: 'none', stroke: '#fff', 'stroke-width': 4.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, bl);
+  var bt = el('text', { x: 0, y: 9, 'text-anchor': 'end', 'font-size': 28, 'font-weight': 700, fill: '#cfd5e4' }, brand);
+  bt.innerHTML = 'GeoVerse <tspan fill="#b39dff" font-weight="500">Labs</tspan>';
+  var prog = el('rect', { x: 0, y: 1074, width: 0, height: 6, fill: 'url(#brandH)', opacity: .9 });
+
+  /* ---------------- renderer ---------------- */
+  var X = .35; // crossfade half-width (s)
+  function render(t) {
+    t = ((t % TOTAL) + TOTAL) % TOTAL;
+    SCENES.forEach(function (s, i) {
+      var a = s.start - (i === 0 ? 0 : X), b = s.end + (i === SCENES.length - 1 ? 0 : X);
+      if (t < a || t >= b) { s.g.setAttribute('display', 'none'); return; }
+      s.g.removeAttribute('display');
+      var fi = i === 0 ? 1 : seg(t, s.start - X, s.start + X);
+      var fo = i === SCENES.length - 1 ? 1 : 1 - seg(t, s.end - X, s.end + X);
+      s.g.setAttribute('opacity', Math.min(fi, fo));
+      s.update(t - s.start);
+    });
+    brand.setAttribute('opacity', (1 - seg(t, 45.6, 46.3)) * seg(t, .3, 1));
+    glowBlob.setAttribute('opacity', .06 + .03 * Math.sin(t * .8));
+    prog.setAttribute('width', 1920 * t / TOTAL);
+  }
+
+  function fitAll() { fitPills(); SCENES.forEach(function (s) { if (s.fit) s.fit(); }); }
+
+  /* ---------------- playback ---------------- */
+  var playing = !CAPTURE, t0 = 0, offset = 0, current = 0;
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (Q.get('t')) offset = parseFloat(Q.get('t')) || 0;
+  if (reduce && !CAPTURE && !Q.get('t')) { playing = false; offset = 50; }
+  var playBtn = document.getElementById('play'), scrub = document.getElementById('scrub'), time = document.getElementById('time');
+  var langBtn = document.getElementById('lang'), dl = document.getElementById('dl'), chaptersEl = document.getElementById('chapters');
+  function fmt(s) { s = Math.floor(s); return '00:' + (s < 10 ? '0' : '') + s; }
+  function syncUI() {
+    playBtn.textContent = playing ? '❚❚' : '▶';
+    scrub.value = Math.round(current * 1000);
+    time.textContent = fmt(current) + ' / 00:52';
+    Array.prototype.forEach.call(chaptersEl.children, function (b, i) {
+      b.classList.toggle('on', current >= SCENES[i].start && current < SCENES[i].end);
+    });
+  }
+  SCENES.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.dataset.i = i;
+    b.addEventListener('click', function () { seek(s.start + .01); });
+    chaptersEl.appendChild(b);
+  });
+  function labelChapters() {
+    Array.prototype.forEach.call(chaptersEl.children, function (b, i) { b.textContent = (i + 1) + ' ' + (LANG === 'en' ? SCENES[i].en : SCENES[i].zh); });
+    langBtn.textContent = LANG === 'en' ? '中文' : 'EN';
+    dl.setAttribute('href', '../assets/film/geoverse-film-' + (LANG === 'en' ? 'en' : 'zh') + '.mp4');
+    document.title = LANG === 'en' ? 'GeoVerse Labs — Film' : 'GeoVerse Labs — 宣传片';
+  }
+  function seek(s) { offset = clamp(s, 0, TOTAL - .001); t0 = performance.now(); current = offset; render(current); syncUI(); }
+  function tick(now) {
+    if (playing) {
+      current = (offset + (now - t0) / 1000) % TOTAL;
+      render(current);
+      syncUI();
+    }
+    requestAnimationFrame(tick);
+  }
+  playBtn.addEventListener('click', function () { playing = !playing; seek(current); });
+  scrub.addEventListener('input', function () { playing = false; seek(scrub.value / 1000); });
+  langBtn.addEventListener('click', function () {
+    LANG = LANG === 'en' ? 'zh' : 'en';
+    try { localStorage.setItem('gv-lang', LANG); } catch (e) { /* ignore */ }
+    document.documentElement.lang = LANG === 'en' ? 'en' : 'zh-CN';
+    relabel(); fitAll(); labelChapters(); render(current);
+  });
+  document.getElementById('fs').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey || e.metaKey || e.altKey) return; // leave browser shortcuts (Ctrl+L, Ctrl+F …) alone
+    if (e.target === scrub && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) return; // the range input seeks itself
+    if (e.key === ' ') { e.preventDefault(); playing = !playing; seek(current); }
+    else if (e.key === 'ArrowRight') seek(current + 2);
+    else if (e.key === 'ArrowLeft') seek(current - 2);
+    else if (e.key >= '1' && e.key <= '8') seek(SCENES[+e.key - 1].start + .01);
+    else if (e.key === 'l' || e.key === 'L') langBtn.click();
+    else if (e.key === 'f' || e.key === 'F') document.getElementById('fs').click();
+  });
+  var controls = document.getElementById('controls'), idleTimer = null;
+  function wake() { controls.classList.remove('idle'); clearTimeout(idleTimer); idleTimer = setTimeout(function () { controls.classList.add('idle'); }, 2600); }
+  ['mousemove', 'touchstart', 'keydown'].forEach(function (ev) { document.addEventListener(ev, wake, { passive: true }); });
+
+  labelChapters();
+  var ready = (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () { fitAll(); render(current); });
+  window.__render = function (t) { current = t; render(t); };
+  window.__fit = function () { relabel(); fitAll(); render(current); };
+  window.__ready = ready;
+  window.__total = TOTAL;
+  seek(offset);
+  if (!CAPTURE) { wake(); requestAnimationFrame(tick); }
+})();
+</script>
+</body>
+</html>

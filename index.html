@@ -1,0 +1,1101 @@
+<!doctype html>
+<html lang="zh-CN" data-title-zh="GeoVerse Labs — 为中国坐标系而生的 Web 地图基础设施" data-title-en="GeoVerse Labs — Mapping infrastructure for the modern web">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoVerse Labs — 为中国坐标系而生的 Web 地图基础设施</title>
+<meta name="description" content="GeoVerse Labs 打造空间应用工具链：双引擎地图 SDK、协作式地理数据编辑平台、Go 瓦片服务、AI-native 空间运行时与 GeoJSON 寻路库，原生支持 GCJ-02 / BD-09。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GeoVerse Labs">
+<meta property="og:title" content="GeoVerse Labs — Mapping infrastructure for the modern web">
+<meta property="og:description" content="双引擎地图 SDK · 协作编辑平台 · 瓦片服务 · AI 空间运行时 · GeoJSON 寻路。Built for China's coordinate systems.">
+<meta property="og:url" content="https://geoverselabs.github.io/.github/">
+<meta property="og:image" content="https://geoverselabs.github.io/.github/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0a0c11">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css">
+<script>
+  // Pick the language before first paint: ?lang= > saved choice > browser language.
+  (function () {
+    var l = null;
+    try {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q === 'en' || q === 'zh') { l = q; localStorage.setItem('gv-lang', q); }
+      else { l = localStorage.getItem('gv-lang'); }
+    } catch (e) { /* storage unavailable */ }
+    if (!l) l = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+    if (l === 'en') document.documentElement.classList.add('en');
+  })();
+</script>
+<style>
+  /* ---------- hero ---------- */
+  .hero { position: relative; padding: 64px 0 24px; overflow-x: clip; }
+  .hero::before {
+    content: ""; position: absolute; inset: -30% -10% auto; height: 680px; pointer-events: none;
+    background:
+      radial-gradient(closest-side at 30% 40%, rgba(79,140,255,.16), transparent 70%),
+      radial-gradient(closest-side at 70% 30%, rgba(139,108,246,.20), transparent 70%),
+      radial-gradient(closest-side at 60% 70%, rgba(47,191,138,.12), transparent 70%);
+  }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.02fr 1fr; gap: 48px; align-items: center; }
+  .eyebrow { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--text-2); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; background: var(--bg-2); }
+  .eyebrow b { color: var(--accent-2); font-weight: 600; }
+  .hero h1 { font-size: clamp(32px, 4.6vw, 56px); line-height: 1.14; margin: 20px 0 18px; letter-spacing: -.6px; font-weight: 760; }
+  .grad { background: linear-gradient(90deg, var(--ol), var(--accent-2) 50%, var(--libre)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .lead { font-size: clamp(16px, 1.8vw, 18.5px); color: var(--text-2); margin: 0 0 28px; max-width: 620px; }
+  .hero .pills { margin-top: 26px; }
+  .pill.ol::before, .pill.libre::before { content: "●"; margin-right: 6px; font-size: 10px; vertical-align: 1px; }
+  .pill.ol::before { color: var(--ol); }
+  .pill.libre::before { color: var(--libre); }
+
+  .viz { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: #0b0f17; box-shadow: 0 40px 100px -40px rgba(0,0,0,.85); aspect-ratio: 5 / 4; }
+  .viz canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y; cursor: ew-resize; }
+  .viz .chip { position: absolute; top: 12px; font: 600 12px/1 var(--font); padding: 6px 10px; border-radius: 999px; background: rgba(10,12,17,.72); border: 1px solid var(--line); display: inline-flex; gap: 6px; align-items: center; pointer-events: none; }
+  .viz .chip i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .viz .chip.l { left: 12px; } .viz .chip.r { right: 12px; }
+  .viz .readout { position: absolute; left: 12px; right: 12px; bottom: 12px; font: 11.5px/1.5 var(--mono); color: var(--text-2); background: rgba(10,12,17,.78); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; pointer-events: none; display: flex; flex-wrap: wrap; gap: 2px 14px; }
+  .viz .readout b { color: var(--text); font-weight: 600; }
+  .viz .readout .g { color: #fcd34d; }
+  .viz .algo { position: absolute; top: 44px; left: 14px; font: 11px/1.4 var(--mono); color: var(--text-3); pointer-events: none; }
+  .viz-cap { font-size: 12.5px; color: var(--text-3); margin-top: 10px; }
+
+  /* ---------- stats ---------- */
+  .stats { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 56px 0 0; }
+  .stat { background: var(--bg-2); padding: 18px 18px; }
+  .stat b { display: block; font-size: 26px; font-weight: 720; letter-spacing: -.3px; line-height: 1.2; }
+  .stat > span { font-size: 12.5px; color: var(--text-2); line-height: 1.5; display: block; margin-top: 4px; }
+
+  /* ---------- toolchain ---------- */
+  .chain { display: grid; grid-template-columns: 1.25fr 1fr; gap: 28px; align-items: start; }
+  .layers { display: grid; gap: 10px; }
+  .layer { display: grid; grid-template-columns: 112px 1fr; gap: 12px; align-items: stretch; }
+  .layer > .lname { font: 600 11.5px/1.3 var(--mono); letter-spacing: 1px; text-transform: uppercase; color: var(--text-3); display: flex; align-items: center; border-right: 1px dashed var(--line-2); padding-right: 10px; }
+  .layer > .row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .node { flex: 1 1 200px; display: block; border: 1px solid var(--line); background: var(--bg-2); border-radius: 12px; padding: 12px 14px; color: var(--text); position: relative; transition: border-color .2s, transform .2s, opacity .2s, background .2s; }
+  .node:hover { text-decoration: none; }
+  .node::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 3px; background: var(--c); }
+  .node b { display: block; font-size: 15px; font-weight: 650; }
+  .node span { display: block; font-size: 12.5px; color: var(--text-2); }
+  .layers.dim .node { opacity: .35; }
+  .layers.dim .node.on { opacity: 1; border-color: var(--c); background: color-mix(in srgb, var(--c) 9%, var(--bg-2)); transform: translateY(-1px); }
+  .rels { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+  .rels li { font-size: 14px; color: var(--text-2); padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); cursor: default; transition: border-color .2s; }
+  .rels li:hover, .rels li.on { border-color: var(--line-2); color: var(--text); }
+  .rels li em { font-style: normal; font-family: var(--mono); font-size: 12px; color: var(--accent-2); display: block; margin-bottom: 2px; }
+
+  /* ---------- products ---------- */
+  .products { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .product { position: relative; display: flex; flex-direction: column; gap: 12px; background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 24px 24px 20px; overflow: hidden; }
+  .product::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: linear-gradient(90deg, var(--c), transparent 80%); }
+  .product::after { content: ""; position: absolute; right: -80px; top: -80px; width: 220px; height: 220px; background: radial-gradient(closest-side, color-mix(in srgb, var(--c) 18%, transparent), transparent); pointer-events: none; }
+  .product .head { display: flex; gap: 14px; align-items: center; }
+  .product .ico { width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center; background: color-mix(in srgb, var(--c) 14%, var(--panel)); border: 1px solid color-mix(in srgb, var(--c) 35%, var(--line)); color: var(--c); flex: none; }
+  .product .ico svg { width: 22px; height: 22px; }
+  .product h3 { margin: 0; font-size: 19px; }
+  .product .tagline { margin: 0; color: var(--text); font-size: 15px; }
+  .product .badges { display: flex; flex-wrap: wrap; gap: 6px; }
+  .product ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .product li { position: relative; padding-left: 18px; color: var(--text-2); font-size: 14px; line-height: 1.6; }
+  .product li::before { content: ""; position: absolute; left: 2px; top: .66em; width: 6px; height: 6px; border-radius: 2px; transform: rotate(45deg); background: var(--c); }
+  .product li code { font-size: 12.5px; color: var(--text); background: var(--panel); padding: 1px 5px; border-radius: 5px; }
+  .product .links { margin-top: auto; padding-top: 8px; display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; font-weight: 600; }
+  .product .links a { color: var(--c); }
+  .product.wide { grid-column: span 2; }
+  .product.wide .split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+
+  /* ---------- demos ---------- */
+  .demos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .demo { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--bg-2); color: var(--text); transition: border-color .2s, transform .2s; }
+  .demo:hover { text-decoration: none; border-color: var(--line-2); transform: translateY(-2px); }
+  .demo .pic { aspect-ratio: 16 / 8.2; overflow: hidden; background: var(--panel); border-bottom: 1px solid var(--line); position: relative; }
+  .demo .pic img { width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  .demo .pic .tag { position: absolute; left: 12px; top: 12px; font: 600 11.5px/1 var(--font); padding: 6px 9px; border-radius: 999px; background: rgba(10,12,17,.8); border: 1px solid var(--line); color: var(--text); }
+  .demo .pic .play { position: absolute; inset: 0; display: grid; place-items: end; padding: 14px; }
+  .demo .pic .play span { width: 54px; height: 54px; border-radius: 50%; background: rgba(139,108,246,.92); display: grid; place-items: center; box-shadow: 0 10px 40px rgba(139,108,246,.5); }
+  .demo .pic .play svg { width: 26px; height: 26px; fill: #fff; margin-left: 4px; }
+  .demo .txt { padding: 16px 20px 20px; }
+  .demo .txt b { font-size: 16px; display: block; margin-bottom: 4px; }
+  .demo .txt span { font-size: 14px; color: var(--text-2); }
+  .demo .txt .url { display: block; margin-top: 8px; font: 12px var(--mono); color: var(--accent-2); overflow-wrap: anywhere; }
+
+  /* ---------- coords ---------- */
+  .coords { display: grid; grid-template-columns: 1fr 1.1fr; gap: 32px; align-items: start; }
+  .cities { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  .cities button { font: 500 13px var(--font); color: var(--text-2); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 5px 12px; cursor: pointer; }
+  .cities button[aria-pressed="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+  .ctable { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .ctable th, .ctable td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .ctable th { color: var(--text-3); font-weight: 500; font-size: 12px; }
+  .ctable td.num { font-family: var(--mono); font-size: 12.5px; color: var(--text); white-space: nowrap; }
+  .ctable .sys { font-weight: 650; display: flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .ctable .sys i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .ctable small { display: block; color: var(--text-3); font-size: 11.5px; font-weight: 400; white-space: normal; }
+  .cplot { border: 1px solid var(--line); border-radius: 14px; background: #0b0f17; }
+  .cplot svg { display: block; width: 100%; height: auto; }
+  .cinput { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 12px; font-size: 13px; color: var(--text-3); }
+  .cinput input { width: 116px; font: 13px var(--mono); color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; }
+  .cinput button { font: 600 13px var(--font); color: var(--text); background: var(--panel); border: 1px solid var(--line-2); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .note { font-size: 12.5px; color: var(--text-3); margin-top: 10px; }
+
+  /* ---------- film ---------- */
+  .film { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); display: block; aspect-ratio: 16 / 9; background: #000; }
+  .film img { width: 100%; height: 100%; object-fit: cover; }
+  .film .play { position: absolute; inset: 0; display: grid; justify-items: center; align-items: start; padding-top: 7%; background: linear-gradient(180deg, transparent 50%, rgba(5,6,10,.7)); }
+  .film .play span { width: 84px; height: 84px; border-radius: 50%; background: rgba(139,108,246,.95); display: grid; place-items: center; box-shadow: 0 12px 50px rgba(139,108,246,.55); transition: transform .2s; }
+  .film:hover .play span { transform: scale(1.06); }
+  .film .play svg { width: 30px; height: 30px; fill: #fff; margin-left: 5px; }
+  .film .meta { position: absolute; left: 20px; bottom: 16px; right: 20px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font-size: 13px; color: var(--text-2); }
+  .film .meta b { color: var(--text); font-size: 16px; }
+  .film-links { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 14px; font-size: 14px; }
+
+  /* ---------- principles ---------- */
+  .principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .principle { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+  .principle .n { font: 600 12px var(--mono); color: var(--accent-2); }
+  .principle h3 { margin: 6px 0 8px; font-size: 17px; }
+  .principle p { margin: 0; color: var(--text-2); font-size: 14px; }
+  .principle code { font-size: 12.5px; color: var(--text); }
+  .tiers { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .tiers span { font: 11.5px var(--mono); padding: 3px 8px; border-radius: 6px; background: var(--panel); border: 1px solid var(--line); color: var(--text-2); }
+
+  /* ---------- open source table ---------- */
+  .oss-table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .oss-table th, .oss-table td { text-align: left; padding: 13px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .oss-table tr:last-child td { border-bottom: 0; }
+  .oss-table th { color: var(--text-3); font-weight: 500; font-size: 12.5px; background: var(--panel); }
+  .oss-table td { color: var(--text-2); }
+  .oss-table td a.repo { font-weight: 650; color: var(--text); }
+  .oss-table td .lang { font: 12px var(--mono); color: var(--text-3); }
+  .oss-table code { font-size: 12.5px; word-break: break-all; }
+  .table-scroll { overflow-x: auto; border-radius: var(--radius); }
+
+  /* ---------- news ---------- */
+  .news { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--line); display: grid; gap: 18px; }
+  .news li { position: relative; padding-left: 22px; }
+  .news li::before { content: ""; position: absolute; left: -7px; top: 7px; width: 12px; height: 12px; border-radius: 50%; background: var(--bg); border: 2px solid var(--c, var(--accent)); }
+  .news time { font: 12.5px var(--mono); color: var(--text-3); display: block; }
+  .news b { color: var(--text); }
+  .news p { margin: 2px 0 0; color: var(--text-2); font-size: 14.5px; }
+
+  /* ---------- contact ---------- */
+  .contact { margin: 104px 0 0; padding: 44px 40px; border-radius: 20px; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(79,140,255,.10), rgba(139,108,246,.14) 50%, rgba(47,191,138,.10)); }
+  .contact h2 { margin: 0 0 8px; }
+  .contact > p { margin: 0 0 24px; color: var(--text-2); max-width: 760px; }
+  .asks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .ask { display: block; padding: 18px 20px; border-radius: 14px; background: rgba(10,12,17,.55); border: 1px solid var(--line); color: var(--text); }
+  .ask:hover { text-decoration: none; border-color: var(--line-2); }
+  .ask b { display: block; font-size: 15.5px; margin-bottom: 4px; }
+  .ask span { font-size: 13.5px; color: var(--text-2); }
+  .ask em { display: block; margin-top: 10px; font-style: normal; font-size: 13px; font-weight: 600; color: var(--accent-2); }
+
+  @media (max-width: 980px) {
+    .hero-grid, .chain, .coords { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(3, 1fr); }
+    .principles { grid-template-columns: 1fr 1fr; }
+    .product.wide .split { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    .products, .demos { grid-template-columns: 1fr; }
+    .product.wide { grid-column: auto; }
+    .asks { grid-template-columns: 1fr; }
+    .layer { grid-template-columns: 1fr; gap: 6px; }
+    .layer > .lname { border-right: 0; padding: 0; }
+  }
+  @media (max-width: 560px) {
+    .hero { padding-top: 40px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .principles { grid-template-columns: 1fr; }
+    .contact { padding: 28px 20px; }
+    .viz { aspect-ratio: 1 / 1; }
+    .viz .readout { font-size: 10.5px; }
+    .product { padding: 20px 18px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="assets/logo.svg" alt="" width="26" height="26">GeoVerse <small>Labs</small></a>
+    <div class="nav-links">
+      <a href="#platform"><span class="zh">工具链</span><span class="en">Platform</span></a>
+      <a href="#products"><span class="zh">产品</span><span class="en">Products</span></a>
+      <a href="#demos"><span class="zh">在线体验</span><span class="en">Live demos</span></a>
+      <a href="#coords"><span class="zh">国内坐标系</span><span class="en">China CRS</span></a>
+      <a href="#principles"><span class="zh">工程方法</span><span class="en">Engineering</span></a>
+      <a href="#opensource"><span class="zh">开源</span><span class="en">Open source</span></a>
+      <a href="#contact"><span class="zh">联系</span><span class="en">Contact</span></a>
+    </div>
+    <div class="nav-tools">
+      <button class="lang-btn" type="button">EN</button>
+      <a class="gh-btn" href="https://github.com/GeoVerseLabs"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg><span>GitHub</span></a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow"><b>GeoVerse Labs</b><span class="zh">· 空间应用工具链</span><span class="en">· The spatial application toolchain</span></span>
+        <h1>
+          <span class="zh">为中国坐标系而生的<br><span class="grad">Web 地图基础设施</span></span>
+          <span class="en">Mapping infrastructure for the modern web, <span class="grad">built for China's coordinate systems</span></span>
+        </h1>
+        <p class="lead zh">从几何入库、瓦片发布，到双引擎渲染与编辑、多人协作平台和 AI 原生运行时——我们用一条可组合的工具链，把空间应用从数据库带到浏览器，再交给 AI。</p>
+        <p class="lead en">From geometry persistence and tile serving to dual-engine rendering and editing, a collaborative editing platform and an AI-native runtime — one composable toolchain that takes spatial apps from the database to the browser, and hands them to AI.</p>
+        <div class="cta">
+          <a class="btn primary" href="film/" data-film><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z"/></svg><span class="zh">观看宣传片 · 52 秒</span><span class="en">Watch the film · 52s</span></a>
+          <a class="btn" href="#demos"><span class="zh">在线体验</span><span class="en">Try the live demos</span></a>
+          <a class="btn" href="#contact"><span class="zh">预约演示</span><span class="en">Book a demo</span></a>
+        </div>
+        <ul class="pills">
+          <li class="pill ol">OpenLayers 10</li>
+          <li class="pill libre">MapLibre GL 5</li>
+          <li class="pill">GCJ-02 / BD-09</li>
+          <li class="pill">PostGIS · MVT · OGC API</li>
+          <li class="pill">MCP · AI Agents</li>
+        </ul>
+      </div>
+      <figure>
+        <div class="viz" id="viz">
+          <canvas id="hero-canvas" aria-label="Animated road network: A* search, split between an OpenLayers-style and a MapLibre-style rendering"></canvas>
+          <span class="chip l"><i style="background:var(--ol)"></i>OpenLayers</span>
+          <span class="chip r"><i style="background:var(--libre)"></i>MapLibre GL</span>
+          <span class="algo" id="viz-algo">A*</span>
+          <div class="readout" id="viz-readout" aria-live="off"></div>
+        </div>
+        <figcaption class="viz-cap"><span class="zh">示意动画：同一张路网，左右两种渲染风格，拖动画面对比；寻路为实时 A* 计算，坐标读数为真实的 WGS-84 → GCJ-02 换算。</span><span class="en">Illustrative animation: one road network in two rendering styles — drag to compare. Routing is a live A* search; the readout is a real WGS-84 → GCJ-02 conversion.</span></figcaption>
+      </figure>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>7</b><span class="zh">产品与开源项目，覆盖数据、服务、前端、AI</span><span class="en">products &amp; open-source projects, data to AI</span></div>
+      <div class="stat"><b>2</b><span class="zh">渲染引擎，一套 API</span><span class="en">rendering engines, one API</span></div>
+      <div class="stat"><b>25</b><span class="zh">编辑命令，内核不依赖任何地图库</span><span class="en">editing commands in a map-library-free core</span></div>
+      <div class="stat"><b><span class="zh">13.5 万</span><span class="en">135k</span></b><span class="zh">坐标的 OSM 路网，在浏览器里建图寻路</span><span class="en">OSM coordinates routed in the browser</span></div>
+      <div class="stat"><b>425</b><span class="zh">个 SAR 测试，无一依赖真实 LLM</span><span class="en">SAR tests, none needing a real LLM</span></div>
+      <div class="stat"><b>1</b><span class="zh">个纯 Go 二进制，发布瓦片与 OGC 服务</span><span class="en">pure-Go binary serving tiles &amp; OGC APIs</span></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ================= PLATFORM ================= -->
+  <section class="block" id="platform">
+    <p class="kicker">01 · Platform</p>
+    <h2><span class="zh">一条可组合的空间工具链</span><span class="en">One composable spatial toolchain</span></h2>
+    <p class="sub zh">每一层都能单独使用，组合起来就是一整套空间应用。把鼠标移到右侧的连接关系上，看看它们怎么接在一起。</p>
+    <p class="sub en">Every layer works on its own; together they form a complete spatial stack. Hover a relationship on the right to see how the pieces connect.</p>
+    <div class="chain">
+      <div class="layers" id="layers">
+        <div class="layer">
+          <div class="lname"><span class="zh">应用</span><span class="en">Apps</span></div>
+          <div class="row">
+            <a class="node" href="#p-live" data-id="live" style="--c:var(--c-live)"><b>GeoVerse Live</b><span class="zh">协作式地理数据编辑平台</span><span class="en">Collaborative geodata editing platform</span></a>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="lname"><span class="zh">智能</span><span class="en">AI</span></div>
+          <div class="row">
+            <a class="node" href="#p-sar" data-id="sar" style="--c:var(--c-sar)"><b>GeoVerse SAR</b><span class="zh">AI-native 空间应用运行时</span><span class="en">AI-native spatial runtime</span></a>
+            <a class="node" href="#p-skills" data-id="skills" style="--c:var(--c-skills)"><b>GeoVerse Skills</b><span class="zh">Agent 技能 + 布局 MCP</span><span class="en">Agent skills + layout MCP</span></a>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="lname"><span class="zh">前端</span><span class="en">Client</span></div>
+          <div class="row">
+            <a class="node" href="#p-sdk" data-id="sdk" style="--c:var(--c-sdk)"><b>GeoVerse SDK</b><span class="zh">双引擎渲染 + 编辑引擎</span><span class="en">Dual-engine rendering + editing</span></a>
+            <a class="node" href="#p-lf" data-id="lf" style="--c:var(--c-lf)"><b>Line Finder</b><span class="zh">GeoJSON 路网寻路</span><span class="en">GeoJSON network routing</span></a>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="lname"><span class="zh">服务</span><span class="en">Serving</span></div>
+          <div class="row">
+            <a class="node" href="#p-serve" data-id="serve" style="--c:var(--c-serve)"><b>GeoVerse Serve</b><span class="zh">MVT / PMTiles / OGC / MCP</span><span class="en">MVT / PMTiles / OGC / MCP</span></a>
+          </div>
+        </div>
+        <div class="layer">
+          <div class="lname"><span class="zh">数据</span><span class="en">Data</span></div>
+          <div class="row">
+            <a class="node" href="#p-mpg" data-id="mpg" style="--c:var(--c-mpg)"><b>mybatis-plus-geometry</b><span class="zh">Java ↔ PostGIS / MySQL 几何</span><span class="en">Java ↔ PostGIS / MySQL geometry</span></a>
+          </div>
+        </div>
+      </div>
+      <ul class="rels" id="rels">
+        <li data-ids="live sdk"><em>Live → SDK</em><span class="zh">Live 的前端直接消费 GeoVerse SDK：同一个项目可在 OpenLayers 与 MapLibre 间切换，编辑与同步契约来自 <code>editor-core</code>。</span><span class="en">Live's web client is built on the SDK — each project switches between OpenLayers and MapLibre, and editing/sync contracts come from <code>editor-core</code>.</span></li>
+        <li data-ids="live sar"><em>Live → SAR</em><span class="zh">SAR 内核嵌在浏览器里驱动 AI 助手：AI 的修改只落在本地会话，可撤销，提交由人决定。</span><span class="en">SAR's kernel runs in the browser behind Live's AI assistant — AI edits stay in the local session, undoable, until a human commits.</span></li>
+        <li data-ids="sar sdk"><em>SAR → SDK</em><span class="zh">SAR 的 <code>engine-geo</code> 零改动包装 <code>@geoverse/editor-core</code>，把编辑命令变成可审计的能力。</span><span class="en">SAR's <code>engine-geo</code> wraps <code>@geoverse/editor-core</code> unchanged, turning editing commands into auditable capabilities.</span></li>
+        <li data-ids="serve sdk live"><em>Serve → SDK / Live</em><span class="zh">Serve 只通过协议（MVT、PMTiles、OGC API）被消费，零代码依赖；Live 的图层可一键发布到 Serve。</span><span class="en">Serve is consumed purely over protocols (MVT, PMTiles, OGC API) — no code coupling; Live layers publish to Serve in one click.</span></li>
+        <li data-ids="mpg live"><em>Live → mybatis-plus-geometry</em><span class="zh">Live 后端用 mybatis-plus-geometry + PostGIS 存取要素几何。</span><span class="en">Live's backend persists feature geometry through mybatis-plus-geometry + PostGIS.</span></li>
+        <li data-ids="lf skills"><em>Line Finder · Skills</em><span class="zh">寻路库与布局引擎都是可内嵌的确定性计算：浏览器、Worker、Node 或 Agent 工具里都能跑。</span><span class="en">The routing library and the layout engine are embeddable, deterministic computation — in the browser, a Worker, Node or an agent tool.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= PRODUCTS ================= -->
+  <section class="block" id="products">
+    <p class="kicker">02 · Products</p>
+    <h2><span class="zh">产品与项目</span><span class="en">Products &amp; projects</span></h2>
+    <p class="sub zh">核心 SDK 与协作平台以商业方式提供；生态需要的基础构件以开源或源码可见方式公开，独立于核心 SDK 发布。</p>
+    <p class="sub en">The core SDK and the collaboration platform are commercial; the building blocks the ecosystem needs are open source or source-available, released separately from the SDK.</p>
+
+    <div class="products">
+      <!-- SDK -->
+      <article class="product" id="p-sdk" style="--c:var(--c-sdk)">
+        <div class="head">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3 2.5 8 12 13l9.5-5z"/><path d="m2.5 12.5 9.5 5 9.5-5"/><path d="m2.5 16.5 9.5 5 9.5-5" opacity=".55"/></svg></span>
+          <div><h3>GeoVerse SDK</h3><div class="badges"><span class="badge com"><i></i><span class="zh">商业产品 · 早期访问</span><span class="en">Commercial · early access</span></span></div></div>
+        </div>
+        <p class="tagline zh">一套地图 API，跑在 OpenLayers 或 MapLibre GL 任一引擎上。</p>
+        <p class="tagline en">One mapping API that runs on either OpenLayers or MapLibre GL.</p>
+        <ul class="zh">
+          <li>统一门面 <code>createMap({ engine })</code>，可按子路径锁定引擎、摇掉另一个；引擎独有能力走 <code>getEngine()</code> 逃生舱</li>
+          <li>高德、百度等国内底图就地纠偏（GCJ-02 / BD-09），对外坐标恒为 WGS-84</li>
+          <li>框架无关的编辑引擎：25 个编辑命令、撤销重做与宏撤销、开洞 / 切面 / 合并等拓扑工具、吸附辅助线、三路合并同步</li>
+          <li>Vue 与 React 官方绑定；8 个包，依赖方向由门禁强制</li>
+        </ul>
+        <ul class="en">
+          <li>Unified facade <code>createMap({ engine })</code>; lock an engine by subpath import and tree-shake the other; engine-only features through the <code>getEngine()</code> escape hatch</li>
+          <li>Chinese basemaps (GCJ-02 / BD-09) corrected in place — your coordinates always stay WGS-84</li>
+          <li>Framework-agnostic editing engine: 25 commands, undo/redo and macro undo, holes / split / merge topology tools, snap guides, three-way-merge sync</li>
+          <li>Official Vue and React bindings; 8 packages with dependency direction enforced by lint gates</li>
+        </ul>
+        <div class="links">
+          <a href="https://geoverse-7yh.pages.dev/"><span class="zh">在线 Playground ↗</span><span class="en">Playground ↗</span></a>
+          <a href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20SDK%20early%20access"><span class="zh">申请早期访问 / 授权</span><span class="en">Request early access</span></a>
+        </div>
+      </article>
+
+      <!-- Live -->
+      <article class="product" id="p-live" style="--c:var(--c-live)">
+        <div class="head">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/><path d="m13.5 13.5 4.5-4.5 1.5 1.5-4.5 4.5H13.5z" fill="currentColor" stroke="none" opacity=".9"/></svg></span>
+          <div><h3>GeoVerse Live</h3><div class="badges"><span class="badge com"><i></i><span class="zh">私有产品 · 可预约演示</span><span class="en">Private product · demos on request</span></span></div></div>
+        </div>
+        <p class="tagline zh">基于 GeoVerse SDK 的协作式地理数据编辑平台。</p>
+        <p class="tagline en">A collaborative geodata editing platform built on GeoVerse SDK.</p>
+        <ul class="zh">
+          <li>渲染引擎是项目的一个属性：OpenLayers ↔ MapLibre 一键切换，图层、样式与协作数据完全通用</li>
+          <li>20+ 绘制与拓扑工具、逐版本历史与回滚，乐观锁冲突检测 + 字段级三路合并</li>
+          <li>专题制图（自然断点 / 分位数 / 归一化 / 色觉友好色带）、实时协作与要素评论、AI 助手</li>
+          <li>免登录分享与 iframe 嵌入（可加密传输）；多租户 RBAC；Docker Compose 私有化部署</li>
+        </ul>
+        <ul class="en">
+          <li>The rendering engine is a project property — switch OpenLayers ↔ MapLibre; layers, styles and collaboration data carry over</li>
+          <li>20+ drawing and topology tools, per-version history and rollback, optimistic-lock conflict detection with field-level three-way merge</li>
+          <li>Thematic mapping (natural breaks, quantiles, normalisation, CVD-safe ramps), real-time co-editing with feature-anchored comments, an AI assistant</li>
+          <li>Login-free sharing and iframe embeds (with encrypted transport); multi-tenant RBAC; private deployment with Docker Compose</li>
+        </ul>
+        <div class="links">
+          <a href="live/"><span class="zh">产品手册 →</span><span class="en">Product brochure →</span></a>
+          <a href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20demo"><span class="zh">预约演示</span><span class="en">Book a demo</span></a>
+        </div>
+      </article>
+
+      <!-- Serve -->
+      <article class="product" id="p-serve" style="--c:var(--c-serve)">
+        <div class="head">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5" fill="currentColor" opacity=".35"/></svg></span>
+          <div><h3>GeoVerse Serve</h3><div class="badges"><span class="badge oss"><i></i>MIT</span><span class="badge">Go</span></div></div>
+        </div>
+        <p class="tagline zh">轻量地理数据分发服务——单二进制、纯 Go、零外部运行时依赖。</p>
+        <p class="tagline en">A lightweight geodata server — a single, pure-Go binary with zero external runtime dependencies.</p>
+        <ul class="zh">
+          <li>PostGIS（<code>ST_AsMVT</code> 下推）、MySQL 8 / MariaDB、PMTiles、MBTiles、GeoJSON、GeoPackage → MVT、WMTS、TileJSON、OGC API – Features</li>
+          <li>内置数据源控制台：真实连接测试、配置原子写回与热加载，数据库凭据不回显</li>
+          <li>两级缓存、ETag / 304、gzip、可选 API Key；<code>-doctor</code> 只读部署诊断</li>
+          <li>MCP 端点让 LLM 直接发现图层、查询要素；算法插件：最短路径、等时圈、路径匹配、DBSCAN</li>
+        </ul>
+        <ul class="en">
+          <li>PostGIS (<code>ST_AsMVT</code> push-down), MySQL 8 / MariaDB, PMTiles, MBTiles, GeoJSON, GeoPackage → MVT, WMTS, TileJSON, OGC API – Features</li>
+          <li>Built-in data-source console: real connection tests, atomic config write-back with hot reload, credentials never echoed</li>
+          <li>Two-tier cache, ETag / 304, gzip, optional API keys; <code>-doctor</code> read-only deployment checks</li>
+          <li>An MCP endpoint lets LLMs discover layers and query features; algorithm plugins: shortest path, isochrones, map matching, DBSCAN</li>
+        </ul>
+        <div class="links">
+          <a href="https://github.com/GeoVerseLabs/geoverse-map-server">GitHub ↗</a>
+        </div>
+      </article>
+
+      <!-- SAR -->
+      <article class="product" id="p-sar" style="--c:var(--c-sar)">
+        <div class="head">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2.5"/><path d="M9.5 2.5v3M14.5 2.5v3M9.5 18.5v3M14.5 18.5v3M2.5 9.5h3M2.5 14.5h3M18.5 9.5h3M18.5 14.5h3"/><path d="m12 9 .9 2.1L15 12l-2.1.9L12 15l-.9-2.1L9 12l2.1-.9z" fill="currentColor" stroke="none"/></svg></span>
+          <div><h3>GeoVerse SAR</h3><div class="badges"><span class="badge oss"><i></i>MIT</span><span class="badge pre"><i></i><span class="zh">技术预览</span><span class="en">Technical preview</span></span></div></div>
+        </div>
+        <p class="tagline zh">AI-native 空间应用运行时：人点 UI、AI 调工具、Agent 自主执行、外部 MCP 客户端，走同一个内核。</p>
+        <p class="tagline en">An AI-native runtime for spatial apps: UI clicks, AI tool calls, autonomous agents and external MCP clients share one kernel.</p>
+        <ul class="zh">
+          <li>能力描述符就是工具定义：同一份投影同时驱动 UI 命令面板、AI 工具目录与 MCP <code>tools/list</code></li>
+          <li>一切操作走单一漏斗 <code>dispatcher.invoke</code>：权限、校验、审计、事务日志回放长在内核里</li>
+          <li>领域状态撤销是一等公民：工作流合并成一次宏撤销；写操作可 <code>dryRun</code> 预览，交给人审批</li>
+          <li>内核只依赖 zod、不认识"地图"；自然语言不进内核——425 个测试无需真实 LLM</li>
+        </ul>
+        <ul class="en">
+          <li>A capability descriptor <em>is</em> a tool definition — one projection feeds the UI command palette, the AI tool catalogue and MCP <code>tools/list</code></li>
+          <li>Every operation goes through one funnel, <code>dispatcher.invoke</code>: permissions, validation, audit and journal replay live in the kernel</li>
+          <li>Domain-state undo is first class: workflows collapse into one macro undo; writes can <code>dryRun</code> for human approval</li>
+          <li>The kernel depends only on zod and doesn't know what a map is; natural language never enters it — 425 tests run without a real LLM</li>
+        </ul>
+        <div class="links">
+          <a href="https://github.com/GeoVerseLabs/geoverse-sar">GitHub ↗</a>
+        </div>
+      </article>
+
+      <!-- Line Finder (wide) -->
+      <article class="product wide" id="p-lf" style="--c:var(--c-lf)">
+        <div class="split">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div class="head">
+              <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19 9 11l5 4 6-10"/><circle cx="4" cy="19" r="2" fill="currentColor"/><circle cx="20" cy="5" r="2" fill="currentColor"/><circle cx="9" cy="11" r="1.4"/><circle cx="14" cy="15" r="1.4"/></svg></span>
+              <div><h3>GeoVerse Line Finder</h3><div class="badges"><span class="badge oss"><i></i>Apache-2.0</span><span class="badge">npm 0.3.0</span><span class="badge">TypeScript</span></div></div>
+            </div>
+            <p class="tagline zh">零依赖 TypeScript 库：在 GeoJSON 线网络上求带权最短路。</p>
+            <p class="tagline en">A zero-dependency TypeScript library for weighted shortest paths on GeoJSON line networks.</p>
+            <ul class="zh">
+              <li>A*（可选 ALT 地标加速）/ Dijkstra / 双向 Dijkstra 按名切换，也能注册自己的引擎</li>
+              <li>起终点吸附到线段任意位置；候选约束 + 全程择优；多途经点、跳过或直线兜底的失败策略</li>
+              <li><b>0.3.0</b>：多楼层室内寻路（电梯 / 楼梯 / 扶梯）、按节点编号建拓扑，建图提速约 2 倍</li>
+              <li>同一份 13.5 万坐标路网、300 次查询：306 ms，0 条非最短路；geojson-path-finder 需 11.6 s 且有 41 条非最短<sup>†</sup></li>
+            </ul>
+            <ul class="en">
+              <li>A* (optionally ALT-accelerated), Dijkstra and bidirectional Dijkstra, switchable by name — or register your own engine</li>
+              <li>Snap endpoints anywhere on a segment; constrained candidates with cost-optimal selection; multi-waypoint routes with skip / straight-line failure policies</li>
+              <li><b>0.3.0</b>: multi-level indoor routing (elevators, stairs, escalators), node-id topology, ~2× faster graph builds</li>
+              <li>Same 135k-coordinate network, 300 queries: 306 ms with 0 non-shortest routes; geojson-path-finder took 11.6 s and returned 41<sup>†</sup></li>
+            </ul>
+            <div class="links">
+              <a href="https://geoverselabs.github.io/geoverse-line-finder/"><span class="zh">在线示例 ↗</span><span class="en">Playground ↗</span></a>
+              <a href="https://www.npmjs.com/package/geoverse-line-finder">npm ↗</a>
+              <a href="https://github.com/GeoVerseLabs/geoverse-line-finder">GitHub ↗</a>
+            </div>
+            <p class="note zh">† 2026-09-11 基准，GPF large-network.json，300 对 × 5 轮取中位数；复现方法见仓库 <code>docs/BENCHMARK.md</code>。</p>
+            <p class="note en">† Benchmark of 2026-09-11 on GPF's large-network.json, 300 pairs × 5 rounds, median; reproduce via <code>docs/BENCHMARK.md</code> in the repo.</p>
+          </div>
+          <figure class="shot zoomable"><img src="assets/shots/line-finder-gothenburg.webp" alt="Line Finder playground: a route across Gothenburg on a 135,417-coordinate OSM road network, built in the browser" loading="lazy" width="1600" height="730"></figure>
+        </div>
+      </article>
+
+      <!-- mybatis-plus-geometry -->
+      <article class="product" id="p-mpg" style="--c:var(--c-mpg)">
+        <div class="head">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v13c0 1.55 3.36 2.8 7.5 2.8s7.5-1.25 7.5-2.8v-13"/><path d="M4.5 12c0 1.55 3.36 2.8 7.5 2.8s7.5-1.25 7.5-2.8"/></svg></span>
+          <div><h3>mybatis-plus-geometry</h3><div class="badges"><span class="badge oss"><i></i>Apache-2.0</span><span class="badge">Maven Central 1.0.1</span></div></div>
+        </div>
+        <p class="tagline zh">Spring Boot starter，打通 MyBatis Plus 与 JTS 几何类型。</p>
+        <p class="tagline en">A Spring Boot starter bridging MyBatis Plus and JTS geometry types.</p>
+        <ul class="zh">
+          <li>MySQL 8 与 PostgreSQL / PostGIS 自动识别，零配置</li>
+          <li>Point 到 GeometryCollection 共 8 类几何注解，WKB 自动转换</li>
+          <li>Jackson GeoJSON 序列化开箱即用，REST 接口直接吐 GeoJSON</li>
+          <li>Java 17+，Spring Boot 2.7+ / 3.x</li>
+        </ul>
+        <ul class="en">
+          <li>Auto-detects MySQL 8 and PostgreSQL / PostGIS — zero configuration</li>
+          <li>Annotations for 8 geometry types from Point to GeometryCollection, WKB conversion built in</li>
+          <li>Jackson GeoJSON serialisation out of the box for REST APIs</li>
+          <li>Java 17+, Spring Boot 2.7+ / 3.x</li>
+        </ul>
+        <div class="links">
+          <a href="https://github.com/GeoVerseLabs/mybatis-plus-geometry">GitHub ↗</a>
+          <a href="https://central.sonatype.com/artifact/io.github.geoverselabs/mybatis-plus-geometry-spring-boot-starter">Maven Central ↗</a>
+        </div>
+      </article>
+
+      <!-- Skills -->
+      <article class="product" id="p-skills" style="--c:var(--c-skills)">
+        <div class="head">
+          <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><path d="M17.5 13.5v8M13.5 17.5h8" stroke-linecap="round"/></svg></span>
+          <div><h3>GeoVerse Skills</h3><div class="badges"><span class="badge src"><i></i><span class="zh">BSL 1.1 · 源码可见</span><span class="en">BSL 1.1 · source-available</span></span></div></div>
+        </div>
+        <p class="tagline zh">面向 AI Agent 的空间技能仓库，配套确定性布局引擎与 MCP App。</p>
+        <p class="tagline en">Spatial skills for AI agents, with a deterministic layout engine and an MCP App.</p>
+        <ul class="zh">
+          <li><code>generate-region-layout</code>：把设施网格 / 矩形与摆放、编号规则变成确定性、可校验的布局——货架、库位、车位、展位</li>
+          <li>配套 npm 包 <code>@geoverse/layout-engine</code> 0.7 与 <code>@geoverse/layout-mcp-app</code> 0.5：交互地图卡片 + 离线 HTML 预览</li>
+          <li>每个 Skill 带评测用例与安装自检；统一 CI 做结构校验与干净安装冒烟</li>
+        </ul>
+        <ul class="en">
+          <li><code>generate-region-layout</code>: turn facility grids or rectangles plus placement and numbering rules into deterministic, validated layouts — racks, bins, parking bays, booths</li>
+          <li>Backed by <code>@geoverse/layout-engine</code> 0.7 and <code>@geoverse/layout-mcp-app</code> 0.5 on npm: interactive map cards plus an offline HTML preview</li>
+          <li>Every skill ships evals and installation self-checks; one CI validates structure and runs clean-install smoke tests</li>
+        </ul>
+        <div class="links">
+          <a href="https://github.com/GeoVerseLabs/geoverse-skills">GitHub ↗</a>
+          <a href="https://www.npmjs.com/package/@geoverse/layout-mcp-app">npm ↗</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= DEMOS ================= -->
+  <section class="block" id="demos">
+    <p class="kicker">03 · Live demos</p>
+    <h2><span class="zh">现在就能打开的在线体验</span><span class="en">Live demos you can open right now</span></h2>
+    <p class="sub zh">不用注册、不用安装。产品手册里是真实截图，两个 Playground 都是真实代码在你的浏览器里运行。</p>
+    <p class="sub en">No sign-up, no install. The brochure shows real screenshots; both playgrounds run the real code in your browser.</p>
+    <div class="demos">
+      <a class="demo" href="live/">
+        <div class="pic"><img src="live/assets/editor-thematic-maplibre.webp" alt="GeoVerse Live editor: countries classed by GDP per capita with a world-cities layer" loading="lazy" width="1600" height="742"><span class="tag"><span class="zh">产品手册</span><span class="en">Brochure</span></span></div>
+        <div class="txt"><b>GeoVerse Live</b><span class="zh">双引擎、编辑与版本历史、专题制图、协作与 AI、开放发布——逐项带截图。</span><span class="en">Dual engine, editing &amp; history, thematic mapping, collaboration &amp; AI, open sharing — every feature with screenshots.</span><span class="url">geoverselabs.github.io/.github/live/</span></div>
+      </a>
+      <a class="demo" href="https://geoverselabs.github.io/geoverse-line-finder/">
+        <div class="pic"><img src="assets/shots/line-finder-multilevel.webp" alt="Line Finder playground: multi-level building with elevator, stairs and escalator" loading="lazy" width="1600" height="780"><span class="tag">Playground</span></div>
+        <div class="txt"><b>Line Finder Playground</b><span class="zh">仓库通道、哥德堡 13.5 万坐标 OSM 路网、多楼层电梯 / 楼梯 / 扶梯、拓扑诊断——点地图放途经点即可。</span><span class="en">Warehouse aisles, a 135k-coordinate Gothenburg OSM network, multi-level elevators / stairs / escalators, topology diagnostics — click the map to add waypoints.</span><span class="url">geoverselabs.github.io/geoverse-line-finder/</span></div>
+      </a>
+      <a class="demo" href="https://geoverse-7yh.pages.dev/">
+        <div class="pic"><img src="assets/film/still-engines.webp" alt="Illustration: one map, two engines — OpenLayers and MapLibre GL" loading="lazy" width="1280" height="656"><span class="tag">Playground</span></div>
+        <div class="txt"><b>GeoVerse SDK Playground</b><span class="zh">双引擎门面、国内底图纠偏、图层与编辑能力的交互示例。（配图为示意）</span><span class="en">Interactive examples of the dual-engine facade, Chinese basemap correction, layers and editing. (Image is illustrative.)</span><span class="url">geoverse-7yh.pages.dev</span></div>
+      </a>
+      <a class="demo" href="film/" data-film>
+        <div class="pic"><img src="assets/film/poster.webp" alt="GeoVerse Labs film poster" loading="lazy" width="1280" height="720"><span class="tag"><span class="zh">宣传片</span><span class="en">Film</span></span><span class="play"><span><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z"/></svg></span></span></div>
+        <div class="txt"><b><span class="zh">GeoVerse Labs 宣传片</span><span class="en">The GeoVerse Labs film</span></b><span class="zh">52 秒看完整条工具链：坐标、双引擎、编辑协作、AI、服务、寻路。也有可交互的网页版。</span><span class="en">The whole toolchain in 52 seconds: coordinates, dual engines, editing, AI, serving, routing. Also available as an interactive web page.</span><span class="url">geoverselabs.github.io/.github/film/</span></div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ================= COORDS ================= -->
+  <section class="block" id="coords">
+    <p class="kicker">04 · China's coordinate systems</p>
+    <div class="coords">
+      <div>
+        <h2><span class="zh">同一个点，三套坐标</span><span class="en">One place, three sets of coordinates</span></h2>
+        <p class="sub zh">国内图商的底图坐标经过国家规定的非线性偏移（GCJ-02），百度在此之上再加一层（BD-09）。偏移量随位置变化，通常在几百米——足以让一条路整体错开半个街区，又不至于离谱到让人立刻怀疑坐标系。</p>
+        <p class="sub en">Chinese basemap providers shift coordinates with a mandated non-linear offset (GCJ-02); Baidu adds another layer on top (BD-09). The shift varies with location and is typically a few hundred metres — enough to move a street half a block, not enough to make anyone suspect the coordinate system.</p>
+        <p class="sub zh" style="margin-bottom:12px"><b style="color:var(--text)">GeoVerse 的做法：</b>对外 API、数据库与 GeoJSON 一律 WGS-84；纠偏发生在引擎内部——OpenLayers 在投影层，MapLibre 在数据出入边界。两条路径，同一个对外契约。</p>
+        <p class="sub en" style="margin-bottom:12px"><b style="color:var(--text)">How GeoVerse handles it:</b> APIs, databases and GeoJSON are always WGS-84; correction happens inside the engine — at the projection layer in OpenLayers and at the data boundary in MapLibre. Two mechanisms, one public contract.</p>
+        <p class="note zh">右侧换算在你的浏览器里实时计算（公开的 GCJ-02 / BD-09 近似算法），仅供理解偏移量级。</p>
+        <p class="note en">The conversion on the right runs live in your browser (the public GCJ-02 / BD-09 approximation) and is meant to show the magnitude of the offset.</p>
+      </div>
+      <div>
+        <div class="cities" id="cities" role="group" aria-label="Sample locations"></div>
+        <div class="cplot"><svg id="cplot" viewBox="0 0 560 300" role="img" aria-label="Offset plot of WGS-84, GCJ-02 and BD-09 positions"></svg></div>
+        <table class="ctable" id="ctable" aria-live="polite"></table>
+        <div class="cinput">
+          <label><span class="zh">经度</span><span class="en">Lng</span> <input id="in-lng" inputmode="decimal" value="116.3974"></label>
+          <label><span class="zh">纬度</span><span class="en">Lat</span> <input id="in-lat" inputmode="decimal" value="39.9087"></label>
+          <button type="button" id="in-go"><span class="zh">换算 WGS-84</span><span class="en">Convert WGS-84</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FILM ================= -->
+  <section class="block" id="film">
+    <p class="kicker">05 · Film</p>
+    <h2><span class="zh">52 秒，看完整条工具链</span><span class="en">The whole toolchain in 52 seconds</span></h2>
+    <p class="sub zh">从一个坐标开始，到一条在浏览器里算出来的路线结束。网页版逐帧可拖动，适合在演讲和展台循环播放。</p>
+    <p class="sub en">It starts with a single coordinate and ends with a route computed in the browser. The web version can be scrubbed frame by frame — good for talks and booth loops.</p>
+    <a class="film" href="film/" data-film>
+      <img src="assets/film/poster.webp" alt="GeoVerse Labs film" loading="lazy" width="1280" height="720">
+      <span class="play"><span><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9-5.5z"/></svg></span></span>
+      <span class="meta"><b>GeoVerse Labs · 2026</b><span>1080p · 52s · <span class="zh">中文字幕 / English</span><span class="en">English / 中文</span></span></span>
+    </a>
+    <div class="film-links">
+      <a href="film/"><span class="zh">网页互动版 →</span><span class="en">Interactive web version →</span></a>
+      <a href="assets/film/geoverse-film-zh.mp4" download><span class="zh">下载 MP4（中文）</span><span class="en">Download MP4 (Chinese)</span></a>
+      <a href="assets/film/geoverse-film-en.mp4" download><span class="zh">下载 MP4（英文）</span><span class="en">Download MP4 (English)</span></a>
+      <a href="brand/"><span class="zh">品牌资源与文案 →</span><span class="en">Brand kit &amp; copy →</span></a>
+    </div>
+  </section>
+
+  <!-- ================= PRINCIPLES ================= -->
+  <section class="block" id="principles">
+    <p class="kicker">06 · How we build</p>
+    <h2><span class="zh">可证伪的工程纪律</span><span class="en">Engineering you can falsify</span></h2>
+    <p class="sub zh">地图软件最危险的 bug 不报错，只是悄悄给出错的结果。所以我们把"怎么知道它是对的"放在和功能同样重要的位置。</p>
+    <p class="sub en">The most dangerous mapping bugs don't throw — they quietly return the wrong answer. So "how do we know it's right" gets the same weight as the feature itself.</p>
+    <div class="principles">
+      <div class="principle">
+        <span class="n">01</span>
+        <h3><span class="zh">契约先于实现</span><span class="en">Contracts before implementations</span></h3>
+        <p class="zh">坐标对外恒为 WGS-84；引擎独有能力不进统一接口；编辑内核的输入输出只有 GeoJSON，不知道地图库存在。</p>
+        <p class="en">Coordinates are always WGS-84 at the boundary; engine-only features stay out of the shared interface; the editing core speaks only GeoJSON and never sees a map library.</p>
+      </div>
+      <div class="principle">
+        <span class="n">02</span>
+        <h3><span class="zh">门禁，而不是约定</span><span class="en">Gates, not conventions</span></h3>
+        <p class="zh">依赖方向由 ESLint 门禁强制：<code>editor-core</code> 禁止 import 地图库，SAR 内核只能依赖 zod；跨入口一致性由测试钉死。</p>
+        <p class="en">Dependency direction is enforced by lint gates: <code>editor-core</code> can't import a map library, SAR's kernel may only depend on zod, and cross-entry parity is pinned by tests.</p>
+      </div>
+      <div class="principle">
+        <span class="n">03</span>
+        <h3><span class="zh">四级状态口径</span><span class="en">Four-tier status wording</span></h3>
+        <p class="zh">我们不说"做完了"，而是说清楚做到了哪一级——不让一句"完成"掩盖后三级的缺失。</p>
+        <p class="en">We don't say "done"; we say which tier — so one word can't hide what's missing from the next three.</p>
+        <div class="tiers"><span>implemented</span><span>verified-in-clean-CI</span><span>published</span><span>production-supported</span></div>
+      </div>
+      <div class="principle">
+        <span class="n">04</span>
+        <h3><span class="zh">拒绝"假绿"</span><span class="en">No false greens</span></h3>
+        <p class="zh">每个验证都要回答："如果没做对，它一定会失败吗？"WGS-84 底图全绿不代表纠偏正确；渲染问题回到真实浏览器，数据问题回到存储层核对。</p>
+        <p class="en">Every check must answer: "if this were wrong, would it definitely fail?" Green on a WGS-84 basemap proves nothing about datum correction; rendering is verified in a real browser, data at the storage layer.</p>
+      </div>
+      <div class="principle">
+        <span class="n">05</span>
+        <h3><span class="zh">可复现的性能数字</span><span class="en">Reproducible numbers</span></h3>
+        <p class="zh">基准取多轮中位数与区间，钉死对手版本，附复现命令；单轮测量不下结论，源码与构建产物不混比。</p>
+        <p class="en">Benchmarks report medians with ranges over multiple rounds, pin competitor versions and ship a repro command; no conclusions from single runs, no source-vs-dist comparisons.</p>
+      </div>
+      <div class="principle">
+        <span class="n">06</span>
+        <h3><span class="zh">每个坑都沉淀成知识</span><span class="en">Every bug becomes knowledge</span></h3>
+        <p class="zh">内部知识库 70 余篇知识笔记，其中 30 篇踩坑记录按"症状 → 真因 → 修法 → 复发防线"写成，并定期与代码对照防腐。</p>
+        <p class="en">Our internal knowledge base holds 70+ notes, including 30 post-mortems written as symptom → root cause → fix → regression guard, and is re-verified against the code on a schedule.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OPEN SOURCE ================= -->
+  <section class="block" id="opensource">
+    <p class="kicker">07 · Open source</p>
+    <h2><span class="zh">开源与源码可见</span><span class="en">Open source &amp; source-available</span></h2>
+    <p class="sub zh">欢迎 Issue 与 PR。每个仓库都有自己的贡献指南与安全策略。</p>
+    <p class="sub en">Issues and PRs welcome. Each repository has its own contributing guide and security policy.</p>
+    <div class="table-scroll">
+      <table class="oss-table">
+        <thead><tr><th><span class="zh">仓库</span><span class="en">Repository</span></th><th><span class="zh">是什么</span><span class="en">What it is</span></th><th><span class="zh">许可</span><span class="en">License</span></th><th><span class="zh">获取</span><span class="en">Get it</span></th></tr></thead>
+        <tbody>
+          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-line-finder">geoverse-line-finder</a><br><span class="lang">TypeScript</span></td><td><span class="zh">GeoJSON 路网带权最短路，多楼层室内寻路</span><span class="en">Weighted shortest paths on GeoJSON networks, multi-level indoor routing</span></td><td><span class="badge oss"><i></i>Apache-2.0</span></td><td><code>pnpm add geoverse-line-finder</code></td></tr>
+          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-map-server">geoverse-map-server</a><br><span class="lang">Go</span></td><td><span class="zh">GeoVerse Serve：多数据源 → MVT / OGC / MCP</span><span class="en">GeoVerse Serve: many sources → MVT / OGC / MCP</span></td><td><span class="badge oss"><i></i>MIT</span></td><td><code>make build</code></td></tr>
+          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-sar">geoverse-sar</a><br><span class="lang">TypeScript</span></td><td><span class="zh">AI-native 空间应用运行时（技术预览，未发布 npm）</span><span class="en">AI-native spatial runtime (technical preview, not on npm yet)</span></td><td><span class="badge oss"><i></i>MIT</span></td><td><span class="zh">从源码构建（geo 相关包需 GeoVerse SDK 访问权限）</span><span class="en">Build from source (geo packages need GeoVerse SDK access)</span></td></tr>
+          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/mybatis-plus-geometry">mybatis-plus-geometry</a><br><span class="lang">Java</span></td><td><span class="zh">MyBatis Plus ↔ JTS 几何，MySQL / PostGIS</span><span class="en">MyBatis Plus ↔ JTS geometry for MySQL / PostGIS</span></td><td><span class="badge oss"><i></i>Apache-2.0</span></td><td><code>io.github.geoverselabs:mybatis-plus-geometry-spring-boot-starter:1.0.1</code></td></tr>
+          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-skills">geoverse-skills</a><br><span class="lang">Markdown · Node</span></td><td><span class="zh">AI Agent 空间技能（区域布局生成）</span><span class="en">Spatial skills for AI agents (region layout generation)</span></td><td><span class="badge src"><i></i>BSL 1.1</span></td><td><code>@geoverse/layout-mcp-app</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ================= NEWS ================= -->
+  <section class="block" id="news">
+    <p class="kicker">08 · Changelog</p>
+    <h2><span class="zh">近期动态</span><span class="en">Recent releases</span></h2>
+    <ul class="news">
+      <li style="--c:var(--c-lf)"><time datetime="2026-09-29">2026-09-29</time><b>Line Finder 0.3.0</b><p class="zh">多楼层室内寻路（电梯 / 楼梯 / 扶梯、楼层感知的 A* 下界）、按节点编号建拓扑、点要素竖向连接器；默认配置下建图约 2.05 倍提速，输出与 0.1.0 逐位相同。</p><p class="en">Multi-level indoor routing (elevators / stairs / escalators, a level-aware A* bound), node-id topology, point-feature vertical connectors; ~2.05× faster default graph builds with output bit-identical to 0.1.0.</p></li>
+      <li style="--c:var(--c-live)"><time datetime="2026-09-24">2026-09-24</time><b><span class="zh">GeoVerse Live 产品手册上线</span><span class="en">GeoVerse Live brochure published</span></b><p class="zh">双引擎、编辑与版本、专题制图、协作与 AI、开放发布的完整图文介绍。</p><p class="en">A full illustrated tour: dual engine, editing &amp; versions, thematic maps, collaboration &amp; AI, open sharing.</p></li>
+      <li style="--c:var(--c-lf)"><time datetime="2026-09-14">2026-09-14</time><b>Line Finder 0.2.0</b><p class="zh">候选吸附与全程择优、一对多与代价矩阵、线性参照、拓扑诊断、ALT 地标加速与图序列化进 Worker。</p><p class="en">Candidate snapping with cost-optimal selection, one-to-many and cost matrices, linear referencing, topology diagnostics, ALT landmarks and graph serialisation for Workers.</p></li>
+      <li style="--c:var(--c-lf)"><time datetime="2026-09-11">2026-09-11</time><b><span class="zh">Line Finder 开源发布</span><span class="en">Line Finder open-sourced</span></b><p class="zh">0.1.0 以 Apache-2.0 发布到 npm，CI 带 npm provenance。</p><p class="en">0.1.0 released on npm under Apache-2.0, with npm provenance from CI.</p></li>
+      <li style="--c:var(--c-skills)"><time datetime="2026-07-17">2026-07</time><b><span class="zh">布局引擎与 MCP App</span><span class="en">Layout engine &amp; MCP App</span></b><p class="zh"><code>@geoverse/layout-engine</code> 0.7 与 <code>@geoverse/layout-mcp-app</code> 0.5 发布，配合 geoverse-skills 的区域布局技能。</p><p class="en"><code>@geoverse/layout-engine</code> 0.7 and <code>@geoverse/layout-mcp-app</code> 0.5 released, powering the region-layout skill in geoverse-skills.</p></li>
+      <li style="--c:var(--c-mpg)"><time datetime="2026-07-15">2026-07</time><b>mybatis-plus-geometry 1.0.x</b><p class="zh">1.0.0 首发 Maven Central；1.0.1 补齐 Multi* 与 GeometryCollection 全部几何类型。</p><p class="en">1.0.0 shipped to Maven Central; 1.0.1 completed every Multi* type and GeometryCollection.</p></li>
+    </ul>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contact">
+    <h2><span class="zh">聊聊你的空间应用</span><span class="en">Let's talk about your spatial app</span></h2>
+    <p class="zh">GeoVerse SDK 与 GeoVerse Live 目前以早期访问与私有化部署的方式提供。告诉我们你的场景、数据规模与部署环境，我们会安排一次针对性的演示。</p>
+    <p class="en">GeoVerse SDK and GeoVerse Live are available through early access and private deployment. Tell us about your use case, data volume and environment, and we'll set up a tailored demo.</p>
+    <div class="asks">
+      <a class="ask" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Live%20demo"><b><span class="zh">预约 Live 演示</span><span class="en">Book a Live demo</span></b><span class="zh">协作编辑、专题制图、AI 助手、私有化部署。</span><span class="en">Collaborative editing, thematic maps, AI assistant, private deployment.</span><em>libra.liuyb@gmail.com →</em></a>
+      <a class="ask" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20SDK%20early%20access%20%2F%20licensing"><b><span class="zh">SDK 早期访问与授权</span><span class="en">SDK early access &amp; licensing</span></b><span class="zh">把双引擎地图与编辑引擎集成进你的产品。</span><span class="en">Bring the dual-engine map and editing engine into your product.</span><em>libra.liuyb@gmail.com →</em></a>
+      <a class="ask" href="https://github.com/GeoVerseLabs"><b><span class="zh">参与开源</span><span class="en">Contribute</span></b><span class="zh">在对应仓库提 Issue / PR，或给我们一个 Star。</span><span class="en">Open an issue or PR on the relevant repo — or leave a star.</span><em>github.com/GeoVerseLabs →</em></a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <a class="brand" href="#top"><img src="assets/logo.svg" alt="" width="26" height="26">GeoVerse <small>Labs</small></a>
+        <p class="zh" style="margin:10px 0 0;max-width:340px">为中国坐标系而生的 Web 地图基础设施。</p>
+        <p class="en" style="margin:10px 0 0;max-width:340px">Mapping infrastructure for the modern web, built for China's coordinate systems.</p>
+      </div>
+      <div>
+        <h4><span class="zh">产品</span><span class="en">Products</span></h4>
+        <ul>
+          <li><a href="#p-sdk">GeoVerse SDK</a></li>
+          <li><a href="live/">GeoVerse Live</a></li>
+          <li><a href="#p-serve">GeoVerse Serve</a></li>
+          <li><a href="#p-sar">GeoVerse SAR</a></li>
+          <li><a href="#p-lf">GeoVerse Line Finder</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4><span class="zh">在线体验</span><span class="en">Try it</span></h4>
+        <ul>
+          <li><a href="live/"><span class="zh">Live 产品手册</span><span class="en">Live brochure</span></a></li>
+          <li><a href="https://geoverse-7yh.pages.dev/">SDK Playground</a></li>
+          <li><a href="https://geoverselabs.github.io/geoverse-line-finder/">Line Finder Playground</a></li>
+          <li><a href="film/"><span class="zh">宣传片</span><span class="en">Film</span></a></li>
+        </ul>
+      </div>
+      <div>
+        <h4><span class="zh">资源</span><span class="en">Resources</span></h4>
+        <ul>
+          <li><a href="brand/"><span class="zh">品牌资源与文案</span><span class="en">Brand kit &amp; copy</span></a></li>
+          <li><a href="https://github.com/GeoVerseLabs">GitHub</a></li>
+          <li><a href="https://www.npmjs.com/package/geoverse-line-finder">npm</a></li>
+          <li><a href="mailto:libra.liuyb@gmail.com"><span class="zh">联系我们</span><span class="en">Contact</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="legal">
+      <span>© 2026 GeoVerse Labs</span>
+      <span class="zh">截图示例数据来自 Natural Earth（公有领域）与 OpenStreetMap 贡献者（ODbL）。</span>
+      <span class="en">Screenshot data: Natural Earth (public domain) and OpenStreetMap contributors (ODbL).</span>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-label="Image preview"><img alt=""></div>
+<div class="modal" id="film-modal" role="dialog" aria-label="GeoVerse Labs film">
+  <div class="modal-box">
+    <button class="modal-close" type="button"><span class="zh">关闭 ✕</span><span class="en">Close ✕</span></button>
+    <div class="frame"><video controls playsinline preload="none" poster="assets/film/poster.webp" data-src-zh="assets/film/geoverse-film-zh.mp4" data-src-en="assets/film/geoverse-film-en.mp4"></video></div>
+  </div>
+</div>
+
+<script src="assets/coords.js"></script>
+<script src="assets/site.js"></script>
+<script>
+/* ================= hero: dual-style road network with a live A* search ================= */
+(function () {
+  var cv = document.getElementById('hero-canvas');
+  var box = document.getElementById('viz');
+  var readout = document.getElementById('viz-readout');
+  var algoEl = document.getElementById('viz-algo');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d');
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W = 0, H = 0, DPR = 1;
+  var nodes = [], edges = [], adj = [];
+  var run = null, seed = 20260929, visible = true;
+  var split = 0.5, held = false, releasedAt = -1e9, pointer = null, lastReadout = 0;
+  // the canvas maps onto this WGS-84 window over central Beijing
+  var BBOX = { w: 116.300, e: 116.480, s: 39.860, n: 39.960 };
+
+  function rnd() { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }
+
+  function build() {
+    seed = 20260929;
+    nodes = []; edges = []; adj = [];
+    var cols = W < 480 ? 9 : 13, rows = W < 480 ? 9 : 10;
+    var px = W * 0.05, top = H * 0.2, bottom = H * 0.8;
+    var gx = (W - 2 * px) / (cols - 1), gy = (bottom - top) / (rows - 1);
+    for (var r = 0; r < rows; r++) for (var c = 0; c < cols; c++) {
+      nodes.push({ x: px + c * gx + (rnd() - .5) * gx * .6, y: top + r * gy + (rnd() - .5) * gy * .6, r: r, c: c });
+      adj.push([]);
+    }
+    var id = function (r, c) { return r * cols + c; };
+    var seen = {};
+    function add(a, b, kind) {
+      var k = a < b ? a + ':' + b : b + ':' + a;
+      if (seen[k] !== undefined) { if (kind === 'art') edges[seen[k]].kind = 'art'; return; }
+      var dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y;
+      var e = { a: a, b: b, len: Math.sqrt(dx * dx + dy * dy), kind: kind };
+      seen[k] = edges.length; edges.push(e);
+      adj[a].push(e); adj[b].push(e);
+    }
+    var ar = Math.floor(rows / 2), ac = Math.floor(cols * .62);
+    for (r = 0; r < rows; r++) for (c = 0; c < cols; c++) {
+      if (c + 1 < cols && (r === ar || rnd() < .84)) add(id(r, c), id(r, c + 1), r === ar ? 'art' : 'st');
+      if (r + 1 < rows && (c === ac || rnd() < .8)) add(id(r, c), id(r + 1, c), c === ac ? 'art' : 'st');
+      if (r + 1 < rows && c + 1 < cols && rnd() < .1) add(id(r, c), id(r + 1, c + 1), 'st');
+      if (r + 1 < rows && c > 0 && rnd() < .08) add(id(r, c), id(r + 1, c - 1), 'st');
+    }
+    // a diagonal expressway
+    for (var i = 0; i < Math.min(rows, cols) - 2; i++) add(id(i + 1, i + 1), id(i + 2, i + 2), 'art');
+    edges.forEach(function (e) { e.w = e.len * (e.kind === 'art' ? .5 : 1); });
+  }
+
+  function other(e, n) { return e.a === n ? e.b : e.a; }
+
+  // A* with an admissible heuristic (straight-line distance × the cheapest cost per pixel)
+  function search(s, t) {
+    var n = nodes.length, g = new Array(n), parent = new Array(n), done = new Array(n), order = [];
+    for (var i = 0; i < n; i++) { g[i] = Infinity; parent[i] = null; done[i] = false; }
+    var h = function (u) { var dx = nodes[u].x - nodes[t].x, dy = nodes[u].y - nodes[t].y; return Math.sqrt(dx * dx + dy * dy) * .5; };
+    g[s] = 0;
+    var open = [s];
+    while (open.length) {
+      var bi = 0;
+      for (i = 1; i < open.length; i++) if (g[open[i]] + h(open[i]) < g[open[bi]] + h(open[bi])) bi = i;
+      var u = open.splice(bi, 1)[0];
+      if (done[u]) continue;
+      done[u] = true; order.push(u);
+      if (u === t) break;
+      adj[u].forEach(function (e) {
+        var v = other(e, u);
+        if (done[v]) return;
+        var nd = g[u] + e.w;
+        if (nd < g[v]) { g[v] = nd; parent[v] = e; open.push(v); }
+      });
+    }
+    if (!done[t]) return null;
+    var path = [t], cur = t;
+    while (cur !== s) { cur = other(parent[cur], cur); path.unshift(cur); }
+    var plen = [0];
+    for (i = 1; i < path.length; i++) {
+      var dx = nodes[path[i]].x - nodes[path[i - 1]].x, dy = nodes[path[i]].y - nodes[path[i - 1]].y;
+      plen.push(plen[i - 1] + Math.sqrt(dx * dx + dy * dy));
+    }
+    return { order: order, parent: parent, path: path, plen: plen, s: s, t: t };
+  }
+
+  function newRun(now) {
+    for (var tries = 0; tries < 40; tries++) {
+      var s = Math.floor(Math.random() * nodes.length), t = Math.floor(Math.random() * nodes.length);
+      var dx = nodes[s].x - nodes[t].x, dy = nodes[s].y - nodes[t].y;
+      if (Math.sqrt(dx * dx + dy * dy) < Math.min(W, H) * .55) continue;
+      var res = search(s, t);
+      if (res && res.path.length > 4) {
+        res.t0 = now;
+        res.explore = Math.max(1200, Math.min(2600, res.order.length * 26));
+        res.draw = 1100; res.hold = 1900; res.fade = 500;
+        run = res;
+        algoEl.textContent = 'A* · settled ' + res.order.length + ' / ' + nodes.length + ' nodes';
+        return;
+      }
+    }
+  }
+
+  var STYLE = {
+    ol:    { bg: '#0c1220', grid: 'rgba(79,140,255,.07)', st: '#26324c', art: '#3b4f7a', seen: 'rgba(79,140,255,.55)', dot: '#4f8cff', path: '#8fb8ff', glow: 0 },
+    libre: { bg: '#0a1512', grid: 'rgba(47,191,138,.05)', st: '#1d3a32', art: '#2f6a57', seen: 'rgba(47,191,138,.55)', dot: '#2fbf8a', path: '#6ff0c0', glow: 14 }
+  };
+
+  function paint(st, now) {
+    ctx.fillStyle = st.bg; ctx.fillRect(0, 0, W, H);
+    // background: raster-ish tile grid (OL) vs soft vector glow (MapLibre)
+    ctx.strokeStyle = st.grid; ctx.lineWidth = 1;
+    var step = st === STYLE.ol ? 64 : 32;
+    ctx.beginPath();
+    for (var x = 0; x <= W; x += step) { ctx.moveTo(x + .5, 0); ctx.lineTo(x + .5, H); }
+    for (var y = 0; y <= H; y += step) { ctx.moveTo(0, y + .5); ctx.lineTo(W, y + .5); }
+    ctx.stroke();
+    ctx.lineCap = 'round';
+    edges.forEach(function (e) {
+      ctx.strokeStyle = e.kind === 'art' ? st.art : st.st;
+      ctx.lineWidth = e.kind === 'art' ? (st === STYLE.ol ? 3 : 3.6) : (st === STYLE.ol ? 1.4 : 1.8);
+      ctx.beginPath(); ctx.moveTo(nodes[e.a].x, nodes[e.a].y); ctx.lineTo(nodes[e.b].x, nodes[e.b].y); ctx.stroke();
+    });
+    if (!run) return;
+    var t = now - run.t0;
+    var total = run.explore + run.draw + run.hold + run.fade;
+    var alpha = t > total - run.fade ? Math.max(0, (total - t) / run.fade) : 1;
+    ctx.globalAlpha = alpha;
+    // explored tree
+    var k = Math.min(run.order.length, Math.floor(run.order.length * Math.min(1, t / run.explore)));
+    ctx.strokeStyle = st.seen; ctx.lineWidth = 1.6;
+    ctx.beginPath();
+    for (var i = 0; i < k; i++) {
+      var u = run.order[i], e = run.parent[u];
+      if (!e) continue;
+      var v = other(e, u);
+      ctx.moveTo(nodes[v].x, nodes[v].y); ctx.lineTo(nodes[u].x, nodes[u].y);
+    }
+    ctx.stroke();
+    ctx.fillStyle = st.dot;
+    for (i = 0; i < k; i++) {
+      var n = nodes[run.order[i]], fresh = i > k - 6 && t < run.explore;
+      ctx.beginPath(); ctx.arc(n.x, n.y, fresh ? 3.6 : 2, 0, 6.283); ctx.fill();
+    }
+    // path
+    var pt = Math.max(0, Math.min(1, (t - run.explore) / run.draw));
+    if (pt > 0) {
+      var L = run.plen[run.plen.length - 1] * pt;
+      ctx.save();
+      ctx.strokeStyle = st.path; ctx.lineWidth = 4; ctx.lineJoin = 'round';
+      if (st.glow) { ctx.shadowColor = st.path; ctx.shadowBlur = st.glow; }
+      ctx.beginPath(); ctx.moveTo(nodes[run.path[0]].x, nodes[run.path[0]].y);
+      for (i = 1; i < run.path.length; i++) {
+        var a = nodes[run.path[i - 1]], b = nodes[run.path[i]];
+        if (run.plen[i] <= L) { ctx.lineTo(b.x, b.y); continue; }
+        var f = (L - run.plen[i - 1]) / (run.plen[i] - run.plen[i - 1]);
+        ctx.lineTo(a.x + (b.x - a.x) * f, a.y + (b.y - a.y) * f);
+        break;
+      }
+      ctx.stroke(); ctx.restore();
+    }
+    [run.s, run.t].forEach(function (id, j) {
+      var p = nodes[id];
+      ctx.fillStyle = '#fff';
+      ctx.beginPath(); ctx.arc(p.x, p.y, 6, 0, 6.283); ctx.fill();
+      ctx.strokeStyle = j ? '#fcd34d' : st.dot; ctx.lineWidth = 3;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, 6.283); ctx.stroke();
+    });
+    ctx.globalAlpha = 1;
+  }
+
+  function headPoint(now) {
+    if (!run) return null;
+    var t = now - run.t0, pt = Math.max(0, Math.min(1, (t - run.explore) / run.draw));
+    if (pt <= 0) { var k = Math.max(0, Math.min(run.order.length - 1, Math.floor(run.order.length * t / run.explore))); return nodes[run.order[k]]; }
+    var L = run.plen[run.plen.length - 1] * pt;
+    for (var i = 1; i < run.path.length; i++) if (run.plen[i] >= L) {
+      var a = nodes[run.path[i - 1]], b = nodes[run.path[i]], f = (L - run.plen[i - 1]) / (run.plen[i] - run.plen[i - 1] || 1);
+      return { x: a.x + (b.x - a.x) * f, y: a.y + (b.y - a.y) * f };
+    }
+    return nodes[run.t];
+  }
+
+  function updateReadout(now) {
+    var p = pointer || headPoint(now);
+    if (!p) return;
+    var lng = BBOX.w + (p.x / W) * (BBOX.e - BBOX.w), lat = BBOX.n - (p.y / H) * (BBOX.n - BBOX.s);
+    var g = GVCoords.wgs2gcj(lng, lat), d = GVCoords.distance(lng, lat, g[0], g[1]);
+    readout.innerHTML = '<span><b>WGS-84</b> ' + lng.toFixed(5) + ', ' + lat.toFixed(5) + '</span>' +
+      '<span><b>GCJ-02</b> ' + g[0].toFixed(5) + ', ' + g[1].toFixed(5) + '</span>' +
+      '<span class="g">Δ ' + Math.round(d) + ' m</span>';
+  }
+
+  function frame(now) {
+    if (!W) return;
+    if (!run || now - run.t0 > run.explore + run.draw + run.hold + run.fade) newRun(now);
+    if (!held && now - releasedAt > 3500 && !reduce) {
+      var target = .5 + .3 * Math.sin(now / 3400);
+      split += (target - split) * .03;
+    }
+    var sx = Math.round(W * split);
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, sx, H); ctx.clip(); paint(STYLE.ol, now); ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.rect(sx, 0, W - sx, H); ctx.clip(); paint(STYLE.libre, now); ctx.restore();
+    // divider + handle
+    ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fillRect(sx - 1, 0, 2, H);
+    ctx.beginPath(); ctx.arc(sx, H / 2, 15, 0, 6.283); ctx.fillStyle = '#e8eaf0'; ctx.fill();
+    ctx.fillStyle = '#0a0c11'; ctx.font = '700 13px ' + getComputedStyle(document.body).fontFamily; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('‹ ›', sx, H / 2 + 1);
+    if (now - lastReadout > 90) { updateReadout(now); lastReadout = now; }
+  }
+
+  function loop(now) { if (visible) frame(now); requestAnimationFrame(loop); }
+
+  function resize() {
+    var r = box.getBoundingClientRect();
+    DPR = Math.min(2, window.devicePixelRatio || 1);
+    W = Math.round(r.width); H = Math.round(r.height);
+    cv.width = W * DPR; cv.height = H * DPR;
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    build(); run = null;
+    if (reduce) { newRun(0); run.t0 = -(run.explore + run.draw); frame(0); updateReadout(0); }
+  }
+
+  function setFromEvent(e) {
+    var r = cv.getBoundingClientRect();
+    pointer = { x: e.clientX - r.left, y: e.clientY - r.top };
+    if (held) split = Math.max(.04, Math.min(.96, pointer.x / W));
+    // reduced motion: repaint the finished route in place instead of advancing the animation
+    if (reduce) { frame(0); updateReadout(0); }
+  }
+  cv.addEventListener('pointerdown', function (e) { held = true; setFromEvent(e); try { cv.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ } });
+  cv.addEventListener('pointermove', setFromEvent);
+  var release = function () { held = false; releasedAt = performance.now(); };
+  cv.addEventListener('pointerup', release);
+  cv.addEventListener('pointercancel', release);
+  cv.addEventListener('pointerleave', function () { pointer = null; if (held) release(); if (reduce) { frame(0); updateReadout(0); } });
+
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(box); else window.addEventListener('resize', resize);
+  if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }).observe(box);
+  resize();
+  if (!reduce) requestAnimationFrame(loop);
+})();
+
+/* ================= toolchain hover ================= */
+(function () {
+  var layers = document.getElementById('layers');
+  var rels = document.querySelectorAll('#rels li');
+  function light(ids) {
+    layers.classList.toggle('dim', !!ids);
+    layers.querySelectorAll('.node').forEach(function (n) { n.classList.toggle('on', !!ids && ids.indexOf(n.dataset.id) >= 0); });
+  }
+  rels.forEach(function (li) {
+    var ids = li.dataset.ids.split(' ');
+    li.addEventListener('mouseenter', function () { light(ids); li.classList.add('on'); });
+    li.addEventListener('mouseleave', function () { light(null); li.classList.remove('on'); });
+  });
+  layers.querySelectorAll('.node').forEach(function (n) {
+    n.addEventListener('mouseenter', function () {
+      var id = n.dataset.id, set = [id];
+      rels.forEach(function (li) { var ids = li.dataset.ids.split(' '); if (ids.indexOf(id) >= 0) { li.classList.add('on'); ids.forEach(function (x) { if (set.indexOf(x) < 0) set.push(x); }); } });
+      light(set);
+    });
+    n.addEventListener('mouseleave', function () { light(null); rels.forEach(function (li) { li.classList.remove('on'); }); });
+  });
+})();
+
+/* ================= coordinate widget ================= */
+(function () {
+  var CITIES = [
+    { zh: '北京 · 天安门', en: 'Beijing · Tiananmen', p: [116.3974, 39.9087] },
+    { zh: '上海 · 外滩', en: 'Shanghai · The Bund', p: [121.4905, 31.2400] },
+    { zh: '广州 · 广州塔', en: 'Guangzhou · Canton Tower', p: [113.3245, 23.1064] },
+    { zh: '成都 · 天府广场', en: 'Chengdu · Tianfu Square', p: [104.0657, 30.6574] },
+    { zh: '拉萨 · 布达拉宫', en: 'Lhasa · Potala Palace', p: [91.1172, 29.6578] },
+    { zh: '东京（境外）', en: 'Tokyo (outside China)', p: [139.7671, 35.6812] }
+  ];
+  var bar = document.getElementById('cities'), table = document.getElementById('ctable'), svg = document.getElementById('cplot');
+  var current = CITIES[0].p, active = 0;
+  var COL = { wgs: '#e8eaf0', gcj: '#fbbf24', bd: '#fb7185' };
+
+  function renderButtons() {
+    var en = window.gvLang && gvLang() === 'en';
+    bar.innerHTML = '';
+    CITIES.forEach(function (c, i) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = en ? c.en : c.zh;
+      b.setAttribute('aria-pressed', String(i === active));
+      b.addEventListener('click', function () { active = i; current = c.p; renderButtons(); render(); });
+      bar.appendChild(b);
+    });
+  }
+
+  function render() {
+    var en = window.gvLang && gvLang() === 'en';
+    var w = current, g = GVCoords.wgs2gcj(w[0], w[1]), b = GVCoords.gcj2bd(g[0], g[1]);
+    var dg = GVCoords.distance(w[0], w[1], g[0], g[1]), db = GVCoords.distance(w[0], w[1], b[0], b[1]);
+    var rows = [
+      ['wgs', 'WGS-84', en ? 'GPS, international standard — the GeoVerse public contract' : 'GPS 原生、国际通用——GeoVerse 的对外契约', w, en ? 'reference' : '基准'],
+      ['gcj', 'GCJ-02', en ? 'Mandated offset used by Amap, Tencent and other Chinese providers' : '国家规定的加密偏移，高德、腾讯等国内图商使用', g, Math.round(dg) + ' m'],
+      ['bd', 'BD-09', en ? 'Baidu adds its own offset on top of GCJ-02' : '百度在 GCJ-02 之上再加一层偏移', b, Math.round(db) + ' m']
+    ];
+    table.innerHTML = '<thead><tr><th>' + (en ? 'System' : '坐标系') + '</th><th>' + (en ? 'Longitude, latitude' : '经度, 纬度') + '</th><th>' + (en ? 'Offset vs WGS-84' : '相对 WGS-84') + '</th></tr></thead><tbody>' +
+      rows.map(function (r) {
+        return '<tr><td><span class="sys"><i style="background:' + COL[r[0]] + '"></i>' + r[1] + '</span><small>' + r[2] + '</small></td><td class="num">' + r[3][0].toFixed(6) + ',<br>' + r[3][1].toFixed(6) + '</td><td class="num">' + r[4] + '</td></tr>';
+      }).join('') + '</tbody>';
+
+    // plot in local metres around the WGS-84 point
+    var toM = function (p) {
+      var dx = (p[0] - w[0]) * Math.PI / 180 * 6371008.8 * Math.cos(w[1] * Math.PI / 180);
+      var dy = (p[1] - w[1]) * Math.PI / 180 * 6371008.8;
+      return [dx, dy];
+    };
+    var pts = { wgs: [0, 0], gcj: toM(g), bd: toM(b) };
+    var ext = Math.max(200, Math.abs(pts.gcj[0]), Math.abs(pts.gcj[1]), Math.abs(pts.bd[0]), Math.abs(pts.bd[1])) * 1.25;
+    var Wd = 560, Hd = 300, s = Math.min((Wd / 2 - 30) / ext, (Hd / 2 - 30) / ext);
+    var P = function (m) { return [Wd / 2 + m[0] * s, Hd / 2 - m[1] * s]; };
+    var stepM = [50, 100, 200, 250, 500, 1000].filter(function (v) { return v * s >= 34; })[0] || 1000;
+    var out = '';
+    for (var x = -Math.ceil(ext / stepM) * stepM; x <= ext; x += stepM) { var X = P([x, 0])[0]; if (X >= 0 && X <= Wd) out += '<line x1="' + X + '" y1="0" x2="' + X + '" y2="' + Hd + '" stroke="#1a2030"/>'; }
+    for (var y = -Math.ceil(ext / stepM) * stepM; y <= ext; y += stepM) { var Y = P([0, y])[1]; if (Y >= 0 && Y <= Hd) out += '<line x1="0" y1="' + Y + '" x2="' + Wd + '" y2="' + Y + '" stroke="#1a2030"/>'; }
+    var pw = P(pts.wgs), pg = P(pts.gcj), pb = P(pts.bd);
+    out += '<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10z" fill="#6f778b"/></marker></defs>';
+    if (dg > 1) out += '<line x1="' + pw[0] + '" y1="' + pw[1] + '" x2="' + pg[0] + '" y2="' + pg[1] + '" stroke="#6f778b" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#ah)"/>';
+    if (db > 1) out += '<line x1="' + pg[0] + '" y1="' + pg[1] + '" x2="' + pb[0] + '" y2="' + pb[1] + '" stroke="#6f778b" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#ah)"/>';
+    [['bd', pb, 'BD-09'], ['gcj', pg, 'GCJ-02'], ['wgs', pw, 'WGS-84']].forEach(function (q) {
+      out += '<circle cx="' + q[1][0] + '" cy="' + q[1][1] + '" r="13" fill="' + COL[q[0]] + '" opacity=".16"/><circle cx="' + q[1][0] + '" cy="' + q[1][1] + '" r="6" fill="' + COL[q[0]] + '"/>' +
+        '<text x="' + (q[1][0] + 12) + '" y="' + (q[1][1] - 10) + '" fill="' + COL[q[0]] + '" font-size="13" font-weight="600" font-family="ui-monospace, Consolas, monospace">' + q[2] + '</text>';
+    });
+    var bx = 16, by = Hd - 18;
+    out += '<line x1="' + bx + '" y1="' + by + '" x2="' + (bx + stepM * s) + '" y2="' + by + '" stroke="#a4abbd" stroke-width="2"/><text x="' + bx + '" y="' + (by - 7) + '" fill="#a4abbd" font-size="11.5" font-family="ui-monospace, Consolas, monospace">' + stepM + ' m</text>';
+    if (dg < 1) out += '<text x="' + Wd / 2 + '" y="40" fill="#a4abbd" font-size="13" text-anchor="middle">' + (en ? 'Outside China: no offset is applied' : '境外坐标不做偏移') + '</text>';
+    svg.innerHTML = out;
+  }
+
+  document.getElementById('in-go').addEventListener('click', function () {
+    var lng = parseFloat(document.getElementById('in-lng').value), lat = parseFloat(document.getElementById('in-lat').value);
+    if (!isFinite(lng) || !isFinite(lat) || Math.abs(lng) > 180 || Math.abs(lat) > 90) return;
+    current = [lng, lat]; active = -1; renderButtons(); render();
+  });
+  document.addEventListener('gv:lang', function () { renderButtons(); render(); });
+  renderButtons(); render();
+})();
+</script>
+</body>
+</html>

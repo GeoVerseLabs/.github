@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="zh-CN" data-title-zh="品牌资源与文案 — GeoVerse Labs" data-title-en="Brand kit &amp; copy — GeoVerse Labs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>品牌资源与文案 — GeoVerse Labs</title>
+<meta name="description" content="GeoVerse Labs 品牌资源：标志、配色、产品命名规范、标准介绍文案（中英）、截图与宣传片下载。">
+<meta property="og:title" content="GeoVerse Labs — Brand kit">
+<meta property="og:description" content="Logos, colours, naming, boilerplate copy, screenshots and the film.">
+<meta property="og:url" content="https://geoverselabs.github.io/.github/brand/">
+<meta property="og:image" content="https://geoverselabs.github.io/.github/assets/og-card.png">
+<meta name="theme-color" content="#0a0c11">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site.css">
+<script>
+  (function () {
+    var l = null;
+    try {
+      var q = new URLSearchParams(location.search).get('lang');
+      if (q === 'en' || q === 'zh') { l = q; localStorage.setItem('gv-lang', q); }
+      else { l = localStorage.getItem('gv-lang'); }
+    } catch (e) { /* storage unavailable */ }
+    if (!l) l = /^zh/i.test(navigator.language || '') ? 'zh' : 'en';
+    if (l === 'en') document.documentElement.classList.add('en');
+  })();
+</script>
+<style>
+  .hero { padding: 64px 0 8px; }
+  .hero h1 { font-size: clamp(32px, 4.4vw, 50px); line-height: 1.15; margin: 14px 0 14px; letter-spacing: -.5px; }
+  .hero p { color: var(--text-2); max-width: 760px; margin: 0; font-size: 17px; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .toc a { font-size: 13px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg-2); color: var(--text-2); }
+  .toc a:hover { color: var(--text); text-decoration: none; }
+  .logos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .logo-card { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--bg-2); }
+  .logo-card .stage { height: 190px; display: grid; place-items: center; padding: 24px; }
+  .logo-card .stage.light { background: #f4f5f8; }
+  .logo-card .stage.grad { background: linear-gradient(135deg, #1b2a52, #2b1f5c 50%, #123d33); }
+  .logo-card .stage img { max-height: 120px; max-width: 100%; }
+  .logo-card .meta { padding: 12px 16px; display: flex; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--text-2); border-top: 1px solid var(--line); flex-wrap: wrap; }
+  .rules { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .rules ul { margin: 6px 0 0; padding-left: 18px; color: var(--text-2); font-size: 14px; }
+  .rules h3 { font-size: 15px; }
+  .ok { color: #6ee7b7; } .no { color: #fda4af; }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .sw { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--bg-2); cursor: pointer; text-align: left; padding: 0; color: var(--text); font-family: var(--font); }
+  .sw .chip { height: 70px; }
+  .sw .info { padding: 10px 12px; font-size: 13px; }
+  .sw .info b { display: block; font-size: 13.5px; }
+  .sw .info code { color: var(--text-2); font-size: 12px; }
+  .sw.copied .info code { color: #6ee7b7; }
+  h3.group { margin: 26px 0 10px; font-size: 14px; color: var(--text-2); font-weight: 600; }
+  .type { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .type .card p { margin: 0; color: var(--text-2); font-size: 14px; }
+  .type .sample { font-size: 34px; font-weight: 750; letter-spacing: -.4px; margin: 6px 0 8px; color: var(--text); line-height: 1.2; }
+  .type .sample.mono { font-family: var(--mono); font-size: 24px; font-weight: 500; letter-spacing: 0; }
+  .names { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .names th, .names td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .names th { color: var(--text-3); font-weight: 500; font-size: 12.5px; background: var(--panel); }
+  .names td { color: var(--text-2); }
+  .names td:first-child { color: var(--text); font-weight: 650; white-space: nowrap; }
+  .names tr:last-child td { border-bottom: 0; }
+  .table-scroll { overflow-x: auto; border-radius: var(--radius); }
+  .copyblocks { display: grid; gap: 14px; }
+  .cb { border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg-2); overflow: hidden; }
+  .cb header { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--line); background: var(--panel); flex-wrap: wrap; }
+  .cb header b { font-size: 14px; }
+  .cb header span { font-size: 12px; color: var(--text-3); margin-left: 8px; }
+  .cb .body { display: grid; grid-template-columns: 1fr 1fr; }
+  .cb .body > div { padding: 14px 16px 16px; position: relative; }
+  .cb .body > div + div { border-left: 1px solid var(--line); }
+  .cb .body p { margin: 0 0 10px; font-size: 14.5px; color: var(--text); white-space: pre-line; }
+  .copy { font: 600 12px var(--font); color: var(--text-2); background: var(--bg); border: 1px solid var(--line-2); border-radius: 7px; padding: 5px 10px; cursor: pointer; }
+  .copy:hover { color: var(--text); }
+  .copy.done { color: #6ee7b7; border-color: rgba(52,211,153,.4); }
+  .lab { font: 600 11px var(--mono); color: var(--text-3); letter-spacing: 1px; margin-bottom: 6px; display: block; }
+  .shots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .shots figure .shot { aspect-ratio: 16 / 9; }
+  .shots figure .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+  .dl { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  @media (max-width: 900px) {
+    .logos, .shots { grid-template-columns: 1fr 1fr; }
+    .rules, .type { grid-template-columns: 1fr; }
+    .cb .body { grid-template-columns: 1fr; }
+    .cb .body > div + div { border-left: 0; border-top: 1px solid var(--line); }
+  }
+  @media (max-width: 560px) { .logos, .shots { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Primary">
+  <div class="wrap">
+    <a class="brand" href="../"><img src="../assets/logo.svg" alt="" width="26" height="26">GeoVerse <small>Labs</small></a>
+    <div class="nav-links">
+      <a href="#logo"><span class="zh">标志</span><span class="en">Logo</span></a>
+      <a href="#color"><span class="zh">配色</span><span class="en">Colour</span></a>
+      <a href="#naming"><span class="zh">命名</span><span class="en">Naming</span></a>
+      <a href="#copy"><span class="zh">标准文案</span><span class="en">Copy</span></a>
+      <a href="#media"><span class="zh">截图与视频</span><span class="en">Media</span></a>
+      <a href="../"><span class="zh">← 返回主页</span><span class="en">← Home</span></a>
+    </div>
+    <div class="nav-tools"><button class="lang-btn" type="button">EN</button></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="kicker">Brand kit</p>
+    <h1><span class="zh">品牌资源与标准文案</span><span class="en">Brand kit &amp; boilerplate copy</span></h1>
+    <p class="zh">写文章、做演讲、发社媒或者在自己的项目里提到 GeoVerse？这里有标志、配色、产品命名、可直接复制的中英文介绍、截图和宣传片。所有数字都能在公开仓库或产品页里找到出处。</p>
+    <p class="en">Writing a post, giving a talk or mentioning GeoVerse in your project? Here are the logos, colours, product names, ready-to-paste copy in Chinese and English, screenshots and the film. Every number traces back to a public repository or product page.</p>
+    <div class="toc">
+      <a href="#logo">Logo</a><a href="#color">Colour</a><a href="#type">Type</a><a href="#naming">Naming</a><a href="#copy">Copy</a><a href="#media">Media</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="block" id="logo">
+    <p class="kicker">01 · Logo</p>
+    <h2><span class="zh">标志</span><span class="en">Logo</span></h2>
+    <p class="sub zh">标志由一个地球（坐标）和一条穿过它的路线（计算）组成，渐变取自三种主色：OpenLayers 蓝、Verse 紫、MapLibre 绿。</p>
+    <p class="sub en">The mark is a globe (coordinates) crossed by a route (computation). The gradient blends the three core colours: OpenLayers blue, Verse violet and MapLibre green.</p>
+    <div class="logos">
+      <div class="logo-card"><div class="stage"><img src="../assets/logo.svg" alt="GeoVerse Labs mark" width="120" height="120"></div><div class="meta"><span><span class="zh">图形标 · 深色底</span><span class="en">Mark · dark</span></span><a href="../assets/logo.svg" download>SVG ↓</a></div></div>
+      <div class="logo-card"><div class="stage"><img src="../assets/logo-wordmark.svg" alt="GeoVerse Labs wordmark" width="360" height="64"></div><div class="meta"><span><span class="zh">横版组合 · 深色底</span><span class="en">Wordmark · dark</span></span><a href="../assets/logo-wordmark.svg" download>SVG ↓</a></div></div>
+      <div class="logo-card"><div class="stage light"><img src="../assets/logo-mono.svg" alt="GeoVerse Labs single-colour mark" width="120" height="120"></div><div class="meta"><span><span class="zh">单色图形标 · 浅色底</span><span class="en">Single-colour mark · light</span></span><a href="../assets/logo-mono.svg" download>SVG ↓</a></div></div>
+      <div class="logo-card"><div class="stage light"><img src="../assets/logo-wordmark-mono.svg" alt="GeoVerse Labs single-colour wordmark" width="360" height="64"></div><div class="meta"><span><span class="zh">单色横版组合 · 浅色底</span><span class="en">Single-colour wordmark · light</span></span><a href="../assets/logo-wordmark-mono.svg" download>SVG ↓</a></div></div>
+      <div class="logo-card"><div class="stage grad"><img src="../assets/banner.svg" alt="GeoVerse Labs banner" width="1280" height="320"></div><div class="meta"><span><span class="zh">动态横幅（README 用）</span><span class="en">Animated banner (READMEs)</span></span><a href="../assets/banner.svg" download>SVG ↓</a></div></div>
+    </div>
+    <div class="rules">
+      <div class="card"><h3 class="ok">✓ <span class="zh">推荐</span><span class="en">Do</span></h3>
+        <ul class="zh"><li>在深色背景上使用，四周至少留出标志高度 1/4 的空白</li><li>图形标最小 20 px；横版组合最小 120 px 宽</li><li>浅色背景请使用单色版本（<code>logo-mono.svg</code> / <code>logo-wordmark-mono.svg</code>，填充 <code>#0a0c11</code>）</li></ul>
+        <ul class="en"><li>Use on dark backgrounds with clear space of at least ¼ of the mark's height</li><li>Minimum 20 px for the mark, 120 px wide for the wordmark</li><li>On light backgrounds use the single-colour versions (<code>logo-mono.svg</code> / <code>logo-wordmark-mono.svg</code>, fill <code>#0a0c11</code>)</li></ul>
+      </div>
+      <div class="card"><h3 class="no">✕ <span class="zh">避免</span><span class="en">Don't</span></h3>
+        <ul class="zh"><li>拉伸、旋转、改渐变方向或替换颜色</li><li>把路线单独拿出来当标志用</li><li>写成 "Geoverse"、"GEOVERSE"、"Geo Verse"</li></ul>
+        <ul class="en"><li>Stretch, rotate, re-angle the gradient or swap colours</li><li>Use the route on its own as a logo</li><li>Write "Geoverse", "GEOVERSE" or "Geo Verse"</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="color">
+    <p class="kicker">02 · Colour</p>
+    <h2><span class="zh">配色</span><span class="en">Colour</span></h2>
+    <p class="sub zh">深色界面为主；每个产品有自己的识别色，用于标签、图标和图表强调。点色块即可复制色值。</p>
+    <p class="sub en">Dark-first. Each product has an identity colour for tags, icons and chart accents. Click a swatch to copy its hex value.</p>
+    <h3 class="group"><span class="zh">核心色</span><span class="en">Core</span></h3>
+    <div class="swatches" data-group="core"></div>
+    <h3 class="group"><span class="zh">产品识别色</span><span class="en">Product colours</span></h3>
+    <div class="swatches" data-group="product"></div>
+  </section>
+
+  <section class="block" id="type">
+    <p class="kicker">03 · Type</p>
+    <h2><span class="zh">字体</span><span class="en">Type</span></h2>
+    <div class="type">
+      <div class="card">
+        <span class="lab">SANS · UI &amp; HEADINGS</span>
+        <div class="sample">GeoVerse 地图基础设施</div>
+        <p class="zh">系统无衬线字体栈：-apple-system / Segoe UI / PingFang SC / Microsoft YaHei / Noto Sans CJK SC。不依赖任何外部字体 CDN，国内访问同样稳定。标题字重 700–760，正文 400，行高 1.7。</p>
+        <p class="en">System sans stack: -apple-system / Segoe UI / PingFang SC / Microsoft YaHei / Noto Sans CJK SC. No external font CDN, so pages load reliably inside China too. Headings 700–760, body 400, line height 1.7.</p>
+      </div>
+      <div class="card">
+        <span class="lab">MONO · CODE &amp; COORDINATES</span>
+        <div class="sample mono">116.3974, 39.9087</div>
+        <p class="zh">等宽字体栈：ui-monospace / SF Mono / JetBrains Mono / Consolas。用于代码、坐标、版本号与栏目编号（如 <code>01 · Platform</code>）。</p>
+        <p class="en">Mono stack: ui-monospace / SF Mono / JetBrains Mono / Consolas. Used for code, coordinates, versions and section kickers (e.g. <code>01 · Platform</code>).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="naming">
+    <p class="kicker">04 · Naming</p>
+    <h2><span class="zh">产品命名与对外口径</span><span class="en">Product names &amp; how to describe them</span></h2>
+    <p class="sub zh">首次出现用全称，之后可用简称。状态和许可请按下表描述——尤其不要把闭源产品说成开源，也不要把技术预览说成生产可用。</p>
+    <p class="sub en">Use the full name on first mention, the short name after. Describe status and licence as below — in particular, don't call closed products open source or call a technical preview production-ready.</p>
+    <div class="table-scroll">
+      <table class="names">
+        <thead><tr><th><span class="zh">全称</span><span class="en">Full name</span></th><th><span class="zh">简称 / 包名</span><span class="en">Short / package</span></th><th><span class="zh">状态与许可</span><span class="en">Status &amp; licence</span></th><th><span class="zh">别这么写</span><span class="en">Avoid</span></th></tr></thead>
+        <tbody>
+          <tr><td>GeoVerse SDK</td><td><code>geoverse</code>, <code>@geoverse/*</code></td><td><span class="zh">商业产品，闭源，早期访问</span><span class="en">Commercial, closed source, early access</span></td><td><span class="zh">"开源地图 SDK"</span><span class="en">"open-source SDK"</span></td></tr>
+          <tr><td>GeoVerse Live</td><td>Live</td><td><span class="zh">私有产品，可预约演示 / 私有化部署</span><span class="en">Private product; demos and private deployment on request</span></td><td><span class="zh">"SaaS 已上线"、"免费注册"</span><span class="en">"sign up free", "generally available SaaS"</span></td></tr>
+          <tr><td>GeoVerse Serve</td><td><code>geoverse-map-server</code></td><td>MIT</td><td>"GeoVerse Server", "Map Server"</td></tr>
+          <tr><td>GeoVerse SAR</td><td>SAR · Spatial Application Runtime</td><td><span class="zh">MIT，技术预览，未发布 npm</span><span class="en">MIT, technical preview, not on npm</span></td><td><span class="zh">"生产可用的 Agent 框架"</span><span class="en">"production-ready agent framework"</span></td></tr>
+          <tr><td>GeoVerse Line Finder</td><td><code>geoverse-line-finder</code></td><td>Apache-2.0 · npm</td><td>"LineFinder", "line finder"</td></tr>
+          <tr><td>mybatis-plus-geometry</td><td><code>io.github.geoverselabs:mybatis-plus-geometry-spring-boot-starter</code></td><td>Apache-2.0 · Maven Central</td><td>"MyBatis-Plus Geometry"</td></tr>
+          <tr><td>GeoVerse Skills</td><td><code>geoverse-skills</code>, <code>@geoverse/layout-*</code></td><td><span class="zh">BSL 1.1，源码可见</span><span class="en">BSL 1.1, source-available</span></td><td><span class="zh">"开源"（BSL 不是 OSI 开源许可）</span><span class="en">"open source" (BSL isn't an OSI licence)</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note zh">坐标系一律写作 WGS-84、GCJ-02、BD-09（带连字符、全大写）；引擎写作 OpenLayers、MapLibre GL。</p>
+    <p class="note en">Write coordinate systems as WGS-84, GCJ-02 and BD-09 (upper case, hyphenated); engines as OpenLayers and MapLibre GL.</p>
+  </section>
+
+  <section class="block" id="copy">
+    <p class="kicker">05 · Boilerplate</p>
+    <h2><span class="zh">标准介绍文案</span><span class="en">Boilerplate copy</span></h2>
+    <p class="sub zh">中英对照，按长度挑选，可直接复制。完整文案库（含各产品、社媒与活动用语）见仓库 <a href="https://github.com/GeoVerseLabs/.github/blob/main/marketing/COPY.md">marketing/COPY.md</a>。</p>
+    <p class="sub en">Chinese and English side by side — pick a length and copy. The full copy deck (per product, social and events) lives in <a href="https://github.com/GeoVerseLabs/.github/blob/main/marketing/COPY.md">marketing/COPY.md</a>.</p>
+    <div class="copyblocks" id="copyblocks"></div>
+  </section>
+
+  <section class="block" id="media">
+    <p class="kicker">06 · Media</p>
+    <h2><span class="zh">截图与宣传片</span><span class="en">Screenshots &amp; film</span></h2>
+    <p class="sub zh">截图均来自真实产品与在线示例。示例数据：Natural Earth（公有领域）、OpenStreetMap 贡献者（ODbL）；底图 © OpenStreetMap contributors、© 高德地图。转载请保留数据与底图署名。</p>
+    <p class="sub en">All screenshots come from the real products and playgrounds. Sample data: Natural Earth (public domain) and OpenStreetMap contributors (ODbL); basemaps © OpenStreetMap contributors, © AutoNavi (Amap) — please keep the data and basemap attribution.</p>
+    <div class="shots" id="shots"></div>
+    <div class="dl">
+      <a class="btn primary" href="../film/"><span class="zh">▶ 观看宣传片</span><span class="en">▶ Watch the film</span></a>
+      <a class="btn" href="../assets/film/geoverse-film-zh.mp4" download><span class="zh">MP4 · 中文</span><span class="en">MP4 · Chinese</span></a>
+      <a class="btn" href="../assets/film/geoverse-film-en.mp4" download><span class="zh">MP4 · 英文</span><span class="en">MP4 · English</span></a>
+      <a class="btn" href="../assets/og-card.png" download><span class="zh">社交分享卡 1200×630</span><span class="en">Social card 1200×630</span></a>
+    </div>
+  </section>
+
+  <section class="contact" style="margin:96px 0 0;padding:36px 32px;border-radius:20px;border:1px solid var(--line);background:linear-gradient(135deg,rgba(79,140,255,.10),rgba(139,108,246,.14) 50%,rgba(47,191,138,.10))">
+    <h2 style="margin:0 0 6px"><span class="zh">媒体与合作</span><span class="en">Press &amp; partnerships</span></h2>
+    <p class="zh" style="margin:0 0 18px;color:var(--text-2)">需要采访、演讲素材、更高分辨率的截图或联合活动？发邮件给我们。</p>
+    <p class="en" style="margin:0 0 18px;color:var(--text-2)">Interviews, talk material, higher-resolution screenshots or joint events — drop us a line.</p>
+    <div class="cta"><a class="btn primary" href="mailto:libra.liuyb@gmail.com?subject=GeoVerse%20Labs%20press">libra.liuyb@gmail.com</a><a class="btn" href="https://github.com/GeoVerseLabs">GitHub</a></div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="legal" style="border-top:1px solid var(--line);padding-top:24px;margin-top:0">
+      <span>© 2026 GeoVerse Labs · <a href="../">geoverselabs.github.io/.github</a></span>
+      <span><a href="../live/"><span class="zh">Live 产品手册</span><span class="en">Live brochure</span></a> · <a href="../film/"><span class="zh">宣传片</span><span class="en">Film</span></a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="lb" id="lb" role="dialog" aria-label="Image preview"><img alt=""></div>
+
+<script>
+(function () {
+  var CORE = [
+    ['Ink', '墨', '#0a0c11'], ['Panel', '面板', '#141823'], ['Line', '分隔线', '#232837'], ['Text', '正文', '#e8eaf0'], ['Text 2', '次级文字', '#a4abbd'],
+    ['OpenLayers Blue', 'OpenLayers 蓝', '#4f8cff'], ['Verse Violet', 'Verse 紫', '#8b6cf6'], ['Violet Light', '浅紫', '#b39dff'], ['MapLibre Green', 'MapLibre 绿', '#2fbf8a'], ['Signal Amber', '信号琥珀', '#fcd34d']
+  ];
+  var PRODUCT = [
+    ['GeoVerse SDK', '', '#8b6cf6'], ['GeoVerse Live', '', '#4f8cff'], ['GeoVerse Serve', '', '#fbbf24'], ['GeoVerse SAR', '', '#e879f9'],
+    ['Line Finder', '', '#22d3ee'], ['mybatis-plus-geometry', '', '#34d399'], ['GeoVerse Skills', '', '#fb7185']
+  ];
+  function copyText(text, done) {
+    var ok = function () { done(true); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback); else fallback();
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { done(document.execCommand('copy')); } catch (e) { done(false); }
+      document.body.removeChild(ta);
+    }
+  }
+  function swatches(group, list) {
+    var box = document.querySelector('.swatches[data-group="' + group + '"]');
+    list.forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'sw';
+      b.innerHTML = '<div class="chip" style="background:' + c[2] + '"></div><div class="info"><b><span class="en">' + c[0] + '</span><span class="zh">' + (c[1] || c[0]) + '</span></b><code>' + c[2] + '</code></div>';
+      b.addEventListener('click', function () {
+        copyText(c[2], function (ok) { if (!ok) return; clearTimeout(b._t); b.classList.add('copied'); b._t = setTimeout(function () { b.classList.remove('copied'); }, 1200); });
+      });
+      box.appendChild(b);
+    });
+  }
+  swatches('core', CORE); swatches('product', PRODUCT);
+
+  var BLOCKS = [
+    ['一句话', 'Tagline', '',
+     '为中国坐标系而生的 Web 地图基础设施。',
+     "Mapping infrastructure for the modern web, built for China's coordinate systems."],
+    ['短版', 'Short', '≈ 60 字 / 50 words',
+     'GeoVerse Labs 打造空间应用工具链：双引擎地图 SDK、协作式地理数据编辑平台、Go 瓦片服务、AI 原生空间运行时与 GeoJSON 寻路库，原生支持 GCJ-02 / BD-09 等国内坐标系。',
+     "GeoVerse Labs builds a spatial application toolchain: a dual-engine mapping SDK, a collaborative geodata editing platform, a Go tile server, an AI-native spatial runtime and a GeoJSON routing library — with first-class support for China's GCJ-02 and BD-09 coordinate systems."],
+    ['中版', 'Medium', '≈ 180 字 / 120 words',
+     'GeoVerse Labs 专注 Web 地图与空间应用的开发者工具。核心产品 GeoVerse SDK 让同一套地图 API 运行在 OpenLayers 或 MapLibre GL 上，内置国内坐标系纠偏与框架无关的要素编辑引擎；基于它构建的 GeoVerse Live 是支持实时协作、版本历史、专题制图与 AI 助手的地理数据编辑平台。\n\n我们同时开源了生态需要的基础构件：GeoVerse Serve（单二进制 Go 瓦片与 OGC 服务）、GeoVerse SAR（AI 原生空间应用运行时）、GeoVerse Line Finder（零依赖 GeoJSON 寻路库）与 mybatis-plus-geometry（Java 几何持久化）。',
+     'GeoVerse Labs makes developer tools for web mapping and spatial applications. Our core product, GeoVerse SDK, runs one mapping API on either OpenLayers or MapLibre GL, with built-in correction for Chinese coordinate systems and a framework-agnostic feature-editing engine. GeoVerse Live, built on the SDK, is a geodata editing platform with real-time collaboration, version history, thematic mapping and an AI assistant.\n\nWe also open-source the building blocks the ecosystem needs: GeoVerse Serve (a single-binary Go tile and OGC server), GeoVerse SAR (an AI-native spatial application runtime), GeoVerse Line Finder (a zero-dependency GeoJSON routing library) and mybatis-plus-geometry (Java geometry persistence).'],
+    ['长版', 'Long', '≈ 320 字 / 220 words',
+     'GeoVerse Labs 为 Web 地图与空间应用打造一整条可组合的工具链——从几何入库、瓦片发布，到双引擎渲染与编辑、多人协作平台，再到 AI 原生运行时。\n\nGeoVerse SDK 是核心：同一套地图 API 可运行在 OpenLayers 10 或 MapLibre GL 5 上，高德、百度等国内底图在引擎内部完成纠偏，对外坐标恒为 WGS-84；配套的编辑引擎不依赖任何地图库，提供 25 个编辑命令、撤销重做与三路合并同步，并有 Vue / React 官方绑定。GeoVerse Live 在 SDK 之上提供协作式地理数据编辑：按项目切换渲染引擎、版本历史与回滚、专题制图、实时协作与要素评论、AI 助手，以及免登录分享与私有化部署。\n\n开源方面，GeoVerse Serve 用一个纯 Go 二进制把 PostGIS、MySQL、PMTiles 等数据发布为 MVT、WMTS、OGC API 与 MCP 服务；GeoVerse SAR 让 UI、AI 工具调用、自治 Agent 与 MCP 客户端走同一个受治理的内核；GeoVerse Line Finder 在浏览器里对 13.5 万坐标的路网建图寻路，并支持多楼层室内路线。\n\n我们相信可证伪的工程纪律：契约先于实现、门禁胜过约定、基准可复现、每个坑都沉淀为知识。',
+     "GeoVerse Labs builds a composable toolchain for web mapping and spatial applications — from geometry persistence and tile serving to dual-engine rendering and editing, a collaboration platform and an AI-native runtime.\n\nGeoVerse SDK is the core: one mapping API runs on OpenLayers 10 or MapLibre GL 5, Chinese basemaps such as Amap and Baidu are corrected inside the engine, and coordinates at the API boundary are always WGS-84. Its editing engine has no map-library dependency and ships 25 editing commands, undo/redo and three-way-merge sync, with official Vue and React bindings. GeoVerse Live builds collaborative geodata editing on top: per-project engine switching, version history and rollback, thematic mapping, real-time co-editing with comments, an AI assistant, login-free sharing and private deployment.\n\nIn open source, GeoVerse Serve turns PostGIS, MySQL, PMTiles and more into MVT, WMTS, OGC API and MCP services from a single pure-Go binary; GeoVerse SAR routes UI actions, AI tool calls, autonomous agents and MCP clients through one governed kernel; and GeoVerse Line Finder builds and routes a 135,000-coordinate road network in the browser, including multi-level indoor routes.\n\nWe believe in engineering you can falsify: contracts before implementations, gates over conventions, reproducible benchmarks, and every bug turned into knowledge."]
+  ];
+  var cbBox = document.getElementById('copyblocks');
+  BLOCKS.forEach(function (b) {
+    var d = document.createElement('div'); d.className = 'cb';
+    d.innerHTML = '<header><div><b><span class="zh">' + b[0] + '</span><span class="en">' + b[1] + '</span></b><span>' + b[2] + '</span></div></header>' +
+      '<div class="body"><div><span class="lab">中文</span><p></p><button class="copy" type="button">复制 · Copy</button></div><div><span class="lab">ENGLISH</span><p></p><button class="copy" type="button">Copy · 复制</button></div></div>';
+    var ps = d.querySelectorAll('p'), bs = d.querySelectorAll('.copy');
+    ps[0].textContent = b[3]; ps[1].textContent = b[4];
+    [0, 1].forEach(function (i) {
+      var label = bs[i].textContent;
+      bs[i].addEventListener('click', function () {
+        copyText(b[3 + i], function (ok) {
+          if (!ok) return;
+          clearTimeout(bs[i]._t);
+          bs[i].classList.add('done'); bs[i].textContent = '✓';
+          bs[i]._t = setTimeout(function () { bs[i].classList.remove('done'); bs[i].textContent = label; }, 1200);
+        });
+      });
+    });
+    cbBox.appendChild(d);
+  });
+
+  var SHOTS = [
+    ['../live/assets/editor-thematic-maplibre.webp', 'GeoVerse Live · 专题图（MapLibre）', 'GeoVerse Live · thematic map (MapLibre)'],
+    ['../live/assets/editor-thematic-openlayers.webp', 'GeoVerse Live · 同一专题图（OpenLayers）', 'GeoVerse Live · same map (OpenLayers)'],
+    ['../live/assets/edit-history.webp', 'GeoVerse Live · 编辑与版本历史', 'GeoVerse Live · editing & history'],
+    ['../live/assets/thematic-style.webp', 'GeoVerse Live · 高级样式工作台', 'GeoVerse Live · advanced styling'],
+    ['../live/assets/collab-comments.webp', 'GeoVerse Live · 要素评论', 'GeoVerse Live · feature comments'],
+    ['../live/assets/ai-assistant.webp', 'GeoVerse Live · AI 助手', 'GeoVerse Live · AI assistant'],
+    ['../live/assets/open-map-composer.webp', 'GeoVerse Live · 综合地图编排', 'GeoVerse Live · map composer'],
+    ['../assets/shots/line-finder-gothenburg.webp', 'Line Finder · 哥德堡 13.5 万坐标路网', 'Line Finder · 135k-coordinate Gothenburg network'],
+    ['../assets/shots/line-finder-multilevel.webp', 'Line Finder · 多楼层寻路', 'Line Finder · multi-level routing']
+  ];
+  var sb = document.getElementById('shots');
+  SHOTS.forEach(function (s) {
+    var f = document.createElement('figure');
+    f.innerHTML = '<div class="shot zoomable"><img loading="lazy" src="' + s[0] + '" alt="' + s[2] + '"></div><figcaption><span class="zh">' + s[1] + '</span><span class="en">' + s[2] + '</span> · <a href="' + s[0] + '" download>↓</a></figcaption>';
+    sb.appendChild(f);
+  });
+})();
+</script>
+<script src="../assets/site.js"></script>
+</body>
+</html>
