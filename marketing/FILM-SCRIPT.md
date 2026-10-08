@@ -45,10 +45,31 @@
 
 ## 更新流程
 
-产品数字或功能变了，按下面的顺序更新，保证网页版与 MP4 一致：
+产品数字或功能变了，按下面的顺序更新，保证网页版、MP4、短版、动图与示意图一致（导出用的帧目录 `/tmp/film-zh`、`/tmp/film-en` 来自第 3 步）：
 
 1. 改 [`film/index.html`](../film/index.html) 中对应场景的文字或数字（每个场景是一个独立的 `sN.update(lt)` 函数，文案用 `txt(parent, attrs, 中文, English)` 成对写）；
 2. 在浏览器里打开 `film/?t=<秒>` 检查该场景，中英各看一遍（右下 `EN / 中文` 按钮或按 <kbd>L</kbd>）；
 3. 起一个静态服务后运行 `node marketing/tools/export-film.mjs --lang zh --out /tmp/film-zh`（英文同理），把生成的 MP4 覆盖到 `assets/film/`；
-4. 用 ffmpeg 重新截海报：`ffmpeg -i /tmp/film-en/frames/01515.jpg -vf scale=1280:720 -c:v libwebp -quality 85 assets/film/poster.webp`；
-5. 同步更新本文件的分镜表与"事实出处"列。
+4. 用 ffmpeg 重新截海报与分享图：
+   `ffmpeg -i /tmp/film-en/frames/01515.jpg -vf scale=1280:720 -c:v libwebp -quality 85 assets/film/poster.webp`，
+   `ffmpeg -i assets/film/poster.webp -vf "scale=1200:-1,crop=1200:630" -q:v 3 assets/film/og-film.jpg`；
+5. 重做 17.4 秒短版（场景 3 的 13.2–19.6 s、场景 7 的 40.2–45.8 s、场景 8 的 46.6–52 s 按帧拼接，30 fps 下起始帧 396 / 1206 / 1398，帧数 192 / 168 / 162），中英各一次（把 `zh` 换成 `en`）：
+
+   ```bash
+   F=/tmp/film-zh/frames
+   ffmpeg -framerate 30 -start_number 396  -i $F/%05d.jpg \
+          -framerate 30 -start_number 1206 -i $F/%05d.jpg \
+          -framerate 30 -start_number 1398 -i $F/%05d.jpg \
+     -filter_complex "[0:v]trim=end_frame=192,setpts=PTS-STARTPTS[a];[1:v]trim=end_frame=168,setpts=PTS-STARTPTS[b];[2:v]trim=end_frame=162,setpts=PTS-STARTPTS[c];[a][b][c]concat=n=3:v=1[v]" \
+     -map "[v]" -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart -tune animation assets/film/teaser-zh.mp4
+   ```
+6. 重做 Line Finder 动图（英文场景 7，40.4 s 起 156 帧，12 fps，宽 720 px）：
+
+   ```bash
+   ffmpeg -framerate 30 -start_number 1212 -i /tmp/film-en/frames/%05d.jpg -frames:v 156 \
+     -vf "fps=12,scale=720:-1:flags=lanczos,split[s0][s1];[s0]palettegen=max_colors=96:stats_mode=diff[p];[s1][p]paletteuse=dither=bayer:bayer_scale=4:diff_mode=rectangle" \
+     assets/film/line-finder-teaser.gif
+   ```
+7. 重做主页 SDK 体验卡片的示意图（英文场景 3 第 516 帧裁出地图区域）：
+   `ffmpeg -i /tmp/film-en/frames/00516.jpg -vf "crop=1080:555:250:245,scale=1280:-2" -c:v libwebp -quality 85 assets/film/still-engines.webp`；
+8. 同步更新本文件的分镜表与"事实出处"列。

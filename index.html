@@ -333,7 +333,7 @@
         <li data-ids="sar sdk"><em>SAR → SDK</em><span class="zh">SAR 的 <code>engine-geo</code> 零改动包装 <code>@geoverse/editor-core</code>，把编辑命令变成可审计的能力。</span><span class="en">SAR's <code>engine-geo</code> wraps <code>@geoverse/editor-core</code> unchanged, turning editing commands into auditable capabilities.</span></li>
         <li data-ids="serve sdk live"><em>Serve → SDK / Live</em><span class="zh">Serve 只通过协议（MVT、PMTiles、OGC API）被消费，零代码依赖；Live 的图层可一键发布到 Serve。</span><span class="en">Serve is consumed purely over protocols (MVT, PMTiles, OGC API) — no code coupling; Live layers publish to Serve in one click.</span></li>
         <li data-ids="mpg live"><em>Live → mybatis-plus-geometry</em><span class="zh">Live 后端用 mybatis-plus-geometry + PostGIS 存取要素几何。</span><span class="en">Live's backend persists feature geometry through mybatis-plus-geometry + PostGIS.</span></li>
-        <li data-ids="lf skills"><em>Line Finder · Skills</em><span class="zh">寻路库与布局引擎都是可内嵌的确定性计算：浏览器、Worker、Node 或 Agent 工具里都能跑。</span><span class="en">The routing library and the layout engine are embeddable, deterministic computation — in the browser, a Worker, Node or an agent tool.</span></li>
+        <li data-ids="lf skills"><em>Line Finder · Skills</em><span class="zh">寻路库与布局引擎都是确定性计算：Line Finder 可内嵌在浏览器、Worker 或 Node 里；布局引擎跑在 Node 与 Agent 工具里（商业评估许可）。</span><span class="en">Both are deterministic computation: Line Finder embeds in the browser, a Worker or Node; the layout engine runs in Node and agent tools (commercial evaluation licence).</span></li>
       </ul>
     </div>
   </section>
@@ -492,13 +492,13 @@
         <p class="tagline en">A Spring Boot starter bridging MyBatis Plus and JTS geometry types.</p>
         <ul class="zh">
           <li>MySQL 8 与 PostgreSQL / PostGIS 自动识别，零配置</li>
-          <li>Point 到 GeometryCollection 共 8 类几何注解，WKB 自动转换</li>
+          <li>8 类几何字段注解（Point 到 GeometryCollection 7 种类型 + 通用 Geometry），WKB 自动转换</li>
           <li>Jackson GeoJSON 序列化开箱即用，REST 接口直接吐 GeoJSON</li>
           <li>Java 17+，Spring Boot 2.7+ / 3.x</li>
         </ul>
         <ul class="en">
           <li>Auto-detects MySQL 8 and PostgreSQL / PostGIS — zero configuration</li>
-          <li>Annotations for 8 geometry types from Point to GeometryCollection, WKB conversion built in</li>
+          <li>8 geometry field annotations (Point through GeometryCollection, plus generic Geometry), WKB conversion built in</li>
           <li>Jackson GeoJSON serialisation out of the box for REST APIs</li>
           <li>Java 17+, Spring Boot 2.7+ / 3.x</li>
         </ul>
@@ -512,23 +512,23 @@
       <article class="product" id="p-skills" style="--c:var(--c-skills)">
         <div class="head">
           <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.2"/><rect x="14" y="3" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><path d="M17.5 13.5v8M13.5 17.5h8" stroke-linecap="round"/></svg></span>
-          <div><h3>GeoVerse Skills</h3><div class="badges"><span class="badge src"><i></i><span class="zh">BSL 1.1 · 源码可见</span><span class="en">BSL 1.1 · source-available</span></span></div></div>
+          <div><h3>GeoVerse Skills</h3><div class="badges"><span class="badge src"><i></i><span class="zh">BSL 1.1 · 源码可见</span><span class="en">BSL 1.1 · source-available</span></span><span class="badge com"><i></i><span class="zh">运行时包 · 商业评估许可</span><span class="en">Runtime packages · commercial evaluation licence</span></span></div></div>
         </div>
         <p class="tagline zh">面向 AI Agent 的空间技能仓库，配套确定性布局引擎与 MCP App。</p>
         <p class="tagline en">Spatial skills for AI agents, with a deterministic layout engine and an MCP App.</p>
         <ul class="zh">
           <li><code>generate-region-layout</code>：把设施网格 / 矩形与摆放、编号规则变成确定性、可校验的布局——货架、库位、车位、展位</li>
-          <li>配套 npm 包 <code>@geoverse/layout-engine</code> 0.7 与 <code>@geoverse/layout-mcp-app</code> 0.5：交互地图卡片 + 离线 HTML 预览</li>
+          <li>运行时 npm 包 <code>@geoverse/layout-engine</code> 0.7 与 <code>@geoverse/layout-mcp-app</code> 0.5：交互地图卡片 + 离线 HTML 预览；采用 GeoVerse 商业许可，免费用于内部非生产评估，生产使用需商业授权</li>
           <li>每个 Skill 带评测用例与安装自检；统一 CI 做结构校验与干净安装冒烟</li>
         </ul>
         <ul class="en">
           <li><code>generate-region-layout</code>: turn facility grids or rectangles plus placement and numbering rules into deterministic, validated layouts — racks, bins, parking bays, booths</li>
-          <li>Backed by <code>@geoverse/layout-engine</code> 0.7 and <code>@geoverse/layout-mcp-app</code> 0.5 on npm: interactive map cards plus an offline HTML preview</li>
+          <li>Runtime npm packages <code>@geoverse/layout-engine</code> 0.7 and <code>@geoverse/layout-mcp-app</code> 0.5: interactive map cards plus an offline HTML preview; under the GeoVerse Commercial License, free for internal non-production evaluation, with production use requiring a commercial licence</li>
           <li>Every skill ships evals and installation self-checks; one CI validates structure and runs clean-install smoke tests</li>
         </ul>
         <div class="links">
           <a href="https://github.com/GeoVerseLabs/geoverse-skills">GitHub ↗</a>
-          <a href="https://www.npmjs.com/package/@geoverse/layout-mcp-app">npm ↗</a>
+          <a href="https://www.npmjs.com/package/@geoverse/layout-mcp-app"><span class="zh">npm（评估许可）↗</span><span class="en">npm (evaluation licence) ↗</span></a>
         </div>
       </article>
     </div>
@@ -542,7 +542,7 @@
     <p class="sub en">No sign-up, no install. The brochure shows real screenshots; both playgrounds run the real code in your browser.</p>
     <div class="demos">
       <a class="demo" href="live/">
-        <div class="pic"><img src="live/assets/editor-thematic-maplibre.webp" alt="GeoVerse Live editor: countries classed by GDP per capita with a world-cities layer" loading="lazy" width="1600" height="742"><span class="tag"><span class="zh">产品手册</span><span class="en">Brochure</span></span></div>
+        <div class="pic"><img src="live/assets/editor-thematic-maplibre.webp" alt="GeoVerse Live editor: countries classed by GDP per capita with a world-cities layer" loading="lazy" width="1600" height="738"><span class="tag"><span class="zh">产品手册</span><span class="en">Brochure</span></span></div>
         <div class="txt"><b>GeoVerse Live</b><span class="zh">双引擎、编辑与版本历史、专题制图、协作与 AI、开放发布——逐项带截图。</span><span class="en">Dual engine, editing &amp; history, thematic mapping, collaboration &amp; AI, open sharing — every feature with screenshots.</span><span class="url">geoverselabs.github.io/.github/live/</span></div>
       </a>
       <a class="demo" href="https://geoverselabs.github.io/geoverse-line-finder/">
@@ -656,8 +656,8 @@
   <section class="block" id="opensource">
     <p class="kicker">07 · Open source</p>
     <h2><span class="zh">开源与源码可见</span><span class="en">Open source &amp; source-available</span></h2>
-    <p class="sub zh">欢迎 Issue 与 PR。每个仓库都有自己的贡献指南与安全策略。</p>
-    <p class="sub en">Issues and PRs welcome. Each repository has its own contributing guide and security policy.</p>
+    <p class="sub zh">欢迎 Issue 与 PR；有 CONTRIBUTING 的仓库请先读它。发现安全问题请不要公开提 Issue，发邮件到 libra.liuyb@gmail.com。</p>
+    <p class="sub en">Issues and PRs are welcome — where a repository has a CONTRIBUTING guide, please read it first. Please report security issues privately to libra.liuyb@gmail.com rather than in a public issue.</p>
     <div class="table-scroll">
       <table class="oss-table">
         <thead><tr><th><span class="zh">仓库</span><span class="en">Repository</span></th><th><span class="zh">是什么</span><span class="en">What it is</span></th><th><span class="zh">许可</span><span class="en">License</span></th><th><span class="zh">获取</span><span class="en">Get it</span></th></tr></thead>
@@ -666,7 +666,7 @@
           <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-map-server">geoverse-map-server</a><br><span class="lang">Go</span></td><td><span class="zh">GeoVerse Serve：多数据源 → MVT / OGC / MCP</span><span class="en">GeoVerse Serve: many sources → MVT / OGC / MCP</span></td><td><span class="badge oss"><i></i>MIT</span></td><td><code>make build</code></td></tr>
           <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-sar">geoverse-sar</a><br><span class="lang">TypeScript</span></td><td><span class="zh">AI-native 空间应用运行时（技术预览，未发布 npm）</span><span class="en">AI-native spatial runtime (technical preview, not on npm yet)</span></td><td><span class="badge oss"><i></i>MIT</span></td><td><span class="zh">从源码构建（geo 相关包需 GeoVerse SDK 访问权限）</span><span class="en">Build from source (geo packages need GeoVerse SDK access)</span></td></tr>
           <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/mybatis-plus-geometry">mybatis-plus-geometry</a><br><span class="lang">Java</span></td><td><span class="zh">MyBatis Plus ↔ JTS 几何，MySQL / PostGIS</span><span class="en">MyBatis Plus ↔ JTS geometry for MySQL / PostGIS</span></td><td><span class="badge oss"><i></i>Apache-2.0</span></td><td><code>io.github.geoverselabs:mybatis-plus-geometry-spring-boot-starter:1.0.1</code></td></tr>
-          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-skills">geoverse-skills</a><br><span class="lang">Markdown · Node</span></td><td><span class="zh">AI Agent 空间技能（区域布局生成）</span><span class="en">Spatial skills for AI agents (region layout generation)</span></td><td><span class="badge src"><i></i>BSL 1.1</span></td><td><code>@geoverse/layout-mcp-app</code></td></tr>
+          <tr><td><a class="repo" href="https://github.com/GeoVerseLabs/geoverse-skills">geoverse-skills</a><br><span class="lang">Markdown · Node</span></td><td><span class="zh">AI Agent 空间技能（区域布局生成）</span><span class="en">Spatial skills for AI agents (region layout generation)</span></td><td><span class="badge src"><i></i>BSL 1.1</span></td><td><span class="zh">克隆仓库安装 Skill；运行时依赖 <code>@geoverse/layout-*</code>（商业许可，仅限评估）</span><span class="en">Clone the repo to install the skill; its runtime <code>@geoverse/layout-*</code> packages are commercially licensed (evaluation only)</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -716,6 +716,8 @@
           <li><a href="#p-serve">GeoVerse Serve</a></li>
           <li><a href="#p-sar">GeoVerse SAR</a></li>
           <li><a href="#p-lf">GeoVerse Line Finder</a></li>
+          <li><a href="#p-mpg">mybatis-plus-geometry</a></li>
+          <li><a href="#p-skills">GeoVerse Skills</a></li>
         </ul>
       </div>
       <div>

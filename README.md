@@ -35,7 +35,7 @@ We publish the building blocks we think the ecosystem needs — open source or s
 | [geoverse-map-server](https://github.com/GeoVerseLabs/geoverse-map-server) | **GeoVerse Serve** — a single pure-Go binary that publishes PostGIS, MySQL, PMTiles, MBTiles, GeoJSON and GeoPackage as MVT, WMTS, OGC API – Features and MCP | MIT | `make build` |
 | [geoverse-sar](https://github.com/GeoVerseLabs/geoverse-sar) | **GeoVerse SAR** — AI-native runtime for spatial apps: UI, AI tool calls, agents and MCP clients share one governed kernel (technical preview) | MIT | build from source (geo packages need GeoVerse SDK access) |
 | [mybatis-plus-geometry](https://github.com/GeoVerseLabs/mybatis-plus-geometry) | Spring Boot starter bridging MyBatis Plus and JTS geometry types (MySQL / PostGIS) | Apache-2.0 | Maven Central `1.0.1` |
-| [geoverse-skills](https://github.com/GeoVerseLabs/geoverse-skills) | Spatial skills for AI agents — deterministic region layouts for racks, bays and booths, with an MCP App | BSL 1.1 (source-available) | `@geoverse/layout-mcp-app` |
+| [geoverse-skills](https://github.com/GeoVerseLabs/geoverse-skills) | Spatial skills for AI agents — deterministic region layouts for racks, bays and booths, with an MCP App | BSL 1.1 (source-available); its runtime `@geoverse/layout-*` npm packages use a commercial licence (evaluation only) | clone the repo |
 
 ## 🧪 How we build
 

@@ -5,10 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>品牌资源与文案 — GeoVerse Labs</title>
 <meta name="description" content="GeoVerse Labs 品牌资源：标志、配色、产品命名规范、标准介绍文案（中英）、截图与宣传片下载。">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GeoVerse Labs">
 <meta property="og:title" content="GeoVerse Labs — Brand kit">
 <meta property="og:description" content="Logos, colours, naming, boilerplate copy, screenshots and the film.">
 <meta property="og:url" content="https://geoverselabs.github.io/.github/brand/">
 <meta property="og:image" content="https://geoverselabs.github.io/.github/assets/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0a0c11">
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site.css">
@@ -108,8 +113,8 @@
   <div class="wrap">
     <p class="kicker">Brand kit</p>
     <h1><span class="zh">品牌资源与标准文案</span><span class="en">Brand kit &amp; boilerplate copy</span></h1>
-    <p class="zh">写文章、做演讲、发社媒或者在自己的项目里提到 GeoVerse？这里有标志、配色、产品命名、可直接复制的中英文介绍、截图和宣传片。所有数字都能在公开仓库或产品页里找到出处。</p>
-    <p class="en">Writing a post, giving a talk or mentioning GeoVerse in your project? Here are the logos, colours, product names, ready-to-paste copy in Chinese and English, screenshots and the film. Every number traces back to a public repository or product page.</p>
+    <p class="zh">写文章、做演讲、发社媒或者在自己的项目里提到 GeoVerse？这里有标志、配色、产品命名、可直接复制的中英文介绍、截图和宣传片。每个数字都有出处：公开仓库、npm / Maven 页面或产品手册；闭源 SDK 与内部工程实践的数字出自内部文档，会注明“内部”。</p>
+    <p class="en">Writing a post, giving a talk or mentioning GeoVerse in your project? Here are the logos, colours, product names, ready-to-paste copy in Chinese and English, screenshots and the film. Every number has a source — a public repository, an npm / Maven page or a product brochure; figures for the closed-source SDK and our internal engineering practice come from internal documentation and are marked “internal”.</p>
     <div class="toc">
       <a href="#logo">Logo</a><a href="#color">Colour</a><a href="#type">Type</a><a href="#naming">Naming</a><a href="#copy">Copy</a><a href="#media">Media</a>
     </div>
@@ -181,13 +186,14 @@
       <table class="names">
         <thead><tr><th><span class="zh">全称</span><span class="en">Full name</span></th><th><span class="zh">简称 / 包名</span><span class="en">Short / package</span></th><th><span class="zh">状态与许可</span><span class="en">Status &amp; licence</span></th><th><span class="zh">别这么写</span><span class="en">Avoid</span></th></tr></thead>
         <tbody>
-          <tr><td>GeoVerse SDK</td><td><code>geoverse</code>, <code>@geoverse/*</code></td><td><span class="zh">商业产品，闭源，早期访问</span><span class="en">Commercial, closed source, early access</span></td><td><span class="zh">"开源地图 SDK"</span><span class="en">"open-source SDK"</span></td></tr>
+          <tr><td>GeoVerse SDK</td><td><code>geoverse</code>, <code>@geoverse/*</code><span class="zh">（<code>@geoverse/layout-*</code> 除外）</span><span class="en"> (except <code>@geoverse/layout-*</code>)</span></td><td><span class="zh">商业产品，闭源，早期访问</span><span class="en">Commercial, closed source, early access</span></td><td><span class="zh">"开源地图 SDK"</span><span class="en">"open-source SDK"</span></td></tr>
           <tr><td>GeoVerse Live</td><td>Live</td><td><span class="zh">私有产品，可预约演示 / 私有化部署</span><span class="en">Private product; demos and private deployment on request</span></td><td><span class="zh">"SaaS 已上线"、"免费注册"</span><span class="en">"sign up free", "generally available SaaS"</span></td></tr>
           <tr><td>GeoVerse Serve</td><td><code>geoverse-map-server</code></td><td>MIT</td><td>"GeoVerse Server", "Map Server"</td></tr>
           <tr><td>GeoVerse SAR</td><td>SAR · Spatial Application Runtime</td><td><span class="zh">MIT，技术预览，未发布 npm</span><span class="en">MIT, technical preview, not on npm</span></td><td><span class="zh">"生产可用的 Agent 框架"</span><span class="en">"production-ready agent framework"</span></td></tr>
           <tr><td>GeoVerse Line Finder</td><td><code>geoverse-line-finder</code></td><td>Apache-2.0 · npm</td><td>"LineFinder", "line finder"</td></tr>
           <tr><td>mybatis-plus-geometry</td><td><code>io.github.geoverselabs:mybatis-plus-geometry-spring-boot-starter</code></td><td>Apache-2.0 · Maven Central</td><td>"MyBatis-Plus Geometry"</td></tr>
-          <tr><td>GeoVerse Skills</td><td><code>geoverse-skills</code>, <code>@geoverse/layout-*</code></td><td><span class="zh">BSL 1.1，源码可见</span><span class="en">BSL 1.1, source-available</span></td><td><span class="zh">"开源"（BSL 不是 OSI 开源许可）</span><span class="en">"open source" (BSL isn't an OSI licence)</span></td></tr>
+          <tr><td>GeoVerse Skills</td><td><code>geoverse-skills</code></td><td><span class="zh">BSL 1.1，源码可见</span><span class="en">BSL 1.1, source-available</span></td><td><span class="zh">"开源"（BSL 不是 OSI 开源许可）</span><span class="en">"open source" (BSL isn't an OSI licence)</span></td></tr>
+          <tr><td><span class="zh">GeoVerse 布局引擎 / 布局 MCP App</span><span class="en">GeoVerse layout engine / layout MCP App</span></td><td><code>@geoverse/layout-engine</code>, <code>@geoverse/layout-mcp-app</code></td><td><span class="zh">GeoVerse 商业许可 v1.0：免费用于内部非生产评估，生产使用需商业授权；没有公开源码仓库，不得再分发</span><span class="en">GeoVerse Commercial License v1.0: free for internal non-production evaluation, production use needs a commercial licence; no public source repository, no redistribution</span></td><td><span class="zh">"开源""BSL""免费商用"</span><span class="en">"open source", "BSL", "free for commercial use"</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -213,6 +219,10 @@
       <a class="btn primary" href="../film/"><span class="zh">▶ 观看宣传片</span><span class="en">▶ Watch the film</span></a>
       <a class="btn" href="../assets/film/geoverse-film-zh.mp4" download><span class="zh">MP4 · 中文</span><span class="en">MP4 · Chinese</span></a>
       <a class="btn" href="../assets/film/geoverse-film-en.mp4" download><span class="zh">MP4 · 英文</span><span class="en">MP4 · English</span></a>
+      <a class="btn" href="../assets/film/teaser-zh.mp4" download><span class="zh">17 秒短版 · 中文</span><span class="en">17 s teaser · Chinese</span></a>
+      <a class="btn" href="../assets/film/teaser-en.mp4" download><span class="zh">17 秒短版 · 英文</span><span class="en">17 s teaser · English</span></a>
+      <a class="btn" href="../assets/film/line-finder-teaser.gif" download><span class="zh">Line Finder 动图</span><span class="en">Line Finder GIF</span></a>
+      <a class="btn" href="../assets/film/poster.webp" download><span class="zh">宣传片海报</span><span class="en">Film poster</span></a>
       <a class="btn" href="../assets/og-card.png" download><span class="zh">社交分享卡 1200×630</span><span class="en">Social card 1200×630</span></a>
     </div>
   </section>
@@ -314,7 +324,8 @@
     ['../live/assets/ai-assistant.webp', 'GeoVerse Live · AI 助手', 'GeoVerse Live · AI assistant'],
     ['../live/assets/open-map-composer.webp', 'GeoVerse Live · 综合地图编排', 'GeoVerse Live · map composer'],
     ['../assets/shots/line-finder-gothenburg.webp', 'Line Finder · 哥德堡 13.5 万坐标路网', 'Line Finder · 135k-coordinate Gothenburg network'],
-    ['../assets/shots/line-finder-multilevel.webp', 'Line Finder · 多楼层寻路', 'Line Finder · multi-level routing']
+    ['../assets/shots/line-finder-multilevel.webp', 'Line Finder · 多楼层寻路', 'Line Finder · multi-level routing'],
+    ['../assets/shots/line-finder-warehouse.webp', 'Line Finder · 仓库通道寻路', 'Line Finder · warehouse aisle routing']
   ];
   var sb = document.getElementById('shots');
   SHOTS.forEach(function (s) {
