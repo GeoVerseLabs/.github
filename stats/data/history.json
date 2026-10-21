@@ -1,0 +1,1461 @@
+{
+ "schema": 1,
+ "org": "GeoVerseLabs",
+ "avatar": "https://avatars.githubusercontent.com/u/13616481?v=4",
+ "updatedAt": "2026-10-21T03:00:34.402Z",
+ "repos": {
+  ".github": {
+   "url": "https://github.com/GeoVerseLabs/.github",
+   "description": "",
+   "createdAt": "2026-07-08",
+   "pushedAt": "2026-10-21T02:59:30Z",
+   "archived": false,
+   "hasPages": true,
+   "views": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     0,
+     0
+    ],
+    "2026-10-08": [
+     8,
+     1
+    ],
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     0,
+     0
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     0,
+     0
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     0,
+     0
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "clones": {
+    "2026-10-06": [
+     2,
+     2
+    ],
+    "2026-10-07": [
+     0,
+     0
+    ],
+    "2026-10-08": [
+     23,
+     11
+    ],
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     1,
+     1
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     1,
+     1
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     1,
+     1
+    ],
+    "2026-10-17": [
+     2,
+     2
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     0,
+     0
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "snapshots": {
+    "2026-10-21": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      8,
+      1
+     ],
+     "clones14": [
+      30,
+      18
+     ]
+    }
+   },
+   "starDates": [],
+   "forkDates": [],
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 1,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/.github",
+     "title": "Overview",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/pull/2",
+     "title": "/pull/2",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/commit/460db1275b3c8dedd749c4c4ca03405ea452e86a",
+     "title": "/commit/460db1275b3c8dedd749c4c4ca03405ea452e86a",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/pull/2/changes",
+     "title": "/pull/2/changes",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/pull/2/commits",
+     "title": "/pull/2/commits",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/pulls",
+     "title": "/pulls",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
+  },
+  "geoverse-line-finder": {
+   "url": "https://github.com/GeoVerseLabs/geoverse-line-finder",
+   "description": "A zero-dependency TypeScript library for finding the shortest path on a GeoJSON line network (LineString / MultiLineString)",
+   "createdAt": "2026-09-11",
+   "pushedAt": "2026-09-29T10:04:00Z",
+   "archived": false,
+   "hasPages": true,
+   "views": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     3,
+     1
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     2,
+     2
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     6,
+     1
+    ],
+    "2026-10-14": [
+     0,
+     0
+    ],
+    "2026-10-15": [
+     3,
+     2
+    ],
+    "2026-10-16": [
+     2,
+     1
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     2,
+     1
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "clones": {
+    "2026-10-06": [
+     1,
+     1
+    ],
+    "2026-10-07": [
+     0,
+     0
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     1,
+     1
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     1,
+     1
+    ],
+    "2026-10-13": [
+     1,
+     1
+    ],
+    "2026-10-14": [
+     3,
+     3
+    ],
+    "2026-10-15": [
+     1,
+     1
+    ],
+    "2026-10-16": [
+     0,
+     0
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     1,
+     1
+    ],
+    "2026-10-19": [
+     3,
+     3
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "snapshots": {
+    "2026-10-21": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      18,
+      4
+     ],
+     "clones14": [
+      12,
+      12
+     ]
+    }
+   },
+   "starDates": [],
+   "forkDates": [],
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 5,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/geoverse-line-finder/graphs/traffic",
+     "title": "/graphs/traffic",
+     "count": 8,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-line-finder/pulse",
+     "title": "/pulse",
+     "count": 4,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-line-finder",
+     "title": "Overview",
+     "count": 3,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-line-finder/blob/main/README.en.md",
+     "title": "/blob/main/README.en.md",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-line-finder/blob/main/docs/RELEASE.en.md",
+     "title": "/blob/main/docs/RELEASE.en.md",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-line-finder/blob/main/docs/UPGRADING.md",
+     "title": "/blob/main/docs/UPGRADING.md",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
+  },
+  "geoverse-map-server": {
+   "url": "https://github.com/GeoVerseLabs/geoverse-map-server",
+   "description": "Lightweight, single-binary geospatial data server in Go (pure Go, no CGO): MVT vector tiles, WMTS, OGC API Features, PostGIS/MBTiles/GeoJSON/GeoPackage sources, built-in MCP endpoint for LLM agents, plus spatial algorithms (shortest path, isochrone, map matching, DBSCAN).",
+   "createdAt": "2026-07-18",
+   "pushedAt": "2026-08-25T02:54:45Z",
+   "archived": false,
+   "hasPages": false,
+   "views": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     0,
+     0
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     3,
+     1
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     0,
+     0
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     0,
+     0
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "clones": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     1,
+     1
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     1,
+     1
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     1,
+     1
+    ],
+    "2026-10-15": [
+     1,
+     1
+    ],
+    "2026-10-16": [
+     1,
+     1
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     2,
+     2
+    ],
+    "2026-10-19": [
+     1,
+     1
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "snapshots": {
+    "2026-10-21": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      3,
+      1
+     ],
+     "clones14": [
+      8,
+      8
+     ]
+    }
+   },
+   "starDates": [],
+   "forkDates": [],
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 1,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/geoverse-map-server",
+     "title": "Overview",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-map-server/graphs/traffic",
+     "title": "/graphs/traffic",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-map-server/pulse",
+     "title": "/pulse",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
+  },
+  "geoverse-precise": {
+   "url": "https://github.com/GeoVerseLabs/geoverse-precise",
+   "description": "Ellipsoid-accurate spatial analysis in WebAssembly (Rust): turf.js drop-in with WGS84 geodesics and CGCS2000 / GCJ-02 / BD-09 support",
+   "createdAt": "2026-10-09",
+   "pushedAt": "2026-10-16T02:14:12Z",
+   "archived": false,
+   "hasPages": true,
+   "views": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     0,
+     0
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     22,
+     3
+    ],
+    "2026-10-10": [
+     7,
+     1
+    ],
+    "2026-10-11": [
+     17,
+     1
+    ],
+    "2026-10-12": [
+     49,
+     1
+    ],
+    "2026-10-13": [
+     8,
+     1
+    ],
+    "2026-10-14": [
+     3,
+     1
+    ],
+    "2026-10-15": [
+     1,
+     1
+    ],
+    "2026-10-16": [
+     2,
+     1
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     3,
+     1
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "clones": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     0,
+     0
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     174,
+     71
+    ],
+    "2026-10-10": [
+     26,
+     15
+    ],
+    "2026-10-11": [
+     26,
+     12
+    ],
+    "2026-10-12": [
+     196,
+     46
+    ],
+    "2026-10-13": [
+     47,
+     33
+    ],
+    "2026-10-14": [
+     4,
+     4
+    ],
+    "2026-10-15": [
+     4,
+     4
+    ],
+    "2026-10-16": [
+     27,
+     12
+    ],
+    "2026-10-17": [
+     4,
+     3
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     1,
+     1
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "snapshots": {
+    "2026-10-21": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 5,
+     "views14": [
+      112,
+      3
+     ],
+     "clones14": [
+      509,
+      177
+     ]
+    }
+   },
+   "starDates": [],
+   "forkDates": [],
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 11,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/geoverse-precise",
+     "title": "Overview",
+     "count": 30,
+     "uniques": 3
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/graphs/traffic",
+     "title": "/graphs/traffic",
+     "count": 12,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/pulse",
+     "title": "/pulse",
+     "count": 10,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/pulls",
+     "title": "/pulls",
+     "count": 8,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/actions/workflows/release.yml",
+     "title": "/actions/workflows/release.yml",
+     "count": 5,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/actions/runs/38225922889",
+     "title": "/actions/runs/38225922889",
+     "count": 4,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/releases",
+     "title": "/releases",
+     "count": 4,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/actions",
+     "title": "/actions",
+     "count": 3,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/pull/1",
+     "title": "/pull/1",
+     "count": 3,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-precise/tags",
+     "title": "/tags",
+     "count": 3,
+     "uniques": 1
+    }
+   ]
+  },
+  "geoverse-sar": {
+   "url": "https://github.com/GeoVerseLabs/geoverse-sar",
+   "description": "AI-native runtime for spatial applications, built above the GeoVerse SDK (hexagonal / ports-and-adapters: the kernel does not know what a \"map\" is).",
+   "createdAt": "2026-07-07",
+   "pushedAt": "2026-08-14T01:43:13Z",
+   "archived": false,
+   "hasPages": false,
+   "views": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     3,
+     1
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     0,
+     0
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     0,
+     0
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     0,
+     0
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "clones": {
+    "2026-10-06": [
+     1,
+     1
+    ],
+    "2026-10-07": [
+     0,
+     0
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     1,
+     1
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     1,
+     1
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     1,
+     1
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "snapshots": {
+    "2026-10-21": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 4,
+     "views14": [
+      3,
+      1
+     ],
+     "clones14": [
+      4,
+      4
+     ]
+    }
+   },
+   "starDates": [],
+   "forkDates": [],
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 1,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/geoverse-sar",
+     "title": "Overview",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-sar/graphs/traffic",
+     "title": "/graphs/traffic",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-sar/pulse",
+     "title": "/pulse",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
+  },
+  "geoverse-skills": {
+   "url": "https://github.com/GeoVerseLabs/geoverse-skills",
+   "description": "Agent Skills repository for GeoVerse AI agents — SKILL.md-based capability packages (layout planning, geospatial workflows) with validation tooling, templates, evals, and unified CI. Ships generate-region-layout for deterministic facility/warehouse layout planning.",
+   "createdAt": "2026-07-17",
+   "pushedAt": "2026-07-17T08:58:26Z",
+   "archived": false,
+   "hasPages": false,
+   "views": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     1,
+     1
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     0,
+     0
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     0,
+     0
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     0,
+     0
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "clones": {
+    "2026-10-06": [
+     1,
+     1
+    ],
+    "2026-10-07": [
+     0,
+     0
+    ],
+    "2026-10-08": [
+     0,
+     0
+    ],
+    "2026-10-09": [
+     1,
+     1
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     1,
+     1
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     1,
+     1
+    ],
+    "2026-10-17": [
+     1,
+     1
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     4,
+     4
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "snapshots": {
+    "2026-10-21": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      1,
+      1
+     ],
+     "clones14": [
+      9,
+      9
+     ]
+    }
+   },
+   "starDates": [],
+   "forkDates": [],
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 1,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/geoverse-skills",
+     "title": "Overview",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
+  },
+  "mybatis-plus-geometry": {
+   "url": "https://github.com/GeoVerseLabs/mybatis-plus-geometry",
+   "description": "A Spring Boot starter that provides seamless integration between MyBatis Plus and JTS (Java Topology Suite) geometry types. Supports MySQL and PostgreSQL/PostGIS with automatic database detection.",
+   "createdAt": "2026-02-04",
+   "pushedAt": "2026-10-08T02:06:13Z",
+   "archived": false,
+   "hasPages": false,
+   "views": {
+    "2026-10-06": [
+     0,
+     0
+    ],
+    "2026-10-07": [
+     5,
+     1
+    ],
+    "2026-10-08": [
+     34,
+     1
+    ],
+    "2026-10-09": [
+     8,
+     1
+    ],
+    "2026-10-10": [
+     3,
+     1
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     7,
+     2
+    ],
+    "2026-10-13": [
+     6,
+     1
+    ],
+    "2026-10-14": [
+     0,
+     0
+    ],
+    "2026-10-15": [
+     2,
+     1
+    ],
+    "2026-10-16": [
+     2,
+     1
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     2,
+     1
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "clones": {
+    "2026-10-06": [
+     19,
+     6
+    ],
+    "2026-10-07": [
+     18,
+     5
+    ],
+    "2026-10-08": [
+     47,
+     19
+    ],
+    "2026-10-09": [
+     3,
+     3
+    ],
+    "2026-10-10": [
+     11,
+     3
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     1,
+     1
+    ],
+    "2026-10-13": [
+     4,
+     3
+    ],
+    "2026-10-14": [
+     2,
+     2
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     0,
+     0
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     2,
+     2
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ]
+   },
+   "snapshots": {
+    "2026-10-21": {
+     "stars": 0,
+     "forks": 1,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      69,
+      2
+     ],
+     "clones14": [
+      107,
+      44
+     ]
+    }
+   },
+   "starDates": [],
+   "forkDates": [
+    "2026-05-08"
+   ],
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 8,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry",
+     "title": "Overview",
+     "count": 17,
+     "uniques": 2
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/graphs/traffic",
+     "title": "/graphs/traffic",
+     "count": 13,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/pulse",
+     "title": "/pulse",
+     "count": 11,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/pulls",
+     "title": "/pulls",
+     "count": 5,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/actions",
+     "title": "/actions",
+     "count": 3,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/compare/main...claude/geometry-transport-p0-p1",
+     "title": "/compare/main...claude/geometry-transport-p0-p1",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/pull/21",
+     "title": "/pull/21",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/tags",
+     "title": "/tags",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/actions/runs/37716220132",
+     "title": "/actions/runs/37716220132",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/actions/runs/37716220132/job/113113160736",
+     "title": "/actions/runs/37716220132/job/113113160736",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
+  }
+ },
+ "npm": {
+  "geoverse-line-finder": {
+   "repo": "geoverse-line-finder",
+   "downloads": {
+    "2026-09-11": 127,
+    "2026-09-12": 8,
+    "2026-09-13": 6,
+    "2026-09-14": 165,
+    "2026-09-15": 0,
+    "2026-09-16": 10,
+    "2026-09-17": 15,
+    "2026-09-18": 2,
+    "2026-09-19": 3,
+    "2026-09-20": 2,
+    "2026-09-21": 5,
+    "2026-09-22": 1,
+    "2026-09-23": 5,
+    "2026-09-24": 2,
+    "2026-09-25": 1,
+    "2026-09-26": 0,
+    "2026-09-27": 2,
+    "2026-09-28": 1,
+    "2026-09-29": 137,
+    "2026-09-30": 12,
+    "2026-10-01": 2,
+    "2026-10-02": 6,
+    "2026-10-03": 6,
+    "2026-10-04": 5,
+    "2026-10-05": 0,
+    "2026-10-06": 0,
+    "2026-10-07": 3,
+    "2026-10-08": 11,
+    "2026-10-09": 1,
+    "2026-10-10": 2,
+    "2026-10-11": 1,
+    "2026-10-12": 1,
+    "2026-10-13": 0,
+    "2026-10-14": 0,
+    "2026-10-15": 0,
+    "2026-10-16": 3,
+    "2026-10-17": 6,
+    "2026-10-18": 5,
+    "2026-10-19": 0,
+    "2026-10-20": 0,
+    "2026-10-21": 0
+   }
+  }
+ }
+}
