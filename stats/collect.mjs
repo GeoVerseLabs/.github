@@ -4,8 +4,9 @@
 //   STATS_TOKEN=<pat> node stats/collect.mjs
 //
 // The token needs push access to the repos (traffic API requirement): a
-// fine-grained PAT with "Administration: read" + "Metadata: read" on the org's
-// public repos, or a classic PAT with `public_repo`.
+// fine-grained PAT owned by the org with "Administration: read" (repository
+// access "All" or "Only select", not "Public repositories"), or a classic PAT
+// with `public_repo`.
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';

@@ -3,8 +3,8 @@
 # merges into stats/data/history.json; the dashboard is served by Pages at
 # https://geoverselabs.github.io/.github/stats/
 #
-# Requires secret STATS_TOKEN: fine-grained PAT owned by GeoVerseLabs, public
-# repositories, permissions "Administration: read" + "Metadata: read".
+# Requires secret STATS_TOKEN: fine-grained PAT owned by GeoVerseLabs, repository
+# access "All" or "Only select" (not "Public repositories"), "Administration: read".
 name: Repo stats
 
 on:

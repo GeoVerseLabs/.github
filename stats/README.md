@@ -15,10 +15,19 @@ paths are 14-day rolling totals.
 
 ## Setup
 
-1. Create a fine-grained personal access token: resource owner **GeoVerseLabs**,
-   repository access **Public repositories** (or all repos you want counted),
-   permissions **Administration: Read-only** and **Metadata: Read-only**.
-   A classic token with `public_repo` also works.
+1. Create a fine-grained personal access token:
+   - resource owner **GeoVerseLabs** (not your personal account);
+   - repository access **All repositories** or **Only select repositories** —
+     *not* "Public repositories", which is read-only and cannot carry the
+     permission below (traffic calls then fail with `403 Resource not
+     accessible by personal access token`);
+   - repository permission **Administration: Read-only** (Metadata: Read-only is
+     added automatically);
+   - if the org requires approval, approve it under org Settings → Personal
+     access tokens → Pending requests.
+
+   Only public repos are collected either way. A classic token with
+   `public_repo` also works.
 2. Add it to this repo as an Actions secret named `STATS_TOKEN`.
 3. Run **Actions → Repo stats → Run workflow** once to seed the data.
 
