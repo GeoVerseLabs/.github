@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repo Stats — GeoVerse Labs</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0a0c11">
+<link rel="icon" href="https://avatars.githubusercontent.com/u/13616481?s=64&amp;v=4" type="image/png">
+<link rel="stylesheet" href="../assets/site.css">
+<style>
+  :root {
+    --s1: #8b6cf6;   /* total — validated vs --bg-2 (dark) */
+    --s2: #25a678;   /* uniques */
+    --grid: #1c2130;
+  }
+  main.wrap { padding-top: 40px; padding-bottom: 64px; }
+  h1 { font-size: clamp(24px, 3vw, 32px); margin: 0 0 6px; letter-spacing: -.3px; }
+  .meta { color: var(--text-3); font-size: 13px; margin: 0 0 24px; }
+  .meta b { color: var(--text-2); font-weight: 600; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-bottom: 20px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg-2); }
+  .seg button { font: 600 13px var(--font); color: var(--text-2); background: none; border: 0; padding: 7px 14px; cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { background: var(--panel-2); color: var(--text); }
+  select { font: 13px var(--font); color: var(--text); background: var(--bg-2); border: 1px solid var(--line); border-radius: 10px; padding: 7px 10px; max-width: 100%; }
+
+  .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .kpi { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+  .kpi .k { font-size: 12px; color: var(--text-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kpi .v { font: 700 26px/1.25 var(--font); font-variant-numeric: tabular-nums; margin-top: 2px; }
+  .kpi .d { font-size: 12px; color: var(--text-3); }
+
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-bottom: 16px; }
+  .panel { background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; min-width: 0; }
+  .panel h2 { font-size: 15px; font-weight: 660; margin: 0; letter-spacing: 0; }
+  .panel .hd { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 4px 12px; margin-bottom: 8px; }
+  .legend { display: flex; gap: 14px; font-size: 12px; color: var(--text-2); }
+  .legend i { display: inline-block; width: 14px; height: 2px; border-radius: 1px; vertical-align: middle; margin-right: 6px; }
+  .chart { position: relative; height: 220px; }
+  .chart svg { display: block; width: 100%; height: 100%; overflow: visible; }
+  .chart .axis { fill: var(--text-3); font: 11px var(--font); font-variant-numeric: tabular-nums; }
+  .tip { position: absolute; pointer-events: none; background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 8px; padding: 6px 10px; font-size: 12px; line-height: 1.5; color: var(--text); white-space: nowrap; opacity: 0; transition: opacity .08s; z-index: 2; }
+  .tip .t { color: var(--text-3); }
+  .tip i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+  .empty { display: grid; place-items: center; height: 100%; color: var(--text-3); font-size: 13px; text-align: center; }
+  details.data { margin-top: 8px; font-size: 12px; color: var(--text-3); }
+  details.data summary { cursor: pointer; }
+  details.data .scroll { max-height: 220px; overflow: auto; margin-top: 6px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+  th, td { padding: 8px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th { color: var(--text-3); font-weight: 600; font-size: 12px; }
+  th:first-child, td:first-child { text-align: left; }
+  tbody tr { cursor: pointer; }
+  tbody tr:hover td { background: var(--panel); }
+  tbody tr[aria-selected="true"] td { background: var(--panel-2); }
+  td .name { color: var(--text); font-weight: 600; }
+  td .desc { display: block; color: var(--text-3); font-size: 12px; max-width: 320px; overflow: hidden; text-overflow: ellipsis; }
+  .tablewrap { overflow-x: auto; }
+  .spark { width: 96px; height: 24px; display: block; margin-left: auto; }
+
+  .list { list-style: none; margin: 0; padding: 0; font-size: 13px; }
+  .list li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--line); }
+  .list li:last-child { border-bottom: 0; }
+  .list .lbl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-2); }
+  .list .num { color: var(--text); font-variant-numeric: tabular-nums; }
+  .list .num small { color: var(--text-3); }
+  .note { font-size: 12px; color: var(--text-3); margin: 8px 0 0; }
+  .banner { background: var(--bg-2); border: 1px dashed var(--line-2); border-radius: var(--radius); padding: 28px; color: var(--text-2); }
+  .banner code { color: var(--accent-2); }
+
+  .brand img.org-avatar { border-radius: 6px; }
+  td .av { width: 16px; height: 16px; border-radius: 4px; display: inline-block; vertical-align: -3px; margin-right: 8px; }
+  @media (max-width: 760px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 560px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .panel { padding: 14px; } }
+</style>
+</head>
+<body>
+<nav class="nav"><div class="wrap"><a class="brand" href="../"><img class="org-avatar" src="https://avatars.githubusercontent.com/u/13616481?s=64&amp;v=4" alt="" width="26" height="26">GeoVerse <small>Labs</small></a><div class="nav-links"><a href="https://github.com/GeoVerseLabs">GitHub</a></div></div></nav>
+
+<main class="wrap">
+  <h1>仓库统计</h1>
+  <p class="meta" id="meta">加载中…</p>
+
+  <div id="app" hidden>
+    <div class="filters">
+      <div class="seg" role="group" aria-label="时间范围" id="range">
+        <button data-r="14" aria-pressed="false">14 天</button>
+        <button data-r="30" aria-pressed="true">30 天</button>
+        <button data-r="90" aria-pressed="false">90 天</button>
+        <button data-r="0" aria-pressed="false">全部</button>
+      </div>
+      <select id="repo" aria-label="仓库"></select>
+    </div>
+
+    <div class="kpis" id="kpis"></div>
+
+    <div class="grid2">
+      <section class="panel">
+        <div class="hd"><h2>每日访问</h2><div class="legend"><span><i style="background:var(--s1)"></i>浏览量</span><span><i style="background:var(--s2)"></i>独立访客</span></div></div>
+        <div class="chart" id="c-views"></div>
+        <details class="data"><summary>数据表</summary><div class="scroll" id="t-views"></div></details>
+      </section>
+      <section class="panel">
+        <div class="hd"><h2>每日 clone</h2><div class="legend"><span><i style="background:var(--s1)"></i>clone 次数</span><span><i style="background:var(--s2)"></i>独立 cloner</span></div></div>
+        <div class="chart" id="c-clones"></div>
+        <details class="data"><summary>数据表</summary><div class="scroll" id="t-clones"></div></details>
+      </section>
+    </div>
+
+    <div class="grid2">
+      <section class="panel">
+        <div class="hd"><h2>Stars / Forks 累计</h2><div class="legend"><span><i style="background:var(--s1)"></i>Stars</span><span><i style="background:var(--s2)"></i>Forks</span></div></div>
+        <div class="chart" id="c-growth"></div>
+        <p class="note">按 star / fork 发生日期回溯；取消 star 不计入，当前数以上方卡片为准。</p>
+      </section>
+      <section class="panel">
+        <div class="hd"><h2>来源与热门页面</h2><span class="muted" style="font-size:12px">近 14 天</span></div>
+        <ul class="list" id="refs"></ul>
+        <ul class="list" id="paths" style="margin-top:14px"></ul>
+      </section>
+    </div>
+
+    <section class="panel" style="margin-bottom:16px">
+      <div class="hd"><h2 id="npm-title">npm 下载</h2><span class="muted" style="font-size:12px">每日下载 · api.npmjs.org</span></div>
+      <div class="chart" id="c-npm"></div>
+      <details class="data"><summary>数据表</summary><div class="scroll" id="t-npm"></div></details>
+    </section>
+
+    <section class="panel">
+      <div class="hd"><h2>各仓库</h2><span class="muted" style="font-size:12px">点击行查看单个仓库</span></div>
+      <div class="tablewrap"><table id="tbl"></table></div>
+      <p class="note">独立访客 / cloner 为 GitHub 给出的近 14 天去重数；按仓库加总时同一个人会在多个仓库重复计数。区间内浏览量与 clone 次数只统计已采集到的日期。</p>
+    </section>
+  </div>
+
+  <div class="banner" id="nodata" hidden>
+    还没有统计数据。<br>
+    在仓库 Settings → Secrets and variables → Actions 中配置 <code>STATS_TOKEN</code>，然后在 Actions 里手动运行一次 <b>Repo stats</b> 工作流；之后每天 UTC 02:17 自动更新。
+  </div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+  var DAY = 86400000;
+  var state = { range: 30, repo: '' };
+  var data = null;
+
+  var fmt = new Intl.NumberFormat('zh-CN');
+  function n(x) { return x == null ? '—' : fmt.format(x); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function iso(t) { return new Date(t).toISOString().slice(0, 10); }
+  function todayUTC() { return iso(Date.now()); }
+  function daysBetween(a, b) { var out = [], t = Date.parse(a), e = Date.parse(b); for (; t <= e; t += DAY) out.push(iso(t)); return out; }
+  function short(d) { return d.slice(5).replace('-', '/'); }
+
+  function repos() {
+    var all = Object.keys(data.repos).map(function (k) { var r = data.repos[k]; r.name = k; return r; });
+    return state.repo ? all.filter(function (r) { return r.name === state.repo; }) : all.filter(function (r) { return !r.removed; });
+  }
+
+  function earliest(rs, key) {
+    var m = null;
+    rs.forEach(function (r) { var k = Object.keys(r[key] || {})[0]; if (k && (!m || k < m)) m = k; });
+    return m;
+  }
+
+  function dateRange(start) {
+    var end = todayUTC();
+    if (state.range) { var s = iso(Date.parse(end) - (state.range - 1) * DAY); if (!start || s > start) start = s; }
+    return daysBetween(start || end, end);
+  }
+
+  // Sum a daily [count, uniques] series across repos; a day nobody observed stays null.
+  function sumDaily(rs, key, days) {
+    return days.map(function (d) {
+      var c = null, u = null;
+      rs.forEach(function (r) { var v = r[key] && r[key][d]; if (v) { c = (c || 0) + v[0]; u = (u || 0) + v[1]; } });
+      return [c, u];
+    });
+  }
+
+  function cumulative(rs, key, days) {
+    return days.map(function (d) {
+      var s = 0;
+      rs.forEach(function (r) { (r[key] || []).forEach(function (x) { if (x <= d) s++; }); });
+      return s;
+    });
+  }
+
+  function latestSnap(r) { var ks = Object.keys(r.snapshots || {}); return ks.length ? r.snapshots[ks[ks.length - 1]] : null; }
+
+  // Top of a 4-gridline axis whose step is 1/2/5 × 10^k, so tick labels stay integers.
+  function niceMax(v) {
+    var raw = Math.max(1, v / 4), p = Math.pow(10, Math.floor(Math.log10(raw))), m = raw / p;
+    return (m <= 1 ? 1 : m <= 2 ? 2 : m <= 5 ? 5 : 10) * p * 4;
+  }
+
+  // Line chart: series = [{name, color, values}] over days. Nulls break the line.
+  function lineChart(el, days, series) {
+    el.innerHTML = '';
+    var any = series.some(function (s) { return s.values.some(function (v) { return v != null; }); });
+    if (!days.length || !any) { el.innerHTML = '<div class="empty">该范围内还没有采集到数据</div>'; return; }
+    var W = el.clientWidth || 600, H = el.clientHeight || 220, L = 36, R = 8, T = 10, B = 24;
+    var max = niceMax(Math.max.apply(null, series.map(function (s) { return Math.max.apply(null, s.values.map(function (v) { return v || 0; })); })));
+    var x = function (i) { return days.length === 1 ? L + (W - L - R) / 2 : L + i * (W - L - R) / (days.length - 1); };
+    var y = function (v) { return T + (H - T - B) * (1 - v / max); };
+    var svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img">';
+    for (var g = 0; g <= 4; g++) {
+      var gv = max * g / 4, gy = y(gv);
+      svg += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + gy + '" y2="' + gy + '" stroke="var(--grid)" stroke-width="1"/>';
+      svg += '<text class="axis" x="' + (L - 6) + '" y="' + (gy + 4) + '" text-anchor="end">' + n(gv) + '</text>';
+    }
+    var ticks = Math.min(days.length, Math.max(2, Math.floor((W - L - R) / 70)));
+    for (var t = 0; t < ticks; t++) {
+      var i = ticks === 1 ? 0 : Math.round(t * (days.length - 1) / (ticks - 1));
+      svg += '<text class="axis" x="' + x(i) + '" y="' + (H - 6) + '" text-anchor="' + (t === 0 ? 'start' : t === ticks - 1 ? 'end' : 'middle') + '">' + short(days[i]) + '</text>';
+    }
+    series.forEach(function (s) {
+      var d = '', pen = false, lone = [];
+      s.values.forEach(function (v, i) {
+        if (v == null) { pen = false; return; }
+        d += (pen ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1);
+        var prevNull = i === 0 || s.values[i - 1] == null, nextNull = i === s.values.length - 1 || s.values[i + 1] == null;
+        if (prevNull && nextNull) lone.push(i);
+        pen = true;
+      });
+      svg += '<path d="' + d + '" fill="none" stroke="' + s.color + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>';
+      lone.forEach(function (i) { svg += '<circle cx="' + x(i) + '" cy="' + y(s.values[i]) + '" r="3" fill="' + s.color + '"/>'; });
+    });
+    svg += '<line class="xh" y1="' + T + '" y2="' + (H - B) + '" stroke="var(--line-2)" stroke-width="1" visibility="hidden"/>';
+    series.forEach(function (s, k) { svg += '<circle class="dot' + k + '" r="4.5" fill="' + s.color + '" stroke="var(--bg-2)" stroke-width="2" visibility="hidden"/>'; });
+    svg += '<rect x="' + L + '" y="0" width="' + (W - L - R) + '" height="' + H + '" fill="transparent"/></svg>';
+    el.innerHTML = svg + '<div class="tip"></div>';
+
+    var root = el.querySelector('svg'), tip = el.querySelector('.tip'), xh = root.querySelector('.xh');
+    function hide() { tip.style.opacity = 0; xh.setAttribute('visibility', 'hidden'); series.forEach(function (_, k) { root.querySelector('.dot' + k).setAttribute('visibility', 'hidden'); }); }
+    root.addEventListener('pointerleave', hide);
+    root.addEventListener('pointermove', function (ev) {
+      var box = root.getBoundingClientRect(), px = (ev.clientX - box.left) * W / box.width;
+      var i = days.length === 1 ? 0 : Math.round((px - L) / ((W - L - R) / (days.length - 1)));
+      i = Math.max(0, Math.min(days.length - 1, i));
+      var cx = x(i);
+      xh.setAttribute('x1', cx); xh.setAttribute('x2', cx); xh.setAttribute('visibility', 'visible');
+      var html = '<div class="t">' + days[i] + '</div>';
+      series.forEach(function (s, k) {
+        var v = s.values[i], dot = root.querySelector('.dot' + k);
+        if (v == null) { dot.setAttribute('visibility', 'hidden'); } else { dot.setAttribute('cx', cx); dot.setAttribute('cy', y(v)); dot.setAttribute('visibility', 'visible'); }
+        html += '<div><i style="background:' + s.color + '"></i>' + s.name + ' <b>' + (v == null ? '未采集' : n(v)) + '</b></div>';
+      });
+      tip.innerHTML = html;
+      var sx = cx * box.width / W, tw = tip.offsetWidth;
+      tip.style.left = Math.max(0, Math.min(box.width - tw, sx + 12 > box.width - tw ? sx - tw - 12 : sx + 12)) + 'px';
+      tip.style.top = '4px';
+      tip.style.opacity = 1;
+    });
+  }
+
+  function dataTable(el, days, cols) {
+    var h = '<table><thead><tr><th>日期</th>' + cols.map(function (c) { return '<th>' + c.name + '</th>'; }).join('') + '</tr></thead><tbody>';
+    for (var i = days.length - 1; i >= 0; i--) h += '<tr><td>' + days[i] + '</td>' + cols.map(function (c) { return '<td>' + (c.values[i] == null ? '—' : n(c.values[i])) + '</td>'; }).join('') + '</tr>';
+    el.innerHTML = h + '</tbody></table>';
+  }
+
+  function spark(vals) {
+    var W = 96, H = 24, max = Math.max(1, Math.max.apply(null, vals.map(function (v) { return v || 0; })));
+    var d = '', pen = false;
+    vals.forEach(function (v, i) {
+      if (v == null) { pen = false; return; }
+      d += (pen ? 'L' : 'M') + (vals.length === 1 ? W / 2 : i * W / (vals.length - 1)).toFixed(1) + ' ' + (H - 2 - (H - 4) * v / max).toFixed(1);
+      pen = true;
+    });
+    return '<svg class="spark" viewBox="0 0 ' + W + ' ' + H + '" aria-hidden="true"><path d="' + d + '" fill="none" stroke="var(--s1)" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+  }
+
+  function sum(arr) { var s = null; arr.forEach(function (v) { if (v != null) s = (s || 0) + v; }); return s; }
+
+  function rollup(list, keyFn) {
+    var m = {};
+    list.forEach(function (it) { var k = keyFn(it); if (!m[k]) m[k] = { label: it.label, count: 0, uniques: 0 }; m[k].count += it.count; m[k].uniques += it.uniques; });
+    return Object.keys(m).map(function (k) { return m[k]; }).sort(function (a, b) { return b.count - a.count; }).slice(0, 8);
+  }
+
+  function listHtml(title, items) {
+    if (!items.length) return '<li><span class="lbl">' + title + '：暂无</span><span></span></li>';
+    return '<li><span class="lbl" style="color:var(--text-3);font-size:12px">' + title + '</span><span class="num"><small>浏览 / 独立</small></span></li>' +
+      items.map(function (it) { return '<li><span class="lbl" title="' + esc(it.label) + '">' + esc(it.label) + '</span><span class="num">' + n(it.count) + ' <small>/ ' + n(it.uniques) + '</small></span></li>'; }).join('');
+  }
+
+  function render() {
+    var rs = repos();
+    var trafficDays = dateRange(earliest(rs, 'views'));
+    var views = sumDaily(rs, 'views', trafficDays), clones = sumDaily(rs, 'clones', trafficDays);
+    var snaps = rs.map(latestSnap).filter(Boolean);
+    var stars = sum(snaps.map(function (s) { return s.stars; })), forks = sum(snaps.map(function (s) { return s.forks; }));
+
+    var created = rs.map(function (r) { return r.createdAt; }).filter(Boolean).sort()[0];
+    var growthDays = dateRange(created);
+    var starCum = cumulative(rs, 'starDates', growthDays), forkCum = cumulative(rs, 'forkDates', growthDays);
+    var starDelta = starCum.length ? starCum[starCum.length - 1] - (cumulative(rs, 'starDates', [iso(Date.parse(growthDays[0]) - DAY)])[0]) : 0;
+    var forkDelta = forkCum.length ? forkCum[forkCum.length - 1] - (cumulative(rs, 'forkDates', [iso(Date.parse(growthDays[0]) - DAY)])[0]) : 0;
+    var rangeLabel = state.range ? '近 ' + state.range + ' 天' : '全部';
+    var pkgs = npmPackages(rs);
+    var npmDays = dateRange(pkgs.map(function (p) { return Object.keys(p.downloads)[0]; }).filter(Boolean).sort()[0]);
+    var npmDaily = npmDays.map(function (d) { var s = null; pkgs.forEach(function (p) { var v = p.downloads[d]; if (v != null) s = (s || 0) + v; }); return s; });
+
+    var kpis = [
+      ['浏览量', n(sum(views.map(function (v) { return v[0]; }))), rangeLabel],
+      ['独立访客', n(sum(snaps.map(function (s) { return s.views14[1]; }))), '近 14 天 · 按仓库加总'],
+      ['clone 次数', n(sum(clones.map(function (v) { return v[0]; }))), rangeLabel],
+      ['独立 cloner', n(sum(snaps.map(function (s) { return s.clones14[1]; }))), '近 14 天 · 按仓库加总'],
+      ['npm 下载', pkgs.length ? n(sum(npmDaily)) : '—', pkgs.length ? rangeLabel : '未发布 npm 包'],
+      ['Stars', n(stars), (starDelta >= 0 ? '+' : '') + n(starDelta) + ' · ' + rangeLabel],
+      ['Forks', n(forks), (forkDelta >= 0 ? '+' : '') + n(forkDelta) + ' · ' + rangeLabel],
+    ];
+    document.getElementById('kpis').innerHTML = kpis.map(function (k) { return '<div class="kpi"><div class="k">' + k[0] + '</div><div class="v">' + k[1] + '</div><div class="d">' + k[2] + '</div></div>'; }).join('');
+
+    var vs = [{ name: '浏览量', color: 'var(--s1)', values: views.map(function (v) { return v[0]; }) }, { name: '独立访客', color: 'var(--s2)', values: views.map(function (v) { return v[1]; }) }];
+    var cs = [{ name: 'clone 次数', color: 'var(--s1)', values: clones.map(function (v) { return v[0]; }) }, { name: '独立 cloner', color: 'var(--s2)', values: clones.map(function (v) { return v[1]; }) }];
+    lineChart(document.getElementById('c-views'), trafficDays, vs);
+    lineChart(document.getElementById('c-clones'), trafficDays, cs);
+    lineChart(document.getElementById('c-growth'), growthDays, [{ name: 'Stars', color: 'var(--s1)', values: starCum }, { name: 'Forks', color: 'var(--s2)', values: forkCum }]);
+    document.getElementById('npm-title').textContent = 'npm 下载' + (pkgs.length ? ' · ' + pkgs.map(function (p) { return p.name; }).join(', ') : '');
+    var ns = [{ name: '下载量', color: 'var(--s1)', values: npmDaily }];
+    if (pkgs.length) { lineChart(document.getElementById('c-npm'), npmDays, ns); dataTable(document.getElementById('t-npm'), npmDays, ns); }
+    else { document.getElementById('c-npm').innerHTML = '<div class="empty">所选仓库没有发布 npm 包</div>'; document.getElementById('t-npm').innerHTML = ''; }
+    dataTable(document.getElementById('t-views'), trafficDays, vs);
+    dataTable(document.getElementById('t-clones'), trafficDays, cs);
+
+    var refs = [], paths = [];
+    rs.forEach(function (r) {
+      (r.referrers || []).forEach(function (x) { refs.push({ label: x.referrer, count: x.count, uniques: x.uniques }); });
+      (r.paths || []).forEach(function (x) { paths.push({ label: x.path.replace('/' + data.org + '/', ''), count: x.count, uniques: x.uniques }); });
+    });
+    document.getElementById('refs').innerHTML = listHtml('来源站点', rollup(refs, function (x) { return x.label; }));
+    document.getElementById('paths').innerHTML = listHtml('热门页面', rollup(paths, function (x) { return x.label; }));
+
+    var all = Object.keys(data.repos).filter(function (k) { return !data.repos[k].removed; }).map(function (k) { return data.repos[k]; });
+    var rows = all.map(function (r) {
+      var v = sumDaily([r], 'views', trafficDays), c = sumDaily([r], 'clones', trafficDays), s = latestSnap(r) || {};
+      var np = npmPackages([r]), nd = sum(npmDays.map(function (d) { return sum(np.map(function (p) { return p.downloads[d]; })); }));
+      return { r: r, s: s, npm: np.length ? nd : null, views: sum(v.map(function (x) { return x[0]; })), clones: sum(c.map(function (x) { return x[0]; })), spark: v.map(function (x) { return x[0]; }) };
+    }).sort(function (a, b) { return (b.views || 0) - (a.views || 0) || (b.clones || 0) - (a.clones || 0) || a.r.name.localeCompare(b.r.name); });
+    document.getElementById('tbl').innerHTML =
+      '<thead><tr><th>仓库</th><th>Stars</th><th>Forks</th><th>浏览 · ' + rangeLabel + '</th><th>独立访客 · 14 天</th><th>clone · ' + rangeLabel + '</th><th>独立 cloner · 14 天</th><th>npm 下载 · ' + rangeLabel + '</th><th>浏览趋势</th></tr></thead><tbody>' +
+      rows.map(function (x) {
+        return '<tr data-repo="' + esc(x.r.name) + '" aria-selected="' + (state.repo === x.r.name) + '" tabindex="0"><td>' + avatarImg() + '<a class="name" href="' + esc(x.r.url) + '" target="_blank" rel="noopener">' + esc(x.r.name) + '</a>' +
+          (x.r.description ? '<span class="desc" title="' + esc(x.r.description) + '">' + esc(x.r.description) + '</span>' : '') + '</td>' +
+          '<td>' + n(x.s.stars) + '</td><td>' + n(x.s.forks) + '</td><td>' + n(x.views) + '</td><td>' + n(x.s.views14 && x.s.views14[1]) + '</td>' +
+          '<td>' + n(x.clones) + '</td><td>' + n(x.s.clones14 && x.s.clones14[1]) + '</td><td>' + n(x.npm) + '</td><td>' + spark(x.spark) + '</td></tr>';
+      }).join('') + '</tbody>';
+  }
+
+  function npmPackages(rs) {
+    var names = {}; rs.forEach(function (r) { names[r.name] = 1; });
+    var npm = data.npm || {};
+    return Object.keys(npm).filter(function (k) { return names[npm[k].repo]; }).map(function (k) { return { name: k, downloads: npm[k].downloads }; });
+  }
+
+  function avatarImg() { return data.avatar ? '<img class="av" src="' + esc(data.avatar) + '&s=32" alt="" width="16" height="16" loading="lazy">' : ''; }
+
+  function setRepo(name) {
+    state.repo = state.repo === name ? '' : name;
+    document.getElementById('repo').value = state.repo;
+    render();
+  }
+
+  function init() {
+    if (data.avatar) {
+      document.querySelector('.org-avatar').src = data.avatar + '&s=64';
+      document.querySelector('link[rel=icon]').href = data.avatar + '&s=64';
+    }
+    var names = Object.keys(data.repos).filter(function (k) { return !data.repos[k].removed; });
+    var sel = document.getElementById('repo');
+    sel.innerHTML = '<option value="">全部仓库（' + names.length + '）</option>' + names.map(function (k) { return '<option value="' + esc(k) + '">' + esc(k) + '</option>'; }).join('');
+    sel.addEventListener('change', function () { state.repo = sel.value; render(); });
+    document.getElementById('range').addEventListener('click', function (ev) {
+      var b = ev.target.closest('button'); if (!b) return;
+      state.range = +b.dataset.r;
+      this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      render();
+    });
+    var tbl = document.getElementById('tbl');
+    tbl.addEventListener('click', function (ev) { if (ev.target.closest('a')) return; var tr = ev.target.closest('tr[data-repo]'); if (tr) setRepo(tr.dataset.repo); });
+    tbl.addEventListener('keydown', function (ev) { var tr = ev.target.closest('tr[data-repo]'); if (tr && (ev.key === 'Enter' || ev.key === ' ')) { ev.preventDefault(); setRepo(tr.dataset.repo); } });
+
+    var first = earliest(Object.keys(data.repos).map(function (k) { return data.repos[k]; }), 'views');
+    document.getElementById('meta').innerHTML = '<b>' + esc(data.org) + '</b> 公开仓库 · 更新于 <b>' + esc(new Date(data.updatedAt).toLocaleString('zh-CN', { hour12: false })) + '</b> · 访问数据自 ' + esc(first || '—') + ' 起累积（GitHub 只保留最近 14 天，每日 UTC 02:17 采集）';
+    document.getElementById('app').hidden = false;
+    render();
+    var last = 0;
+    new ResizeObserver(function () { var w = document.getElementById('c-views').clientWidth; if (Math.abs(w - last) > 4) { last = w; render(); } }).observe(document.querySelector('main'));
+  }
+
+  fetch('data/history.json', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (j) { data = j; if (!Object.keys(j.repos || {}).length) throw new Error('empty'); init(); })
+    .catch(function () { document.getElementById('meta').textContent = ''; document.getElementById('nodata').hidden = false; });
+})();
+</script>
+</body>
+</html>

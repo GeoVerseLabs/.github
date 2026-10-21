@@ -1,0 +1,49 @@
+# Daily snapshot of public-repo traffic (views / clones / referrers / paths) and
+# growth (stars / forks). GitHub keeps traffic for 14 days only, so each run
+# merges into stats/data/history.json; the dashboard is served by Pages at
+# https://geoverselabs.github.io/.github/stats/
+#
+# Requires secret STATS_TOKEN: fine-grained PAT owned by GeoVerseLabs, public
+# repositories, permissions "Administration: read" + "Metadata: read".
+name: Repo stats
+
+on:
+  schedule:
+    - cron: '17 2 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-stats
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node --test stats/collect.test.mjs
+      - name: Collect
+        env:
+          STATS_TOKEN: ${{ secrets.STATS_TOKEN }}
+        run: |
+          if [ -z "$STATS_TOKEN" ]; then
+            echo "::warning::STATS_TOKEN secret is not configured; skipping collection."
+            exit 0
+          fi
+          node stats/collect.mjs
+      - name: Commit
+        run: |
+          git add stats/data/history.json 2>/dev/null || exit 0
+          git diff --cached --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(stats): 更新仓库流量统计 $(date -u +%F)"
+          git pull --rebase
+          git push
