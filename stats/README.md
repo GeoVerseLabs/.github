@@ -10,7 +10,10 @@ Icons use the organization avatar (taken from the API on each run).
 - Collector: [`collect.mjs`](collect.mjs) (Node ≥ 20, no dependencies); tests: `node --test stats/collect.test.mjs`
 
 GitHub keeps views / clones for 14 days only. History starts on the first run;
-stars and forks are backfilled from their timestamps. Referrers and popular
+forks are backfilled from their timestamps; stars too where GitHub still allows
+listing stargazers (restricted to admins / collaborators since 2026-07 — a 403
+there only logs a warning, and the star curve then starts at the first run).
+Referrers and popular
 paths are 14-day rolling totals.
 
 ## Setup

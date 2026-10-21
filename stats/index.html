@@ -114,7 +114,7 @@
       <section class="panel">
         <div class="hd"><h2>Stars / Forks 累计</h2><div class="legend"><span><i style="background:var(--s1)"></i>Stars</span><span><i style="background:var(--s2)"></i>Forks</span></div></div>
         <div class="chart" id="c-growth"></div>
-        <p class="note">按 star / fork 发生日期回溯；取消 star 不计入，当前数以上方卡片为准。</p>
+        <p class="note">有每日快照的日期用快照；更早的日期按 star / fork 发生时间回溯（GitHub 自 2026-07 起限制 stargazers 列表，拿不到时 star 曲线从首次采集开始）。</p>
       </section>
       <section class="panel">
         <div class="hd"><h2>来源与热门页面</h2><span class="muted" style="font-size:12px">近 14 天</span></div>
@@ -183,12 +183,28 @@
     });
   }
 
-  function cumulative(rs, key, days) {
+  // Stars / forks per day: the day's snapshot when there is one, otherwise a count
+  // of backfilled event dates. A repo whose list could not be fetched (GitHub
+  // restricts the stargazers list) is unknown before its first snapshot, and
+  // then the whole day is null rather than an undercount.
+  function growth(rs, key, field, days) {
     return days.map(function (d) {
       var s = 0;
-      rs.forEach(function (r) { (r[key] || []).forEach(function (x) { if (x <= d) s++; }); });
+      for (var i = 0; i < rs.length; i++) {
+        var r = rs[i], snap = r.snapshots && r.snapshots[d], list = r[key] || [], last = latestSnap(r);
+        if (snap) { s += snap[field]; continue; }
+        if (!list.length && last && last[field] > 0) return null;
+        list.forEach(function (x) { if (x <= d) s++; });
+      }
       return s;
     });
+  }
+
+  function delta(rs, key, field, days) {
+    var before = growth(rs, key, field, [iso(Date.parse(days[0]) - DAY)])[0];
+    var vals = growth(rs, key, field, days).filter(function (v) { return v != null; });
+    if (!vals.length) return null;
+    return vals[vals.length - 1] - (before != null ? before : vals[0]);
   }
 
   function latestSnap(r) { var ks = Object.keys(r.snapshots || {}); return ks.length ? r.snapshots[ks[ks.length - 1]] : null; }
@@ -299,9 +315,9 @@
 
     var created = rs.map(function (r) { return r.createdAt; }).filter(Boolean).sort()[0];
     var growthDays = dateRange(created);
-    var starCum = cumulative(rs, 'starDates', growthDays), forkCum = cumulative(rs, 'forkDates', growthDays);
-    var starDelta = starCum.length ? starCum[starCum.length - 1] - (cumulative(rs, 'starDates', [iso(Date.parse(growthDays[0]) - DAY)])[0]) : 0;
-    var forkDelta = forkCum.length ? forkCum[forkCum.length - 1] - (cumulative(rs, 'forkDates', [iso(Date.parse(growthDays[0]) - DAY)])[0]) : 0;
+    var starCum = growth(rs, 'starDates', 'stars', growthDays), forkCum = growth(rs, 'forkDates', 'forks', growthDays);
+    var starDelta = delta(rs, 'starDates', 'stars', growthDays), forkDelta = delta(rs, 'forkDates', 'forks', growthDays);
+    function signed(v) { return v == null ? '—' : (v >= 0 ? '+' : '') + n(v); }
     var rangeLabel = state.range ? '近 ' + state.range + ' 天' : '全部';
     var pkgs = npmPackages(rs);
     var npmDays = dateRange(pkgs.map(function (p) { return Object.keys(p.downloads)[0]; }).filter(Boolean).sort()[0]);
@@ -313,8 +329,8 @@
       ['clone 次数', n(sum(clones.map(function (v) { return v[0]; }))), rangeLabel],
       ['独立 cloner', n(sum(snaps.map(function (s) { return s.clones14[1]; }))), '近 14 天 · 按仓库加总'],
       ['npm 下载', pkgs.length ? n(sum(npmDaily)) : '—', pkgs.length ? rangeLabel : '未发布 npm 包'],
-      ['Stars', n(stars), (starDelta >= 0 ? '+' : '') + n(starDelta) + ' · ' + rangeLabel],
-      ['Forks', n(forks), (forkDelta >= 0 ? '+' : '') + n(forkDelta) + ' · ' + rangeLabel],
+      ['Stars', n(stars), signed(starDelta) + ' · ' + rangeLabel],
+      ['Forks', n(forks), signed(forkDelta) + ' · ' + rangeLabel],
     ];
     document.getElementById('kpis').innerHTML = kpis.map(function (k) { return '<div class="kpi"><div class="k">' + k[0] + '</div><div class="v">' + k[1] + '</div><div class="d">' + k[2] + '</div></div>'; }).join('');
 

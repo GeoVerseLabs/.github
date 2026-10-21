@@ -114,16 +114,27 @@ function client(token) {
     });
     if (!res.ok) {
       const body = await res.text();
-      throw new Error(`GET ${path} → ${res.status} ${body.slice(0, 200)}`);
+      throw Object.assign(new Error(`GET ${path} → ${res.status} ${body.slice(0, 200)}`), { status: res.status });
     }
     return { data: await res.json(), link: res.headers.get('link') ?? '' };
   };
 }
 
+// Backfill lists are optional: since 2026-07 GitHub limits the stargazers list
+// to repo admins / collaborators and answers fine-grained PATs with 403. On
+// 401/403 keep the previous list; the dashboard falls back to daily snapshots.
 async function listDates(gh, path, pick, accept) {
   const dates = [];
   for (let page = 1; page <= MAX_LIST_PAGES; page++) {
-    const { data, link } = await gh(`${path}${path.includes('?') ? '&' : '?'}per_page=100&page=${page}`, accept);
+    let res;
+    try {
+      res = await gh(`${path}${path.includes('?') ? '&' : '?'}per_page=100&page=${page}`, accept);
+    } catch (e) {
+      if (e.status !== 401 && e.status !== 403) throw e;
+      console.log(`::warning::${path} not accessible (${e.status}); keeping previous backfill`);
+      return null;
+    }
+    const { data, link } = res;
     dates.push(...data.map(pick).filter(Boolean).map(day));
     if (!link.includes('rel="next"')) return dates.sort();
   }
