@@ -2,13 +2,13 @@
  "schema": 1,
  "org": "GeoVerseLabs",
  "avatar": "https://avatars.githubusercontent.com/u/13616481?v=4",
- "updatedAt": "2026-10-21T03:00:34.402Z",
+ "updatedAt": "2026-10-22T06:06:32.646Z",
  "repos": {
   ".github": {
    "url": "https://github.com/GeoVerseLabs/.github",
    "description": "",
    "createdAt": "2026-07-08",
-   "pushedAt": "2026-10-21T02:59:30Z",
+   "pushedAt": "2026-10-22T06:05:52Z",
    "archived": false,
    "hasPages": true,
    "views": {
@@ -73,6 +73,10 @@
      0
     ],
     "2026-10-21": [
+     12,
+     1
+    ],
+    "2026-10-22": [
      0,
      0
     ]
@@ -135,10 +139,14 @@
      0
     ],
     "2026-10-20": [
-     0,
-     0
+     3,
+     3
     ],
     "2026-10-21": [
+     18,
+     7
+    ],
+    "2026-10-22": [
      0,
      0
     ]
@@ -157,6 +165,20 @@
       30,
       18
      ]
+    },
+    "2026-10-22": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      20,
+      1
+     ],
+     "clones14": [
+      49,
+      25
+     ]
     }
    },
    "starDates": [],
@@ -170,8 +192,20 @@
    ],
    "paths": [
     {
+     "path": "/GeoVerseLabs/.github/actions/runs/39535517453/job/119011146426",
+     "title": "/actions/runs/39535517453/job/119011146426",
+     "count": 3,
+     "uniques": 1
+    },
+    {
      "path": "/GeoVerseLabs/.github",
      "title": "Overview",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/actions/runs/39535517453",
+     "title": "/actions/runs/39535517453",
      "count": 2,
      "uniques": 1
     },
@@ -179,6 +213,30 @@
      "path": "/GeoVerseLabs/.github/pull/2",
      "title": "/pull/2",
      "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/actions",
+     "title": "/actions",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/actions/runs/39534875217",
+     "title": "/actions/runs/39534875217",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/actions/runs/39534875217/job/119009095950",
+     "title": "/actions/runs/39534875217/job/119009095950",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/actions/workflows/repo-stats.yml",
+     "title": "/actions/workflows/repo-stats.yml",
+     "count": 1,
      "uniques": 1
     },
     {
@@ -192,18 +250,6 @@
      "title": "/pull/2/changes",
      "count": 1,
      "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/.github/pull/2/commits",
-     "title": "/pull/2/commits",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/.github/pulls",
-     "title": "/pulls",
-     "count": 1,
-     "uniques": 1
     }
    ]
   },
@@ -211,7 +257,7 @@
    "url": "https://github.com/GeoVerseLabs/geoverse-line-finder",
    "description": "A zero-dependency TypeScript library for finding the shortest path on a GeoJSON line network (LineString / MultiLineString)",
    "createdAt": "2026-09-11",
-   "pushedAt": "2026-09-29T10:04:00Z",
+   "pushedAt": "2026-10-22T02:05:55Z",
    "archived": false,
    "hasPages": true,
    "views": {
@@ -272,10 +318,14 @@
      1
     ],
     "2026-10-20": [
+     2,
+     1
+    ],
+    "2026-10-21": [
      0,
      0
     ],
-    "2026-10-21": [
+    "2026-10-22": [
      0,
      0
     ]
@@ -344,6 +394,10 @@
     "2026-10-21": [
      0,
      0
+    ],
+    "2026-10-22": [
+     0,
+     0
     ]
    },
    "snapshots": {
@@ -360,6 +414,20 @@
       12,
       12
      ]
+    },
+    "2026-10-22": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      20,
+      4
+     ],
+     "clones14": [
+      11,
+      11
+     ]
     }
    },
    "starDates": [],
@@ -375,13 +443,13 @@
     {
      "path": "/GeoVerseLabs/geoverse-line-finder/graphs/traffic",
      "title": "/graphs/traffic",
-     "count": 8,
+     "count": 9,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/geoverse-line-finder/pulse",
      "title": "/pulse",
-     "count": 4,
+     "count": 5,
      "uniques": 1
     },
     {
@@ -475,10 +543,14 @@
      0
     ],
     "2026-10-20": [
+     2,
+     1
+    ],
+    "2026-10-21": [
      0,
      0
     ],
-    "2026-10-21": [
+    "2026-10-22": [
      0,
      0
     ]
@@ -541,10 +613,14 @@
      1
     ],
     "2026-10-20": [
+     1,
+     1
+    ],
+    "2026-10-21": [
      0,
      0
     ],
-    "2026-10-21": [
+    "2026-10-22": [
      0,
      0
     ]
@@ -563,6 +639,20 @@
       8,
       8
      ]
+    },
+    "2026-10-22": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      5,
+      1
+     ],
+     "clones14": [
+      9,
+      9
+     ]
     }
    },
    "starDates": [],
@@ -576,20 +666,20 @@
    ],
    "paths": [
     {
-     "path": "/GeoVerseLabs/geoverse-map-server",
-     "title": "Overview",
-     "count": 1,
-     "uniques": 1
-    },
-    {
      "path": "/GeoVerseLabs/geoverse-map-server/graphs/traffic",
      "title": "/graphs/traffic",
-     "count": 1,
+     "count": 2,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/geoverse-map-server/pulse",
      "title": "/pulse",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-map-server",
+     "title": "Overview",
      "count": 1,
      "uniques": 1
     }
@@ -666,6 +756,10 @@
     "2026-10-21": [
      0,
      0
+    ],
+    "2026-10-22": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -726,10 +820,14 @@
      1
     ],
     "2026-10-20": [
+     2,
+     2
+    ],
+    "2026-10-21": [
      0,
      0
     ],
-    "2026-10-21": [
+    "2026-10-22": [
      0,
      0
     ]
@@ -747,6 +845,20 @@
      "clones14": [
       509,
       177
+     ]
+    },
+    "2026-10-22": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 5,
+     "views14": [
+      112,
+      3
+     ],
+     "clones14": [
+      511,
+      179
      ]
     }
    },
@@ -893,6 +1005,10 @@
     "2026-10-21": [
      0,
      0
+    ],
+    "2026-10-22": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -953,16 +1069,34 @@
      1
     ],
     "2026-10-20": [
+     1,
+     1
+    ],
+    "2026-10-21": [
      0,
      0
     ],
-    "2026-10-21": [
+    "2026-10-22": [
      0,
      0
     ]
    },
    "snapshots": {
     "2026-10-21": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 4,
+     "views14": [
+      3,
+      1
+     ],
+     "clones14": [
+      4,
+      4
+     ]
+    },
+    "2026-10-22": {
      "stars": 0,
      "forks": 0,
      "watchers": 0,
@@ -1078,6 +1212,10 @@
     "2026-10-21": [
      0,
      0
+    ],
+    "2026-10-22": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1138,16 +1276,34 @@
      4
     ],
     "2026-10-20": [
+     1,
+     1
+    ],
+    "2026-10-21": [
      0,
      0
     ],
-    "2026-10-21": [
+    "2026-10-22": [
      0,
      0
     ]
    },
    "snapshots": {
     "2026-10-21": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      1,
+      1
+     ],
+     "clones14": [
+      9,
+      9
+     ]
+    },
+    "2026-10-22": {
      "stars": 0,
      "forks": 0,
      "watchers": 0,
@@ -1251,6 +1407,10 @@
     "2026-10-21": [
      0,
      0
+    ],
+    "2026-10-22": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1311,10 +1471,14 @@
      2
     ],
     "2026-10-20": [
+     2,
+     2
+    ],
+    "2026-10-21": [
      0,
      0
     ],
-    "2026-10-21": [
+    "2026-10-22": [
      0,
      0
     ]
@@ -1332,6 +1496,20 @@
      "clones14": [
       107,
       44
+     ]
+    },
+    "2026-10-22": {
+     "stars": 0,
+     "forks": 1,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      69,
+      2
+     ],
+     "clones14": [
+      90,
+      40
      ]
     }
    },
@@ -1411,6 +1589,22 @@
   }
  },
  "npm": {
+  "@geoverse/geoverse-precise": {
+   "repo": "geoverse-precise",
+   "downloads": {
+    "2026-10-12": 322,
+    "2026-10-13": 0,
+    "2026-10-14": 0,
+    "2026-10-15": 0,
+    "2026-10-16": 5,
+    "2026-10-17": 0,
+    "2026-10-18": 4,
+    "2026-10-19": 0,
+    "2026-10-20": 0,
+    "2026-10-21": 0,
+    "2026-10-22": 0
+   }
+  },
   "geoverse-line-finder": {
    "repo": "geoverse-line-finder",
    "downloads": {
@@ -1454,7 +1648,8 @@
     "2026-10-18": 5,
     "2026-10-19": 0,
     "2026-10-20": 0,
-    "2026-10-21": 0
+    "2026-10-21": 0,
+    "2026-10-22": 0
    }
   }
  }
