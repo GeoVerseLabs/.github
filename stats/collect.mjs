@@ -16,7 +16,10 @@ export const DATA_FILE = join(HERE, 'data', 'history.json');
 export const WINDOW_DAYS = 14;
 const MAX_LIST_PAGES = 10; // stargazers / forks: up to 1000 each
 // npm packages published from each repo; downloads are public (no token).
-export const NPM_PACKAGES = { 'geoverse-line-finder': ['geoverse-line-finder'] };
+export const NPM_PACKAGES = {
+  'geoverse-line-finder': ['geoverse-line-finder'],
+  'geoverse-precise': ['@geoverse/geoverse-precise'],
+};
 const NPM_MAX_DAYS = 540; // api.npmjs.org range limit is 18 months
 
 export const day = (d) => new Date(d).toISOString().slice(0, 10);
