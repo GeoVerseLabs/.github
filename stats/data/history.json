@@ -2,13 +2,13 @@
  "schema": 1,
  "org": "GeoVerseLabs",
  "avatar": "https://avatars.githubusercontent.com/u/13616481?v=4",
- "updatedAt": "2026-10-22T07:34:37.437Z",
+ "updatedAt": "2026-10-23T07:31:36.102Z",
  "repos": {
   ".github": {
    "url": "https://github.com/GeoVerseLabs/.github",
    "description": "",
    "createdAt": "2026-07-08",
-   "pushedAt": "2026-10-22T06:06:33Z",
+   "pushedAt": "2026-10-22T07:34:39Z",
    "archived": false,
    "hasPages": true,
    "views": {
@@ -77,6 +77,10 @@
      1
     ],
     "2026-10-22": [
+     0,
+     0
+    ],
+    "2026-10-23": [
      0,
      0
     ]
@@ -149,6 +153,10 @@
     "2026-10-22": [
      0,
      0
+    ],
+    "2026-10-23": [
+     0,
+     0
     ]
    },
    "snapshots": {
@@ -167,6 +175,20 @@
      ]
     },
     "2026-10-22": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      20,
+      1
+     ],
+     "clones14": [
+      49,
+      25
+     ]
+    },
+    "2026-10-23": {
      "stars": 0,
      "forks": 0,
      "watchers": 0,
@@ -253,6 +275,171 @@
     }
    ]
   },
+  "geoverse-cn-coding": {
+   "url": "https://github.com/GeoVerseLabs/geoverse-cn-coding",
+   "description": "面向中国地址的轻量地理编码服务：地址解析、正向/逆向地理编码、坐标系转换（WGS84/GCJ-02/BD-09）。单进程 FastAPI + 单个 SQLite 文件，开箱即用，支持口语化地址与置信度评估。",
+   "createdAt": "2026-10-14",
+   "pushedAt": "2026-10-23T02:44:19Z",
+   "archived": false,
+   "hasPages": false,
+   "views": {
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     1,
+     1
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     0,
+     0
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     0,
+     0
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ],
+    "2026-10-22": [
+     0,
+     0
+    ],
+    "2026-10-23": [
+     0,
+     0
+    ]
+   },
+   "clones": {
+    "2026-10-09": [
+     0,
+     0
+    ],
+    "2026-10-10": [
+     0,
+     0
+    ],
+    "2026-10-11": [
+     0,
+     0
+    ],
+    "2026-10-12": [
+     0,
+     0
+    ],
+    "2026-10-13": [
+     0,
+     0
+    ],
+    "2026-10-14": [
+     0,
+     0
+    ],
+    "2026-10-15": [
+     0,
+     0
+    ],
+    "2026-10-16": [
+     0,
+     0
+    ],
+    "2026-10-17": [
+     0,
+     0
+    ],
+    "2026-10-18": [
+     0,
+     0
+    ],
+    "2026-10-19": [
+     0,
+     0
+    ],
+    "2026-10-20": [
+     0,
+     0
+    ],
+    "2026-10-21": [
+     0,
+     0
+    ],
+    "2026-10-22": [
+     0,
+     0
+    ],
+    "2026-10-23": [
+     0,
+     0
+    ]
+   },
+   "snapshots": {
+    "2026-10-23": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      1,
+      1
+     ],
+     "clones14": [
+      0,
+      0
+     ]
+    }
+   },
+   "starDates": [],
+   "forkDates": [],
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 1,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/geoverse-cn-coding",
+     "title": "Overview",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
+  },
   "geoverse-line-finder": {
    "url": "https://github.com/GeoVerseLabs/geoverse-line-finder",
    "description": "A zero-dependency TypeScript library for finding the shortest path on a GeoJSON line network (LineString / MultiLineString)",
@@ -328,6 +515,10 @@
     "2026-10-22": [
      0,
      0
+    ],
+    "2026-10-23": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -396,6 +587,10 @@
      0
     ],
     "2026-10-22": [
+     47,
+     16
+    ],
+    "2026-10-23": [
      0,
      0
     ]
@@ -428,6 +623,20 @@
       11,
       11
      ]
+    },
+    "2026-10-23": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      17,
+      4
+     ],
+     "clones14": [
+      58,
+      27
+     ]
     }
    },
    "starDates": [],
@@ -435,7 +644,7 @@
    "referrers": [
     {
      "referrer": "github.com",
-     "count": 5,
+     "count": 4,
      "uniques": 1
     }
    ],
@@ -443,19 +652,19 @@
     {
      "path": "/GeoVerseLabs/geoverse-line-finder/graphs/traffic",
      "title": "/graphs/traffic",
-     "count": 9,
+     "count": 8,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/geoverse-line-finder/pulse",
      "title": "/pulse",
-     "count": 5,
+     "count": 4,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/geoverse-line-finder",
      "title": "Overview",
-     "count": 3,
+     "count": 2,
      "uniques": 1
     },
     {
@@ -553,6 +762,10 @@
     "2026-10-22": [
      0,
      0
+    ],
+    "2026-10-23": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -617,10 +830,14 @@
      1
     ],
     "2026-10-21": [
+     1,
+     1
+    ],
+    "2026-10-22": [
      0,
      0
     ],
-    "2026-10-22": [
+    "2026-10-23": [
      0,
      0
     ]
@@ -641,6 +858,20 @@
      ]
     },
     "2026-10-22": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      5,
+      1
+     ],
+     "clones14": [
+      9,
+      9
+     ]
+    },
+    "2026-10-23": {
      "stars": 0,
      "forks": 0,
      "watchers": 0,
@@ -760,6 +991,10 @@
     "2026-10-22": [
      0,
      0
+    ],
+    "2026-10-23": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -828,6 +1063,10 @@
      0
     ],
     "2026-10-22": [
+     1,
+     1
+    ],
+    "2026-10-23": [
      0,
      0
     ]
@@ -859,6 +1098,20 @@
      "clones14": [
       511,
       179
+     ]
+    },
+    "2026-10-23": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 5,
+     "views14": [
+      112,
+      3
+     ],
+     "clones14": [
+      512,
+      180
      ]
     }
    },
@@ -1009,6 +1262,10 @@
     "2026-10-22": [
      0,
      0
+    ],
+    "2026-10-23": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1073,10 +1330,14 @@
      1
     ],
     "2026-10-21": [
+     3,
+     3
+    ],
+    "2026-10-22": [
      0,
      0
     ],
-    "2026-10-22": [
+    "2026-10-23": [
      0,
      0
     ]
@@ -1109,37 +1370,26 @@
       4,
       4
      ]
+    },
+    "2026-10-23": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 4,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      7,
+      7
+     ]
     }
    },
    "starDates": [],
    "forkDates": [],
-   "referrers": [
-    {
-     "referrer": "github.com",
-     "count": 1,
-     "uniques": 1
-    }
-   ],
-   "paths": [
-    {
-     "path": "/GeoVerseLabs/geoverse-sar",
-     "title": "Overview",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/geoverse-sar/graphs/traffic",
-     "title": "/graphs/traffic",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/geoverse-sar/pulse",
-     "title": "/pulse",
-     "count": 1,
-     "uniques": 1
-    }
-   ]
+   "referrers": [],
+   "paths": []
   },
   "geoverse-skills": {
    "url": "https://github.com/GeoVerseLabs/geoverse-skills",
@@ -1216,6 +1466,10 @@
     "2026-10-22": [
      0,
      0
+    ],
+    "2026-10-23": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1280,10 +1534,14 @@
      1
     ],
     "2026-10-21": [
+     1,
+     1
+    ],
+    "2026-10-22": [
      0,
      0
     ],
-    "2026-10-22": [
+    "2026-10-23": [
      0,
      0
     ]
@@ -1316,25 +1574,26 @@
       9,
       9
      ]
+    },
+    "2026-10-23": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      10,
+      10
+     ]
     }
    },
    "starDates": [],
    "forkDates": [],
-   "referrers": [
-    {
-     "referrer": "github.com",
-     "count": 1,
-     "uniques": 1
-    }
-   ],
-   "paths": [
-    {
-     "path": "/GeoVerseLabs/geoverse-skills",
-     "title": "Overview",
-     "count": 1,
-     "uniques": 1
-    }
-   ]
+   "referrers": [],
+   "paths": []
   },
   "mybatis-plus-geometry": {
    "url": "https://github.com/GeoVerseLabs/mybatis-plus-geometry",
@@ -1411,6 +1670,10 @@
     "2026-10-22": [
      0,
      0
+    ],
+    "2026-10-23": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1475,10 +1738,14 @@
      2
     ],
     "2026-10-21": [
+     1,
+     1
+    ],
+    "2026-10-22": [
      0,
      0
     ],
-    "2026-10-22": [
+    "2026-10-23": [
      0,
      0
     ]
@@ -1511,6 +1778,20 @@
       90,
       40
      ]
+    },
+    "2026-10-23": {
+     "stars": 0,
+     "forks": 1,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      64,
+      2
+     ],
+     "clones14": [
+      73,
+      36
+     ]
     }
    },
    "starDates": [],
@@ -1520,7 +1801,7 @@
    "referrers": [
     {
      "referrer": "github.com",
-     "count": 8,
+     "count": 7,
      "uniques": 1
     }
    ],
@@ -1528,25 +1809,25 @@
     {
      "path": "/GeoVerseLabs/mybatis-plus-geometry",
      "title": "Overview",
-     "count": 17,
+     "count": 16,
      "uniques": 2
     },
     {
      "path": "/GeoVerseLabs/mybatis-plus-geometry/graphs/traffic",
      "title": "/graphs/traffic",
-     "count": 13,
+     "count": 12,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/mybatis-plus-geometry/pulse",
      "title": "/pulse",
-     "count": 11,
+     "count": 10,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/mybatis-plus-geometry/pulls",
      "title": "/pulls",
-     "count": 5,
+     "count": 4,
      "uniques": 1
     },
     {
@@ -1602,7 +1883,8 @@
     "2026-10-19": 0,
     "2026-10-20": 0,
     "2026-10-21": 0,
-    "2026-10-22": 0
+    "2026-10-22": 0,
+    "2026-10-23": 0
    }
   },
   "geoverse-line-finder": {
@@ -1649,7 +1931,8 @@
     "2026-10-19": 0,
     "2026-10-20": 0,
     "2026-10-21": 0,
-    "2026-10-22": 0
+    "2026-10-22": 0,
+    "2026-10-23": 0
    }
   }
  }
