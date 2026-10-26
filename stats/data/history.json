@@ -2,13 +2,13 @@
  "schema": 1,
  "org": "GeoVerseLabs",
  "avatar": "https://avatars.githubusercontent.com/u/13616481?v=4",
- "updatedAt": "2026-10-25T07:35:09.118Z",
+ "updatedAt": "2026-10-26T07:47:29.882Z",
  "repos": {
   ".github": {
    "url": "https://github.com/GeoVerseLabs/.github",
    "description": "",
    "createdAt": "2026-07-08",
-   "pushedAt": "2026-10-24T07:17:25Z",
+   "pushedAt": "2026-10-25T07:35:10Z",
    "archived": false,
    "hasPages": true,
    "views": {
@@ -91,6 +91,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -167,10 +171,14 @@
      14
     ],
     "2026-10-24": [
-     0,
-     0
+     7,
+     5
     ],
     "2026-10-25": [
+     38,
+     21
+    ],
+    "2026-10-26": [
      0,
      0
     ]
@@ -245,6 +253,20 @@
       76,
       34
      ]
+    },
+    "2026-10-26": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      20,
+      1
+     ],
+     "clones14": [
+      120,
+      56
+     ]
     }
    },
    "starDates": [],
@@ -311,7 +333,7 @@
    "url": "https://github.com/GeoVerseLabs/geoverse-cn-coding",
    "description": "面向中国地址的轻量地理编码服务：地址解析、正向/逆向地理编码、坐标系转换（WGS84/GCJ-02/BD-09）。单进程 FastAPI + 单个 SQLite 文件，开箱即用，支持口语化地址与置信度评估。",
    "createdAt": "2026-10-14",
-   "pushedAt": "2026-10-23T02:44:19Z",
+   "pushedAt": "2026-10-26T02:11:28Z",
    "archived": false,
    "hasPages": false,
    "views": {
@@ -382,6 +404,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -450,6 +476,10 @@
      11
     ],
     "2026-10-25": [
+     1,
+     1
+    ],
+    "2026-10-26": [
      0,
      0
     ]
@@ -495,6 +525,20 @@
      "clones14": [
       50,
       21
+     ]
+    },
+    "2026-10-26": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      9,
+      1
+     ],
+     "clones14": [
+      51,
+      22
      ]
     }
    },
@@ -627,6 +671,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -703,10 +751,14 @@
      12
     ],
     "2026-10-24": [
-     0,
-     0
+     4,
+     4
     ],
     "2026-10-25": [
+     3,
+     2
+    ],
+    "2026-10-26": [
      0,
      0
     ]
@@ -780,6 +832,20 @@
      "clones14": [
       87,
       37
+     ]
+    },
+    "2026-10-26": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      15,
+      2
+     ],
+     "clones14": [
+      93,
+      42
      ]
     }
    },
@@ -906,6 +972,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -988,6 +1058,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "snapshots": {
@@ -1048,6 +1122,20 @@
      ]
     },
     "2026-10-25": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      5,
+      1
+     ],
+     "clones14": [
+      12,
+      11
+     ]
+    },
+    "2026-10-26": {
      "stars": 0,
      "forks": 0,
      "watchers": 0,
@@ -1179,6 +1267,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1259,6 +1351,10 @@
      2
     ],
     "2026-10-25": [
+     2,
+     1
+    ],
+    "2026-10-26": [
      0,
      0
     ]
@@ -1333,6 +1429,20 @@
       318,
       112
      ]
+    },
+    "2026-10-26": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 5,
+     "views14": [
+      66,
+      1
+     ],
+     "clones14": [
+      294,
+      105
+     ]
     }
    },
    "starDates": [],
@@ -1340,7 +1450,7 @@
    "referrers": [
     {
      "referrer": "github.com",
-     "count": 6,
+     "count": 5,
      "uniques": 1
     }
    ],
@@ -1348,25 +1458,25 @@
     {
      "path": "/GeoVerseLabs/geoverse-precise",
      "title": "Overview",
-     "count": 16,
+     "count": 11,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/geoverse-precise/graphs/traffic",
      "title": "/graphs/traffic",
-     "count": 11,
+     "count": 8,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/geoverse-precise/pulse",
      "title": "/pulse",
-     "count": 9,
+     "count": 7,
      "uniques": 1
     },
     {
      "path": "/GeoVerseLabs/geoverse-precise/pulls",
      "title": "/pulls",
-     "count": 6,
+     "count": 5,
      "uniques": 1
     },
     {
@@ -1394,14 +1504,14 @@
      "uniques": 1
     },
     {
-     "path": "/GeoVerseLabs/geoverse-precise/tags",
-     "title": "/tags",
-     "count": 2,
+     "path": "/GeoVerseLabs/geoverse-precise/actions/runs/38224157318/job/114728023903",
+     "title": "/actions/runs/38224157318/job/114728023903",
+     "count": 1,
      "uniques": 1
     },
     {
-     "path": "/GeoVerseLabs/geoverse-precise/actions/runs/38224157318/job/114728023903",
-     "title": "/actions/runs/38224157318/job/114728023903",
+     "path": "/GeoVerseLabs/geoverse-precise/actions/runs/38224157318/job/114728611510",
+     "title": "/actions/runs/38224157318/job/114728611510",
      "count": 1,
      "uniques": 1
     }
@@ -1494,6 +1604,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1570,10 +1684,14 @@
      1
     ],
     "2026-10-24": [
+     1,
+     1
+    ],
+    "2026-10-25": [
      0,
      0
     ],
-    "2026-10-25": [
+    "2026-10-26": [
      0,
      0
     ]
@@ -1647,6 +1765,20 @@
      "clones14": [
       8,
       8
+     ]
+    },
+    "2026-10-26": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 4,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      9,
+      9
      ]
     }
    },
@@ -1742,6 +1874,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1822,6 +1958,10 @@
      1
     ],
     "2026-10-25": [
+     1,
+     1
+    ],
+    "2026-10-26": [
      0,
      0
     ]
@@ -1895,6 +2035,20 @@
      "clones14": [
       10,
       10
+     ]
+    },
+    "2026-10-26": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      11,
+      11
      ]
     }
    },
@@ -1990,6 +2144,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -2072,6 +2230,10 @@
     "2026-10-25": [
      0,
      0
+    ],
+    "2026-10-26": [
+     0,
+     0
     ]
    },
    "snapshots": {
@@ -2132,6 +2294,20 @@
      ]
     },
     "2026-10-25": {
+     "stars": 0,
+     "forks": 1,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      19,
+      2
+     ],
+     "clones14": [
+      13,
+      12
+     ]
+    },
+    "2026-10-26": {
      "stars": 0,
      "forks": 1,
      "watchers": 0,
@@ -2208,7 +2384,8 @@
     "2026-10-22": 0,
     "2026-10-23": 0,
     "2026-10-24": 0,
-    "2026-10-25": 0
+    "2026-10-25": 0,
+    "2026-10-26": 0
    }
   },
   "geoverse-line-finder": {
@@ -2258,7 +2435,8 @@
     "2026-10-22": 3,
     "2026-10-23": 0,
     "2026-10-24": 0,
-    "2026-10-25": 0
+    "2026-10-25": 0,
+    "2026-10-26": 0
    }
   }
  }
