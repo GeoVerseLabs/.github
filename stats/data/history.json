@@ -2,13 +2,13 @@
  "schema": 1,
  "org": "GeoVerseLabs",
  "avatar": "https://avatars.githubusercontent.com/u/13616481?v=4",
- "updatedAt": "2026-11-03T09:31:56.601Z",
+ "updatedAt": "2026-11-04T09:10:52.880Z",
  "repos": {
   ".github": {
    "url": "https://github.com/GeoVerseLabs/.github",
    "description": "",
    "createdAt": "2026-07-08",
-   "pushedAt": "2026-11-02T09:30:08Z",
+   "pushedAt": "2026-11-03T09:31:58Z",
    "archived": false,
    "hasPages": true,
    "views": {
@@ -127,6 +127,10 @@
     "2026-11-03": [
      0,
      0
+    ],
+    "2026-11-04": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -243,6 +247,10 @@
      4
     ],
     "2026-11-03": [
+     5,
+     3
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -443,6 +451,20 @@
       181,
       78
      ]
+    },
+    "2026-11-04": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      20,
+      1
+     ],
+     "clones14": [
+      183,
+      77
+     ]
     }
    },
    "starDates": [],
@@ -614,6 +636,10 @@
      0
     ],
     "2026-11-03": [
+     1,
+     1
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -720,6 +746,10 @@
      3
     ],
     "2026-11-03": [
+     6,
+     5
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -892,6 +922,20 @@
       80,
       39
      ]
+    },
+    "2026-11-04": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      35,
+      4
+     ],
+     "clones14": [
+      86,
+      44
+     ]
     }
    },
    "starDates": [],
@@ -899,22 +943,22 @@
    "referrers": [
     {
      "referrer": "github.com",
-     "count": 6,
+     "count": 7,
      "uniques": 3
     }
    ],
    "paths": [
     {
+     "path": "/GeoVerseLabs/geoverse-cn-coding/tree/main",
+     "title": "/tree/main",
+     "count": 5,
+     "uniques": 2
+    },
+    {
      "path": "/GeoVerseLabs/geoverse-cn-coding",
      "title": "Overview",
      "count": 4,
      "uniques": 3
-    },
-    {
-     "path": "/GeoVerseLabs/geoverse-cn-coding/tree/main",
-     "title": "/tree/main",
-     "count": 4,
-     "uniques": 2
     },
     {
      "path": "/GeoVerseLabs/geoverse-cn-coding/tree/main/data",
@@ -1089,6 +1133,10 @@
     "2026-11-03": [
      0,
      0
+    ],
+    "2026-11-04": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1205,6 +1253,10 @@
      2
     ],
     "2026-11-03": [
+     4,
+     3
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -1405,25 +1457,26 @@
       105,
       44
      ]
+    },
+    "2026-11-04": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      109,
+      47
+     ]
     }
    },
    "starDates": [],
    "forkDates": [],
    "referrers": [],
-   "paths": [
-    {
-     "path": "/GeoVerseLabs/geoverse-line-finder/graphs/traffic",
-     "title": "/graphs/traffic",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/geoverse-line-finder/pulse",
-     "title": "/pulse",
-     "count": 1,
-     "uniques": 1
-    }
-   ]
+   "paths": []
   },
   "geoverse-map-server": {
    "url": "https://github.com/GeoVerseLabs/geoverse-map-server",
@@ -1548,6 +1601,10 @@
     "2026-11-03": [
      0,
      0
+    ],
+    "2026-11-04": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1664,6 +1721,10 @@
      0
     ],
     "2026-11-03": [
+     1,
+     1
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -1864,25 +1925,26 @@
       11,
       11
      ]
+    },
+    "2026-11-04": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      11,
+      11
+     ]
     }
    },
    "starDates": [],
    "forkDates": [],
    "referrers": [],
-   "paths": [
-    {
-     "path": "/GeoVerseLabs/geoverse-map-server/graphs/traffic",
-     "title": "/graphs/traffic",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/geoverse-map-server/pulse",
-     "title": "/pulse",
-     "count": 1,
-     "uniques": 1
-    }
-   ]
+   "paths": []
   },
   "geoverse-precise": {
    "url": "https://github.com/GeoVerseLabs/geoverse-precise",
@@ -2007,6 +2069,10 @@
     "2026-11-03": [
      0,
      0
+    ],
+    "2026-11-04": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -2123,6 +2189,10 @@
      0
     ],
     "2026-11-03": [
+     3,
+     3
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -2323,6 +2393,20 @@
       25,
       16
      ]
+    },
+    "2026-11-04": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 5,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      26,
+      17
+     ]
     }
    },
    "starDates": [],
@@ -2453,6 +2537,10 @@
     "2026-11-03": [
      0,
      0
+    ],
+    "2026-11-04": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -2569,6 +2657,10 @@
      1
     ],
     "2026-11-03": [
+     1,
+     1
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -2769,6 +2861,20 @@
       10,
       9
      ]
+    },
+    "2026-11-04": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 4,
+     "views14": [
+      2,
+      2
+     ],
+     "clones14": [
+      10,
+      9
+     ]
     }
    },
    "starDates": [],
@@ -2918,6 +3024,10 @@
     "2026-11-03": [
      0,
      0
+    ],
+    "2026-11-04": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -3034,6 +3144,10 @@
      0
     ],
     "2026-11-03": [
+     0,
+     0
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -3234,6 +3348,20 @@
       12,
       10
      ]
+    },
+    "2026-11-04": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      1,
+      1
+     ],
+     "clones14": [
+      11,
+      9
+     ]
     }
    },
    "starDates": [],
@@ -3377,6 +3505,10 @@
     "2026-11-03": [
      0,
      0
+    ],
+    "2026-11-04": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -3493,6 +3625,10 @@
      0
     ],
     "2026-11-03": [
+     1,
+     1
+    ],
+    "2026-11-04": [
      0,
      0
     ]
@@ -3693,6 +3829,20 @@
       22,
       17
      ]
+    },
+    "2026-11-04": {
+     "stars": 0,
+     "forks": 1,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      12,
+      6
+     ],
+     "clones14": [
+      21,
+      16
+     ]
     }
    },
    "starDates": [],
@@ -3806,7 +3956,8 @@
     "2026-10-31": 0,
     "2026-11-01": 0,
     "2026-11-02": 1,
-    "2026-11-03": 0
+    "2026-11-03": 0,
+    "2026-11-04": 0
    }
   },
   "geoverse-line-finder": {
@@ -3865,7 +4016,8 @@
     "2026-10-31": 0,
     "2026-11-01": 0,
     "2026-11-02": 4,
-    "2026-11-03": 0
+    "2026-11-03": 0,
+    "2026-11-04": 0
    }
   }
  }
