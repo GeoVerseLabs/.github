@@ -2,13 +2,13 @@
  "schema": 1,
  "org": "GeoVerseLabs",
  "avatar": "https://avatars.githubusercontent.com/u/13616481?v=4",
- "updatedAt": "2026-11-05T09:29:19.252Z",
+ "updatedAt": "2026-11-06T09:23:20.496Z",
  "repos": {
   ".github": {
    "url": "https://github.com/GeoVerseLabs/.github",
    "description": "",
    "createdAt": "2026-07-08",
-   "pushedAt": "2026-11-04T09:10:54Z",
+   "pushedAt": "2026-11-05T09:29:20Z",
    "archived": false,
    "hasPages": true,
    "views": {
@@ -135,6 +135,10 @@
     "2026-11-05": [
      0,
      0
+    ],
+    "2026-11-06": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -259,6 +263,10 @@
      7
     ],
     "2026-11-05": [
+     4,
+     2
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -487,43 +495,26 @@
       180,
       74
      ]
+    },
+    "2026-11-06": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      163,
+      67
+     ]
     }
    },
    "starDates": [],
    "forkDates": [],
    "referrers": [],
-   "paths": [
-    {
-     "path": "/GeoVerseLabs/.github/actions/workflows/repo-stats.yml",
-     "title": "/actions/workflows/repo-stats.yml",
-     "count": 3,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/.github/actions/workflows/pages/pages-build-deployment",
-     "title": "/actions/workflows/pages/pages-build-deployment",
-     "count": 2,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/.github/actions",
-     "title": "/actions",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/.github/actions/runs/39731890873",
-     "title": "/actions/runs/39731890873",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/.github/actions/runs/39731917080",
-     "title": "/actions/runs/39731917080",
-     "count": 1,
-     "uniques": 1
-    }
-   ]
+   "paths": []
   },
   "geoverse-cn-coding": {
    "url": "https://github.com/GeoVerseLabs/geoverse-cn-coding",
@@ -642,6 +633,10 @@
      0
     ],
     "2026-11-05": [
+     3,
+     1
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -756,6 +751,10 @@
      0
     ],
     "2026-11-05": [
+     0,
+     0
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -956,6 +955,20 @@
       86,
       44
      ]
+    },
+    "2026-11-06": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      38,
+      4
+     ],
+     "clones14": [
+      86,
+      44
+     ]
     }
    },
    "starDates": [],
@@ -963,7 +976,7 @@
    "referrers": [
     {
      "referrer": "github.com",
-     "count": 7,
+     "count": 10,
      "uniques": 3
     }
    ],
@@ -971,13 +984,13 @@
     {
      "path": "/GeoVerseLabs/geoverse-cn-coding/tree/main",
      "title": "/tree/main",
-     "count": 5,
+     "count": 7,
      "uniques": 2
     },
     {
      "path": "/GeoVerseLabs/geoverse-cn-coding",
      "title": "Overview",
-     "count": 4,
+     "count": 5,
      "uniques": 3
     },
     {
@@ -1161,6 +1174,10 @@
     "2026-11-05": [
      0,
      0
+    ],
+    "2026-11-06": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1285,6 +1302,10 @@
      3
     ],
     "2026-11-05": [
+     2,
+     1
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -1513,6 +1534,20 @@
       112,
       49
      ]
+    },
+    "2026-11-06": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      67,
+      36
+     ]
     }
    },
    "starDates": [],
@@ -1651,6 +1686,10 @@
     "2026-11-05": [
      0,
      0
+    ],
+    "2026-11-06": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1775,6 +1814,10 @@
      0
     ],
     "2026-11-05": [
+     0,
+     0
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -2003,6 +2046,20 @@
       10,
       10
      ]
+    },
+    "2026-11-06": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      10,
+      10
+     ]
     }
    },
    "starDates": [],
@@ -2141,6 +2198,10 @@
     "2026-11-05": [
      0,
      0
+    ],
+    "2026-11-06": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -2265,6 +2326,10 @@
      1
     ],
     "2026-11-05": [
+     2,
+     2
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -2493,6 +2558,20 @@
       27,
       18
      ]
+    },
+    "2026-11-06": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 5,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      28,
+      19
+     ]
     }
    },
    "starDates": [],
@@ -2629,6 +2708,10 @@
      0
     ],
     "2026-11-05": [
+     3,
+     3
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -2755,6 +2838,10 @@
      0
     ],
     "2026-11-05": [
+     0,
+     0
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -2983,6 +3070,20 @@
       7,
       6
      ]
+    },
+    "2026-11-06": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 4,
+     "views14": [
+      5,
+      5
+     ],
+     "clones14": [
+      7,
+      6
+     ]
     }
    },
    "starDates": [],
@@ -2990,8 +3091,8 @@
    "referrers": [
     {
      "referrer": "aocr.org",
-     "count": 2,
-     "uniques": 2
+     "count": 5,
+     "uniques": 5
     }
    ],
    "paths": [
@@ -3004,6 +3105,24 @@
     {
      "path": "/GeoVerseLabs/geoverse-sar/pull/4/files",
      "title": "/pull/4/files",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-sar/tree/dependabot/github_actions/actions/checkout-7",
+     "title": "/tree/dependabot/github_actions/actions/checkout-7",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-sar/tree/dependabot/github_actions/pnpm/action-setup-6",
+     "title": "/tree/dependabot/github_actions/pnpm/action-setup-6",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-sar/tree/main",
+     "title": "/tree/main",
      "count": 1,
      "uniques": 1
     }
@@ -3138,6 +3257,10 @@
      0
     ],
     "2026-11-05": [
+     6,
+     5
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -3264,6 +3387,10 @@
      2
     ],
     "2026-11-05": [
+     2,
+     1
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -3492,6 +3619,20 @@
       17,
       10
      ]
+    },
+    "2026-11-06": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      7,
+      6
+     ],
+     "clones14": [
+      19,
+      11
+     ]
     }
    },
    "starDates": [],
@@ -3501,12 +3642,41 @@
      "referrer": "aocr.org",
      "count": 1,
      "uniques": 1
+    },
+    {
+     "referrer": "github.com",
+     "count": 1,
+     "uniques": 1
     }
    ],
    "paths": [
     {
      "path": "/GeoVerseLabs/geoverse-skills",
      "title": "Overview",
+     "count": 2,
+     "uniques": 2
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-skills/blob/main/README.zh-CN.md",
+     "title": "/blob/main/README.zh-CN.md",
+     "count": 2,
+     "uniques": 2
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-skills/blob/main/CONTRIBUTING.zh-CN.md",
+     "title": "/blob/main/CONTRIBUTING.zh-CN.md",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-skills/blob/main/README.md",
+     "title": "/blob/main/README.md",
+     "count": 1,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/geoverse-skills/blob/main/SECURITY.zh-CN.md",
+     "title": "/blob/main/SECURITY.zh-CN.md",
      "count": 1,
      "uniques": 1
     }
@@ -3641,6 +3811,10 @@
      0
     ],
     "2026-11-05": [
+     10,
+     10
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -3767,6 +3941,10 @@
      2
     ],
     "2026-11-05": [
+     1,
+     1
+    ],
+    "2026-11-06": [
      0,
      0
     ]
@@ -3995,6 +4173,20 @@
       22,
       17
      ]
+    },
+    "2026-11-06": {
+     "stars": 0,
+     "forks": 1,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      22,
+      16
+     ],
+     "clones14": [
+      23,
+      18
+     ]
     }
    },
    "starDates": [],
@@ -4004,8 +4196,8 @@
    "referrers": [
     {
      "referrer": "aocr.org",
-     "count": 5,
-     "uniques": 5
+     "count": 15,
+     "uniques": 15
     },
     {
      "referrer": "Google",
@@ -4020,9 +4212,27 @@
    ],
    "paths": [
     {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/tree/dependabot/github_actions/github-actions-c648e57022",
+     "title": "/tree/dependabot/github_actions/github-actions-c648e57022",
+     "count": 3,
+     "uniques": 3
+    },
+    {
      "path": "/GeoVerseLabs/mybatis-plus-geometry",
      "title": "Overview",
      "count": 3,
+     "uniques": 2
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/tree/dependabot/github_actions/github-actions-52ff770585",
+     "title": "/tree/dependabot/github_actions/github-actions-52ff770585",
+     "count": 2,
+     "uniques": 2
+    },
+    {
+     "path": "/GeoVerseLabs/mybatis-plus-geometry/tree/dependabot/github_actions/gradle/wrapper-validation-action-3",
+     "title": "/tree/dependabot/github_actions/gradle/wrapper-validation-action-3",
+     "count": 2,
      "uniques": 2
     },
     {
@@ -4060,24 +4270,6 @@
      "title": "/pull/17/files",
      "count": 1,
      "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/mybatis-plus-geometry/pull/2/files",
-     "title": "/pull/2/files",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/mybatis-plus-geometry/pull/7/files",
-     "title": "/pull/7/files",
-     "count": 1,
-     "uniques": 1
-    },
-    {
-     "path": "/GeoVerseLabs/mybatis-plus-geometry/tree/main/src/main",
-     "title": "/tree/main/src/main",
-     "count": 1,
-     "uniques": 1
     }
    ]
   }
@@ -4109,8 +4301,9 @@
     "2026-11-01": 0,
     "2026-11-02": 1,
     "2026-11-03": 1,
-    "2026-11-04": 0,
-    "2026-11-05": 0
+    "2026-11-04": 2,
+    "2026-11-05": 0,
+    "2026-11-06": 0
    }
   },
   "geoverse-line-finder": {
@@ -4170,8 +4363,9 @@
     "2026-11-01": 0,
     "2026-11-02": 4,
     "2026-11-03": 1,
-    "2026-11-04": 0,
-    "2026-11-05": 0
+    "2026-11-04": 2,
+    "2026-11-05": 0,
+    "2026-11-06": 0
    }
   }
  }
