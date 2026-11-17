@@ -2,13 +2,13 @@
  "schema": 1,
  "org": "GeoVerseLabs",
  "avatar": "https://avatars.githubusercontent.com/u/13616481?v=4",
- "updatedAt": "2026-11-16T09:41:44.269Z",
+ "updatedAt": "2026-11-17T10:42:38.860Z",
  "repos": {
   ".github": {
    "url": "https://github.com/GeoVerseLabs/.github",
    "description": "",
    "createdAt": "2026-07-08",
-   "pushedAt": "2026-11-16T01:39:57Z",
+   "pushedAt": "2026-11-16T09:41:46Z",
    "archived": false,
    "hasPages": true,
    "views": {
@@ -177,6 +177,10 @@
      0
     ],
     "2026-11-16": [
+     12,
+     1
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -343,10 +347,14 @@
      8
     ],
     "2026-11-15": [
-     0,
-     0
+     2,
+     2
     ],
     "2026-11-16": [
+     6,
+     3
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -687,12 +695,57 @@
       147,
       59
      ]
+    },
+    "2026-11-17": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      12,
+      1
+     ],
+     "clones14": [
+      134,
+      52
+     ]
     }
    },
    "starDates": [],
    "forkDates": [],
-   "referrers": [],
-   "paths": []
+   "referrers": [
+    {
+     "referrer": "github.com",
+     "count": 1,
+     "uniques": 1
+    }
+   ],
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/.github",
+     "title": "Overview",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/actions/runs/43401825585",
+     "title": "/actions/runs/43401825585",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/actions/workflows/repo-stats.yml",
+     "title": "/actions/workflows/repo-stats.yml",
+     "count": 2,
+     "uniques": 1
+    },
+    {
+     "path": "/GeoVerseLabs/.github/actions/runs/43401825585/job/131806299116",
+     "title": "/actions/runs/43401825585/job/131806299116",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
   },
   "geoverse-cn-coding": {
    "url": "https://github.com/GeoVerseLabs/geoverse-cn-coding",
@@ -855,6 +908,10 @@
      0
     ],
     "2026-11-16": [
+     1,
+     1
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -1013,6 +1070,10 @@
      0
     ],
     "2026-11-16": [
+     0,
+     0
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -1325,6 +1386,20 @@
       24,
       18
      ]
+    },
+    "2026-11-17": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      8,
+      1
+     ],
+     "clones14": [
+      16,
+      14
+     ]
     }
    },
    "starDates": [],
@@ -1332,7 +1407,7 @@
    "referrers": [
     {
      "referrer": "github.com",
-     "count": 7,
+     "count": 8,
      "uniques": 1
     }
    ],
@@ -1340,7 +1415,7 @@
     {
      "path": "/GeoVerseLabs/geoverse-cn-coding",
      "title": "Overview",
-     "count": 4,
+     "count": 5,
      "uniques": 1
     },
     {
@@ -1526,6 +1601,10 @@
     "2026-11-16": [
      0,
      0
+    ],
+    "2026-11-17": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -1690,10 +1769,14 @@
      1
     ],
     "2026-11-15": [
-     0,
-     0
+     4,
+     3
     ],
     "2026-11-16": [
+     2,
+     1
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -2034,6 +2117,20 @@
       34,
       14
      ]
+    },
+    "2026-11-17": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      35,
+      14
+     ]
     }
    },
    "starDates": [],
@@ -2210,10 +2307,14 @@
      0
     ],
     "2026-11-15": [
+     1,
+     1
+    ],
+    "2026-11-16": [
      0,
      0
     ],
-    "2026-11-16": [
+    "2026-11-17": [
      0,
      0
     ]
@@ -2384,6 +2485,10 @@
      0
     ],
     "2026-11-16": [
+     0,
+     0
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -2724,12 +2829,33 @@
       8,
       7
      ]
+    },
+    "2026-11-17": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      1,
+      1
+     ],
+     "clones14": [
+      8,
+      7
+     ]
     }
    },
    "starDates": [],
    "forkDates": [],
    "referrers": [],
-   "paths": []
+   "paths": [
+    {
+     "path": "/GeoVerseLabs/geoverse-map-server",
+     "title": "Overview",
+     "count": 1,
+     "uniques": 1
+    }
+   ]
   },
   "geoverse-precise": {
    "url": "https://github.com/GeoVerseLabs/geoverse-precise",
@@ -2906,6 +3032,10 @@
     "2026-11-16": [
      0,
      0
+    ],
+    "2026-11-17": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -3070,10 +3200,14 @@
      0
     ],
     "2026-11-15": [
-     0,
-     0
+     1,
+     1
     ],
     "2026-11-16": [
+     2,
+     2
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -3414,6 +3548,20 @@
       33,
       22
      ]
+    },
+    "2026-11-17": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 5,
+     "views14": [
+      0,
+      0
+     ],
+     "clones14": [
+      34,
+      24
+     ]
     }
    },
    "starDates": [],
@@ -3596,6 +3744,10 @@
     "2026-11-16": [
      0,
      0
+    ],
+    "2026-11-17": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -3760,10 +3912,14 @@
      2
     ],
     "2026-11-15": [
+     1,
+     1
+    ],
+    "2026-11-16": [
      0,
      0
     ],
-    "2026-11-16": [
+    "2026-11-17": [
      0,
      0
     ]
@@ -4104,6 +4260,20 @@
       6,
       5
      ]
+    },
+    "2026-11-17": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 4,
+     "views14": [
+      3,
+      3
+     ],
+     "clones14": [
+      5,
+      5
+     ]
     }
    },
    "starDates": [],
@@ -4311,6 +4481,10 @@
     "2026-11-16": [
      0,
      0
+    ],
+    "2026-11-17": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -4479,6 +4653,10 @@
      0
     ],
     "2026-11-16": [
+     0,
+     0
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -4819,6 +4997,20 @@
       27,
       12
      ]
+    },
+    "2026-11-17": {
+     "stars": 0,
+     "forks": 0,
+     "watchers": 0,
+     "openIssues": 0,
+     "views14": [
+      6,
+      5
+     ],
+     "clones14": [
+      27,
+      12
+     ]
     }
    },
    "starDates": [],
@@ -5038,6 +5230,10 @@
     "2026-11-16": [
      0,
      0
+    ],
+    "2026-11-17": [
+     0,
+     0
     ]
    },
    "clones": {
@@ -5202,10 +5398,14 @@
      3
     ],
     "2026-11-15": [
-     0,
-     0
+     1,
+     1
     ],
     "2026-11-16": [
+     1,
+     1
+    ],
+    "2026-11-17": [
      0,
      0
     ]
@@ -5546,6 +5746,20 @@
       15,
       13
      ]
+    },
+    "2026-11-17": {
+     "stars": 0,
+     "forks": 1,
+     "watchers": 0,
+     "openIssues": 2,
+     "views14": [
+      13,
+      12
+     ],
+     "clones14": [
+      16,
+      14
+     ]
     }
    },
    "starDates": [],
@@ -5650,7 +5864,8 @@
     "2026-11-13": 4,
     "2026-11-14": 3,
     "2026-11-15": 5,
-    "2026-11-16": 0
+    "2026-11-16": 0,
+    "2026-11-17": 0
    }
   },
   "geoverse-line-finder": {
@@ -5722,7 +5937,8 @@
     "2026-11-13": 2,
     "2026-11-14": 0,
     "2026-11-15": 5,
-    "2026-11-16": 0
+    "2026-11-16": 4,
+    "2026-11-17": 0
    }
   }
  }
